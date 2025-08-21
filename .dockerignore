@@ -25,8 +25,8 @@ coverage.xml
 README.md
 test_*.py
 *.md
-layout_clusters/
-folklife-screens/
+# layout_clusters/  # Commented out - needed for cluster data
+# folklife-screens/  # Commented out - needed for screenshots
 # folklife-screens-x/  # Commented out - needed for image serving
-festival-screens/
-test_screenshots/
+# festival-screens/  # Commented out - needed for screenshots
+# test_screenshots/  # Commented out - needed for screenshots

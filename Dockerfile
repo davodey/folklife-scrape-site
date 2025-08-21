@@ -16,8 +16,10 @@ COPY . .
 
 # Verify critical directories exist
 RUN ls -la && \
+    echo "Checking layout_clusters..." && \
+    ls -la layout_clusters/ | head -5 && \
     echo "Checking folklife-screens-x..." && \
-    ls -la folklife-screens-x/ | head -10
+    ls -la folklife-screens-x/ | head -5
 
 # Create templates directory and generate templates
 RUN python cluster_viewer.py --generate-templates-only
