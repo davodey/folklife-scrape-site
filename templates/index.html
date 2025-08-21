@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>folklife.si.edu Layouts Viewer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .stats { background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: bold; color: #3498db; }
+        .stat-label { color: #7f8c8d; margin-top: 0.5rem; }
+        .clusters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
+        .cluster-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .cluster-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+        .cluster-header { background: #ecf0f1; padding: 1rem; border-bottom: 1px solid #ddd; }
+        .cluster-title { font-size: 1.2rem; font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem; }
+        .cluster-size { color: #7f8c8d; font-size: 0.9rem; }
+        .canonical-image { width: 100%; height: 150px; object-fit: cover; }
+        .cluster-preview { padding: 1rem; }
+        .preview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-top: 1rem; }
+        .preview-thumb { width: 100%; height: 40px; object-fit: cover; border-radius: 4px; }
+        .view-all { text-align: center; margin-top: 1rem; }
+        .view-btn { background: #3498db; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; display: inline-block; }
+        .view-btn:hover { background: #2980b9; }
+        .loading { text-align: center; padding: 2rem; color: #7f8c8d; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+        .clickable { cursor: pointer; transition: opacity 0.2s; }
+        .clickable:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>folklife.si.edu Layouts Viewer</h1>
+        <p>Visual overview of {{ summary.total_clusters }} unique layouts from {{ summary.total_screenshots }} screenshots</p>
+    </div>
+    
+    <div class="container">
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">{{ summary.total_clusters }}</div>
+                    <div class="stat-label">Unique Layouts</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{ summary.total_screenshots }}</div>
+                    <div class="stat-label">Total Screenshots</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{ "%.1f"|format(summary.total_screenshots / summary.total_clusters) }}</div>
+                    <div class="stat-label">Avg per Cluster</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="clusters-grid">
+            {% for cluster in summary.clusters %}
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout {{ cluster.id }}</div>
+                    <div class="cluster-size">{{ cluster.size }} screenshots</div>
+                </div>
+                
+                {% if cluster.canonical_thumbnail %}
+                <img src="{{ cluster.canonical_thumbnail }}" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('{{ cluster.canonical.path }}', '{{ cluster.canonical.filename }}')">
+                {% endif %}
+                
+                <div class="cluster-preview">
+                    <div><strong>Canonical:</strong> {{ cluster.canonical.filename }}</div>
+                    
+                    {% if cluster.screenshots %}
+                    <div class="preview-grid">
+                        {% for screenshot in cluster.screenshots[:8] %}
+                        <img src="/images/{{ screenshot.filename }}" alt="{{ screenshot.filename }}" class="preview-thumb clickable" 
+                             title="{{ screenshot.filename }}" onclick="openModal('{{ screenshot.path }}', '{{ screenshot.filename }}')">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if cluster.has_more %}
+                    <div class="view-all">
+                        <a href="/cluster/{{ cluster.id }}" class="view-btn">View All {{ cluster.size }} Images</a>
+                    </div>
+                    {% else %}
+                    <div class="view-all">
+                        <a href="/cluster/{{ cluster.id }}" class="view-btn">View Details</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(imagePath, filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = '/images/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

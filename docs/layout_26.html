@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout 26 Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .back-link { display: inline-block; margin-bottom: 2rem; color: #3498db; text-decoration: none; font-size: 1.1rem; }
+        .back-link:hover { text-decoration: underline; }
+        
+        .cluster-info { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .canonical-section h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-thumbnail { max-width: 300px; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }
+        .canonical-thumbnail:hover { opacity: 0.8; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        
+        .image-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .image-card img { width: 100%; height: auto; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; margin-bottom: 0.5rem; color: #2c3e50; }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        .canonical-badge { background: #27ae60; color: white; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; margin-left: 0.5rem; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Layout 26 Details</h1>
+        <p>1 screenshots with similar layouts</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to All Layouts</a>
+        
+        <div class="cluster-info">
+            <div class="canonical-section">
+                <h3>Canonical Image</h3>
+                <img src="data:image/jpeg;base64,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" alt="cultural-heritage-policy_ICH_video_smithsonian.png" class="canonical-thumbnail" 
+                     onclick="openModal('cultural-heritage-policy_ICH_video_smithsonian.png')">
+                <p><strong>cultural-heritage-policy_ICH_video_smithsonian.png</strong></p>
+                <p>This image represents the standard layout for this layout group.</p>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="images/cultural-heritage-policy_ICH_video_smithsonian.png" alt="cultural-heritage-policy_ICH_video_smithsonian.png" 
+                     onclick="openModal('cultural-heritage-policy_ICH_video_smithsonian.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        cultural-heritage-policy_ICH_video_smithsonian.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'images/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

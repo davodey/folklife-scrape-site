@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout 0 Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .back-link { display: inline-block; margin-bottom: 2rem; color: #3498db; text-decoration: none; font-size: 1.1rem; }
+        .back-link:hover { text-decoration: underline; }
+        
+        .cluster-info { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .canonical-section h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-thumbnail { max-width: 300px; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }
+        .canonical-thumbnail:hover { opacity: 0.8; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        
+        .image-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .image-card img { width: 100%; height: auto; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; margin-bottom: 0.5rem; color: #2c3e50; }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        .canonical-badge { background: #27ae60; color: white; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; margin-left: 0.5rem; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Layout 0 Details</h1>
+        <p>58 screenshots with similar layouts</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to All Layouts</a>
+        
+        <div class="cluster-info">
+            <div class="canonical-section">
+                <h3>Canonical Image</h3>
+                <img src="data:image/jpeg;base64,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" alt="1989Recommendation.htm.png" class="canonical-thumbnail" 
+                     onclick="openModal('1989Recommendation.htm.png')">
+                <p><strong>1989Recommendation.htm.png</strong></p>
+                <p>This image represents the standard layout for this layout group.</p>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="images/1989Recommendation.htm.png" alt="1989Recommendation.htm.png" 
+                     onclick="openModal('1989Recommendation.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        1989Recommendation.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/abeita.htm.png" alt="abeita.htm.png" 
+                     onclick="openModal('abeita.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        abeita.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/acknowledgements.htm.png" alt="acknowledgements.htm.png" 
+                     onclick="openModal('acknowledgements.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        acknowledgements.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/actionplan.htm.png" alt="actionplan.htm.png" 
+                     onclick="openModal('actionplan.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        actionplan.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/actionplan_french.htm.png" alt="actionplan_french.htm.png" 
+                     onclick="openModal('actionplan_french.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        actionplan_french.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/actionplan_spanish.htm.png" alt="actionplan_spanish.htm.png" 
+                     onclick="openModal('actionplan_spanish.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        actionplan_spanish.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/aikawa.htm.png" alt="aikawa.htm.png" 
+                     onclick="openModal('aikawa.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        aikawa.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/archive.png" alt="archive.png" 
+                     onclick="openModal('archive.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        archive.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/bancroft.htm.png" alt="bancroft.htm.png" 
+                     onclick="openModal('bancroft.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        bancroft.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/berman.htm.png" alt="berman.htm.png" 
+                     onclick="openModal('berman.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        berman.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/blake.htm.png" alt="blake.htm.png" 
+                     onclick="openModal('blake.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        blake.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/borisova.htm.png" alt="borisova.htm.png" 
+                     onclick="openModal('borisova.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        borisova.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/bouchenakiaddress.htm.png" alt="bouchenakiaddress.htm.png" 
+                     onclick="openModal('bouchenakiaddress.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        bouchenakiaddress.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/collier.htm.png" alt="collier.htm.png" 
+                     onclick="openModal('collier.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        collier.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/contributors.htm.png" alt="contributors.htm.png" 
+                     onclick="openModal('contributors.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        contributors.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png" alt="cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png" 
+                     onclick="openModal('cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/dacunha.htm.png" alt="dacunha.htm.png" 
+                     onclick="openModal('dacunha.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        dacunha.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/elhouda.htm.png" alt="elhouda.htm.png" 
+                     onclick="openModal('elhouda.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        elhouda.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/elhouda_eng.htm.png" alt="elhouda_eng.htm.png" 
+                     onclick="openModal('elhouda_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        elhouda_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/finalreport_eng.htm.png" alt="finalreport_eng.htm.png" 
+                     onclick="openModal('finalreport_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        finalreport_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/finalreport_french.htm.png" alt="finalreport_french.htm.png" 
+                     onclick="openModal('finalreport_french.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        finalreport_french.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/finalreport_spanish.htm.png" alt="finalreport_spanish.htm.png" 
+                     onclick="openModal('finalreport_spanish.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        finalreport_spanish.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/folklife.si.edu_magazine_basketry-traditions-southwest-china.png" alt="folklife.si.edu_magazine_basketry-traditions-southwest-china.png" 
+                     onclick="openModal('folklife.si.edu_magazine_basketry-traditions-southwest-china.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        folklife.si.edu_magazine_basketry-traditions-southwest-china.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/folklife@si.edu.png" alt="folklife@si.edu.png" 
+                     onclick="openModal('folklife@si.edu.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        folklife@si.edu.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/garba.htm.png" alt="garba.htm.png" 
+                     onclick="openModal('garba.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        garba.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/garba_eng.htm.png" alt="garba_eng.htm.png" 
+                     onclick="openModal('garba_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        garba_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/hoppal.htm.png" alt="hoppal.htm.png" 
+                     onclick="openModal('hoppal.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        hoppal.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/hornedo.htm.png" alt="hornedo.htm.png" 
+                     onclick="openModal('hornedo.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        hornedo.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/kawada.htm.png" alt="kawada.htm.png" 
+                     onclick="openModal('kawada.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kawada.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/kirkinen.htm.png" alt="kirkinen.htm.png" 
+                     onclick="openModal('kirkinen.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kirkinen.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/koch.htm.png" alt="koch.htm.png" 
+                     onclick="openModal('koch.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        koch.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/kouyate.htm.png" alt="kouyate.htm.png" 
+                     onclick="openModal('kouyate.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kouyate.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/kouyate_eng.htm.png" alt="kouyate_eng.htm.png" 
+                     onclick="openModal('kouyate_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kouyate_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/kurin.htm.png" alt="kurin.htm.png" 
+                     onclick="openModal('kurin.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kurin.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/mambetova.htm.png" alt="mambetova.htm.png" 
+                     onclick="openModal('mambetova.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        mambetova.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/matusse.htm.png" alt="matusse.htm.png" 
+                     onclick="openModal('matusse.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        matusse.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/mayormessage.htm.png" alt="mayormessage.htm.png" 
+                     onclick="openModal('mayormessage.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        mayormessage.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/mccann.htm.png" alt="mccann.htm.png" 
+                     onclick="openModal('mccann.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        mccann.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/nketia.htm.png" alt="nketia.htm.png" 
+                     onclick="openModal('nketia.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        nketia.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/preface.htm.png" alt="preface.htm.png" 
+                     onclick="openModal('preface.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        preface.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/prott.htm.png" alt="prott.htm.png" 
+                     onclick="openModal('prott.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        prott.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/pualani.htm.png" alt="pualani.htm.png" 
+                     onclick="openModal('pualani.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        pualani.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/puri.htm.png" alt="puri.htm.png" 
+                     onclick="openModal('puri.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        puri.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/puwainchir.htm.png" alt="puwainchir.htm.png" 
+                     onclick="openModal('puwainchir.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        puwainchir.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/saunders.htm.png" alt="saunders.htm.png" 
+                     onclick="openModal('saunders.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        saunders.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/seeger.htm.png" alt="seeger.htm.png" 
+                     onclick="openModal('seeger.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        seeger.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/sethi.htm.png" alt="sethi.htm.png" 
+                     onclick="openModal('sethi.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        sethi.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/shalaan.htm.png" alt="shalaan.htm.png" 
+                     onclick="openModal('shalaan.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        shalaan.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/sherkin.htm.png" alt="sherkin.htm.png" 
+                     onclick="openModal('sherkin.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        sherkin.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/simon.htm.png" alt="simon.htm.png" 
+                     onclick="openModal('simon.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        simon.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/thomas.htm.png" alt="thomas.htm.png" 
+                     onclick="openModal('thomas.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        thomas.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/tora.htm.png" alt="tora.htm.png" 
+                     onclick="openModal('tora.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        tora.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png" 
+                     onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png" 
+                     onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png" 
+                     onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/yamaguti.htm.png" alt="yamaguti.htm.png" 
+                     onclick="openModal('yamaguti.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        yamaguti.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/yugar.htm.png" alt="yugar.htm.png" 
+                     onclick="openModal('yugar.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        yugar.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/yugar_eng.htm.png" alt="yugar_eng.htm.png" 
+                     onclick="openModal('yugar_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        yugar_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'images/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

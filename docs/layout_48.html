@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout 48 Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .back-link { display: inline-block; margin-bottom: 2rem; color: #3498db; text-decoration: none; font-size: 1.1rem; }
+        .back-link:hover { text-decoration: underline; }
+        
+        .cluster-info { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .canonical-section h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-thumbnail { max-width: 300px; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }
+        .canonical-thumbnail:hover { opacity: 0.8; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        
+        .image-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .image-card img { width: 100%; height: auto; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; margin-bottom: 0.5rem; color: #2c3e50; }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        .canonical-badge { background: #27ae60; color: white; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; margin-left: 0.5rem; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Layout 48 Details</h1>
+        <p>1 screenshots with similar layouts</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to All Layouts</a>
+        
+        <div class="cluster-info">
+            <div class="canonical-section">
+                <h3>Canonical Image</h3>
+                <img src="data:image/jpeg;base64,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" alt="magazine_forklife-swedish-potatis-korv-potato-sausage.png" class="canonical-thumbnail" 
+                     onclick="openModal('magazine_forklife-swedish-potatis-korv-potato-sausage.png')">
+                <p><strong>magazine_forklife-swedish-potatis-korv-potato-sausage.png</strong></p>
+                <p>This image represents the standard layout for this layout group.</p>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="images/magazine_forklife-swedish-potatis-korv-potato-sausage.png" alt="magazine_forklife-swedish-potatis-korv-potato-sausage.png" 
+                     onclick="openModal('magazine_forklife-swedish-potatis-korv-potato-sausage.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_forklife-swedish-potatis-korv-potato-sausage.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'images/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

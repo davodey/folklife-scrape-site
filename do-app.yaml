@@ -1,0 +1,19 @@
+name: folklife-layouts-viewer
+services:
+- name: web
+  source_dir: /
+  github:
+    repo: your-username/festival-crawler
+    branch: main
+  run_command: python cluster_viewer.py
+  environment_slug: python
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 5000
+  routes:
+  - path: /
+  envs:
+  - key: FLASK_ENV
+    value: production
+  - key: FLASK_APP
+    value: cluster_viewer.py

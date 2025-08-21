@@ -194,6 +194,93 @@ If you encounter issues:
 3. Ensure all dependencies are installed
 4. Check that the target website is accessible
 
+## Deployment Options
+
+### 🚀 **Option 1: Static Site (Recommended - Ultra Cheap!)**
+
+**Cost: $0-5/month vs $12+/month for App Platform**
+
+Generate a static HTML site that can be hosted on:
+- **GitHub Pages**: FREE
+- **DigitalOcean Spaces**: $5/month for 250GB
+- **Netlify**: FREE tier
+
+#### **Quick Deploy to GitHub Pages (FREE)**
+```bash
+# Generate static site
+python generate_static_site.py
+
+# Deploy to GitHub Pages
+./deploy-to-github.sh
+```
+
+#### **Quick Deploy to DigitalOcean Spaces ($5/month)**
+```bash
+# Generate static site
+python generate_static_site.py
+
+# Deploy to DigitalOcean Spaces
+./deploy-to-spaces.sh
+```
+
+#### **Test Locally First**
+```bash
+# Generate and test locally
+python generate_static_site.py
+cd static_site
+python -m http.server 8000
+# Open http://localhost:8000
+```
+
+### 🖥️ **Option 2: DigitalOcean App Platform**
+
+**Cost: $12+/month**
+
+For full server functionality (not recommended for cost reasons).
+
+#### **Quick Deploy**
+1. **Install doctl CLI tool**:
+   ```bash
+   # macOS
+   brew install doctl
+   ```
+
+2. **Authenticate with DigitalOcean**:
+   ```bash
+   doctl auth init
+   ```
+
+3. **Deploy using the script**:
+   ```bash
+   ./deploy.sh
+   ```
+
+### 📁 **Deployment Files**
+
+#### **Static Site (Recommended)**
+- `generate_static_site.py` - Static site generator
+- `deploy-to-github.sh` - GitHub Pages deployment
+- `deploy-to-spaces.sh` - DigitalOcean Spaces deployment
+- `STATIC_DEPLOYMENT.md` - Detailed static site guide
+
+#### **App Platform**
+- `Dockerfile` - Container configuration
+- `do-app.yaml` - DigitalOcean App Platform spec
+- `Procfile` - Process definition
+- `runtime.txt` - Python version
+- `deploy.sh` - Automated deployment script
+- `DEPLOYMENT.md` - Detailed App Platform guide
+
+## 💰 **Cost Comparison**
+
+| Option | Monthly Cost | Storage | Bandwidth | Best For |
+|--------|--------------|---------|-----------|----------|
+| **GitHub Pages** | $0 | 1GB | Unlimited | Testing, personal projects |
+| **DigitalOcean Spaces** | $5 | 250GB | $0.02/GB | **Production, professional use** |
+| **DigitalOcean App Platform** | $12+ | N/A | N/A | Full server features |
+
+**🎯 Recommendation**: Use the static site option for massive cost savings!
+
 ## License
 
 This project is for educational and legitimate business use only. Please respect the terms of service of any website you crawl. 

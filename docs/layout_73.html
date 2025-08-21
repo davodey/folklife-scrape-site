@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout 73 Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .back-link { display: inline-block; margin-bottom: 2rem; color: #3498db; text-decoration: none; font-size: 1.1rem; }
+        .back-link:hover { text-decoration: underline; }
+        
+        .cluster-info { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .canonical-section h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-thumbnail { max-width: 300px; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }
+        .canonical-thumbnail:hover { opacity: 0.8; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        
+        .image-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .image-card img { width: 100%; height: auto; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; margin-bottom: 0.5rem; color: #2c3e50; }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        .canonical-badge { background: #27ae60; color: white; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; margin-left: 0.5rem; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Layout 73 Details</h1>
+        <p>2 screenshots with similar layouts</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to All Layouts</a>
+        
+        <div class="cluster-info">
+            <div class="canonical-section">
+                <h3>Canonical Image</h3>
+                <img src="data:image/jpeg;base64,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" alt="staff_smithsonian.png" class="canonical-thumbnail" 
+                     onclick="openModal('staff_smithsonian.png')">
+                <p><strong>staff_smithsonian.png</strong></p>
+                <p>This image represents the standard layout for this layout group.</p>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="images/staff_smithsonian.png" alt="staff_smithsonian.png" 
+                     onclick="openModal('staff_smithsonian.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        staff_smithsonian.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="images/supporters.png" alt="supporters.png" 
+                     onclick="openModal('supporters.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        supporters.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.134726
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'images/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

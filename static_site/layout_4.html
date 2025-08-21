@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout 4 Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .back-link { display: inline-block; margin-bottom: 2rem; color: #3498db; text-decoration: none; font-size: 1.1rem; }
+        .back-link:hover { text-decoration: underline; }
+        
+        .cluster-info { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .canonical-section h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-thumbnail { max-width: 300px; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }
+        .canonical-thumbnail:hover { opacity: 0.8; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        
+        .image-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .image-card img { width: 100%; height: auto; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; margin-bottom: 0.5rem; color: #2c3e50; }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        .canonical-badge { background: #27ae60; color: white; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; margin-left: 0.5rem; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Layout 4 Details</h1>
+        <p>1 screenshots with similar layouts</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to All Layouts</a>
+        
+        <div class="cluster-info">
+            <div class="canonical-section">
+                <h3>Canonical Image</h3>
+                <img src="data:image/jpeg;base64,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" alt="american-ginseng.png" class="canonical-thumbnail" 
+                     onclick="openModal('american-ginseng.png')">
+                <p><strong>american-ginseng.png</strong></p>
+                <p>This image represents the standard layout for this layout group.</p>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="images/american-ginseng.png" alt="american-ginseng.png" 
+                     onclick="openModal('american-ginseng.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        american-ginseng.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'images/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
