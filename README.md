@@ -66,6 +66,37 @@ The crawler will create:
 - `crawl_summary.json` with crawling statistics
 - `crawler.log` with detailed logging
 
+### Detect Duplicate Layouts in Screenshots
+
+After you have screenshots (e.g., in `folklife-screens-x/`), you can cluster duplicates by page layout using the included script:
+
+```bash
+python dedupe_layouts.py \
+  --input-dir folklife-screens-x \
+  --output-csv layout_clusters.csv \
+  --contact-sheets-dir layout_contact_sheets \
+  --resize-width 1024 \
+  --crop-top 0 --crop-bottom 0 \
+  --mask-text
+```
+
+What it does:
+- Normalizes images to a common width and optional top/bottom crop
+- Optionally masks text via OCR so content doesn't affect similarity
+- Computes multiple layout fingerprints (perceptual hashes + edge/block signatures)
+- Clusters near-duplicate layouts and writes a CSV labeling canonical vs. duplicates
+- Optionally creates contact sheets per cluster for quick visual review
+
+Flags you may want to tweak:
+- `--eps`: clustering radius on the combined distance (lower = stricter). Try 0.25–0.45.
+- `--edge-sig-size`: resolution of the edge signature (32–96). Larger is slower, more precise.
+- `--mask-text`: enable to de-emphasize differing content; requires Tesseract (optional).
+- `--crop-top` / `--crop-bottom`: remove fixed browser/UI bars if present.
+
+Outputs:
+- `layout_clusters.csv`: columns `cluster_id`, `canonical`, `filename`, `path`, `distance_to_canonical`
+- `layout_contact_sheets/`: one JPG per cluster (if `--contact-sheets-dir` set)
+
 ## How It Works
 
 1. **Start**: Begins at the homepage (https://festival.si.edu)
