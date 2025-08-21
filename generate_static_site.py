@@ -112,11 +112,11 @@ def generate_main_page(clusters, summary):
         
         .canonical-section {{ margin-bottom: 1.5rem; }}
         .canonical-section h3 {{ color: #2c3e50; margin-bottom: 1rem; }}
-        .canonical-thumbnail {{ max-width: 100%; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }}
+        .canonical-thumbnail {{ width: 100%; height: 150px; object-fit: cover; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }}
         .canonical-thumbnail:hover {{ opacity: 0.8; }}
         
         .preview-grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }}
-        .preview-thumb {{ width: 100%; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }}
+        .preview-thumb {{ width: 100%; height: 40px; object-fit: cover; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }}
         .preview-thumb:hover {{ opacity: 0.8; }}
         
         .view-all {{ text-align: center; margin-top: 1rem; }}
@@ -274,13 +274,13 @@ def generate_cluster_detail_page(cluster_id, screenshots):
         
         .cluster-info {{ background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
         .canonical-section h3 {{ color: #2c3e50; margin-bottom: 1rem; }}
-        .canonical-thumbnail {{ max-width: 300px; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }}
+        .canonical-thumbnail {{ max-width: 300px; height: 200px; object-fit: cover; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }}
         .canonical-thumbnail:hover {{ opacity: 0.8; }}
         
         .images-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }}
         
         .image-card {{ background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
-        .image-card img {{ width: 100%; height: auto; cursor: pointer; transition: opacity 0.2s; }}
+        .image-card img {{ width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: opacity 0.2s; }}
         .image-card img:hover {{ opacity: 0.8; }}
         .image-info {{ padding: 1rem; }}
         .image-name {{ font-weight: bold; margin-bottom: 0.5rem; color: #2c3e50; }}
