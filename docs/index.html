@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>folklife.si.edu Layouts Viewer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .stats { display: flex; justify-content: center; gap: 3rem; margin: 2rem 0; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: bold; color: #2c3e50; }
+        .stat-label { color: #7f8c8d; margin-top: 0.5rem; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .clusters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
+        
+        .cluster-card { background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; }
+        .cluster-header { padding: 1.5rem; border-bottom: 1px solid #ecf0f1; }
+        .cluster-title { font-size: 1.3rem; font-weight: bold; color: #2c3e50; }
+        .cluster-size { color: #7f8c8d; margin-top: 0.5rem; }
+        
+        .cluster-content { padding: 1.5rem; }
+        
+        .canonical-section { margin-bottom: 1.5rem; }
+        .canonical-section h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-thumbnail { max-width: 100%; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
+        .canonical-thumbnail:hover { opacity: 0.8; }
+        
+        .preview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+        .preview-thumb { width: 100%; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
+        .preview-thumb:hover { opacity: 0.8; }
+        
+        .view-all { text-align: center; margin-top: 1rem; }
+        .view-all a { display: inline-block; padding: 0.75rem 1.5rem; background: #3498db; color: white; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
+        .view-all a:hover { background: #2980b9; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>folklife.si.edu Layouts Viewer</h1>
+        <p>Visual overview of 81 unique layouts from 629 screenshots</p>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number">81</div>
+            <div class="stat-label">Unique Layouts</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">629</div>
+            <div class="stat-label">Total Screenshots</div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="clusters-grid">
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 6</div>
+                    <div class="cluster-size">341 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_arthur-m-greenhall-collection.png" alt="archives-and-resources_arthur-m-greenhall-collection.png" class="canonical-thumbnail" 
+                             onclick="openModal('archives-and-resources_arthur-m-greenhall-collection.png')">
+                        <p><strong>archives-and-resources_arthur-m-greenhall-collection.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_arthur-m-greenhall-collection.png" alt="archives-and-resources_arthur-m-greenhall-collection.png" class="preview-thumb" 
+                             title="archives-and-resources_arthur-m-greenhall-collection.png" onclick="openModal('archives-and-resources_arthur-m-greenhall-collection.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_blue-ridge-institute-records.png" alt="archives-and-resources_blue-ridge-institute-records.png" class="preview-thumb" 
+                             title="archives-and-resources_blue-ridge-institute-records.png" onclick="openModal('archives-and-resources_blue-ridge-institute-records.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_bruce-mondschain-photographs.png" alt="archives-and-resources_bruce-mondschain-photographs.png" class="preview-thumb" 
+                             title="archives-and-resources_bruce-mondschain-photographs.png" onclick="openModal('archives-and-resources_bruce-mondschain-photographs.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_charles-m-bogert-audio-recordings.png" alt="archives-and-resources_charles-m-bogert-audio-recordings.png" class="preview-thumb" 
+                             title="archives-and-resources_charles-m-bogert-audio-recordings.png" onclick="openModal('archives-and-resources_charles-m-bogert-audio-recordings.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_collector-records-business-records.png" alt="archives-and-resources_collector-records-business-records.png" class="preview-thumb" 
+                             title="archives-and-resources_collector-records-business-records.png" onclick="openModal('archives-and-resources_collector-records-business-records.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_cook-labs-records.png" alt="archives-and-resources_cook-labs-records.png" class="preview-thumb" 
+                             title="archives-and-resources_cook-labs-records.png" onclick="openModal('archives-and-resources_cook-labs-records.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_curatorial-research-programs-and-projects.png" alt="archives-and-resources_curatorial-research-programs-and-projects.png" class="preview-thumb" 
+                             title="archives-and-resources_curatorial-research-programs-and-projects.png" onclick="openModal('archives-and-resources_curatorial-research-programs-and-projects.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_diana-davies-photographs.png" alt="archives-and-resources_diana-davies-photographs.png" class="preview-thumb" 
+                             title="archives-and-resources_diana-davies-photographs.png" onclick="openModal('archives-and-resources_diana-davies-photographs.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_6.html">View All 341 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 0</div>
+                    <div class="cluster-size">58 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/1989Recommendation.htm.png" alt="1989Recommendation.htm.png" class="canonical-thumbnail" 
+                             onclick="openModal('1989Recommendation.htm.png')">
+                        <p><strong>1989Recommendation.htm.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/1989Recommendation.htm.png" alt="1989Recommendation.htm.png" class="preview-thumb" 
+                             title="1989Recommendation.htm.png" onclick="openModal('1989Recommendation.htm.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/abeita.htm.png" alt="abeita.htm.png" class="preview-thumb" 
+                             title="abeita.htm.png" onclick="openModal('abeita.htm.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/acknowledgements.htm.png" alt="acknowledgements.htm.png" class="preview-thumb" 
+                             title="acknowledgements.htm.png" onclick="openModal('acknowledgements.htm.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan.htm.png" alt="actionplan.htm.png" class="preview-thumb" 
+                             title="actionplan.htm.png" onclick="openModal('actionplan.htm.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan_french.htm.png" alt="actionplan_french.htm.png" class="preview-thumb" 
+                             title="actionplan_french.htm.png" onclick="openModal('actionplan_french.htm.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan_spanish.htm.png" alt="actionplan_spanish.htm.png" class="preview-thumb" 
+                             title="actionplan_spanish.htm.png" onclick="openModal('actionplan_spanish.htm.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/aikawa.htm.png" alt="aikawa.htm.png" class="preview-thumb" 
+                             title="aikawa.htm.png" onclick="openModal('aikawa.htm.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archive.png" alt="archive.png" class="preview-thumb" 
+                             title="archive.png" onclick="openModal('archive.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_0.html">View All 58 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 15</div>
+                    <div class="cluster-size">51 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amanda-holmes-duffy.png" alt="authors_amanda-holmes-duffy.png" class="canonical-thumbnail" 
+                             onclick="openModal('authors_amanda-holmes-duffy.png')">
+                        <p><strong>authors_amanda-holmes-duffy.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amanda-holmes-duffy.png" alt="authors_amanda-holmes-duffy.png" class="preview-thumb" 
+                             title="authors_amanda-holmes-duffy.png" onclick="openModal('authors_amanda-holmes-duffy.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amelia-tseng.png" alt="authors_amelia-tseng.png" class="preview-thumb" 
+                             title="authors_amelia-tseng.png" onclick="openModal('authors_amelia-tseng.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_andrea-mayorga.png" alt="authors_andrea-mayorga.png" class="preview-thumb" 
+                             title="authors_andrea-mayorga.png" onclick="openModal('authors_andrea-mayorga.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_anne-rappaport.png" alt="authors_anne-rappaport.png" class="preview-thumb" 
+                             title="authors_anne-rappaport.png" onclick="openModal('authors_anne-rappaport.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_antonio-jorge-medeiros-batista-silva.png" alt="authors_antonio-jorge-medeiros-batista-silva.png" class="preview-thumb" 
+                             title="authors_antonio-jorge-medeiros-batista-silva.png" onclick="openModal('authors_antonio-jorge-medeiros-batista-silva.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_astrid-stephenson.png" alt="authors_astrid-stephenson.png" class="preview-thumb" 
+                             title="authors_astrid-stephenson.png" onclick="openModal('authors_astrid-stephenson.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_benedict-cook.png" alt="authors_benedict-cook.png" class="preview-thumb" 
+                             title="authors_benedict-cook.png" onclick="openModal('authors_benedict-cook.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_brianna-melgar.png" alt="authors_brianna-melgar.png" class="preview-thumb" 
+                             title="authors_brianna-melgar.png" onclick="openModal('authors_brianna-melgar.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_15.html">View All 51 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 17</div>
+                    <div class="cluster-size">39 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="authors_betty-belanus.png" class="canonical-thumbnail" 
+                             onclick="openModal('authors_betty-belanus.png')">
+                        <p><strong>authors_betty-belanus.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="authors_betty-belanus.png" class="preview-thumb" 
+                             title="authors_betty-belanus.png" onclick="openModal('authors_betty-belanus.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_daniel-sheehy.png" alt="authors_daniel-sheehy.png" class="preview-thumb" 
+                             title="authors_daniel-sheehy.png" onclick="openModal('authors_daniel-sheehy.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emily-buhrow-rogers.png" alt="authors_emily-buhrow-rogers.png" class="preview-thumb" 
+                             title="authors_emily-buhrow-rogers.png" onclick="openModal('authors_emily-buhrow-rogers.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emma-cieslik.png" alt="authors_emma-cieslik.png" class="preview-thumb" 
+                             title="authors_emma-cieslik.png" onclick="openModal('authors_emma-cieslik.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hali-dardar.png" alt="authors_hali-dardar.png" class="preview-thumb" 
+                             title="authors_hali-dardar.png" onclick="openModal('authors_hali-dardar.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_james-deutsch.png" alt="authors_james-deutsch.png" class="preview-thumb" 
+                             title="authors_james-deutsch.png" onclick="openModal('authors_james-deutsch.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_maddie-vanoostenburg.png" alt="authors_maddie-vanoostenburg.png" class="preview-thumb" 
+                             title="authors_maddie-vanoostenburg.png" onclick="openModal('authors_maddie-vanoostenburg.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine.png" alt="magazine.png" class="preview-thumb" 
+                             title="magazine.png" onclick="openModal('magazine.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_17.html">View All 39 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 16</div>
+                    <div class="cluster-size">28 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amber-long.png" alt="authors_amber-long.png" class="canonical-thumbnail" 
+                             onclick="openModal('authors_amber-long.png')">
+                        <p><strong>authors_amber-long.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amber-long.png" alt="authors_amber-long.png" class="preview-thumb" 
+                             title="authors_amber-long.png" onclick="openModal('authors_amber-long.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amy-horowitz.png" alt="authors_amy-horowitz.png" class="preview-thumb" 
+                             title="authors_amy-horowitz.png" onclick="openModal('authors_amy-horowitz.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_anne-pedersen.png" alt="authors_anne-pedersen.png" class="preview-thumb" 
+                             title="authors_anne-pedersen.png" onclick="openModal('authors_anne-pedersen.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_charleen-smith-riedel.png" alt="authors_charleen-smith-riedel.png" class="preview-thumb" 
+                             title="authors_charleen-smith-riedel.png" onclick="openModal('authors_charleen-smith-riedel.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_crystal-rie.png" alt="authors_crystal-rie.png" class="preview-thumb" 
+                             title="authors_crystal-rie.png" onclick="openModal('authors_crystal-rie.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_ella-ryan.png" alt="authors_ella-ryan.png" class="preview-thumb" 
+                             title="authors_ella-ryan.png" onclick="openModal('authors_ella-ryan.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_erin-younger.png" alt="authors_erin-younger.png" class="preview-thumb" 
+                             title="authors_erin-younger.png" onclick="openModal('authors_erin-younger.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_haili-francis.png" alt="authors_haili-francis.png" class="preview-thumb" 
+                             title="authors_haili-francis.png" onclick="openModal('authors_haili-francis.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_16.html">View All 28 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 14</div>
+                    <div class="cluster-size">25 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_alexa-nickandros.png" alt="authors_alexa-nickandros.png" class="canonical-thumbnail" 
+                             onclick="openModal('authors_alexa-nickandros.png')">
+                        <p><strong>authors_alexa-nickandros.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_alexa-nickandros.png" alt="authors_alexa-nickandros.png" class="preview-thumb" 
+                             title="authors_alexa-nickandros.png" onclick="openModal('authors_alexa-nickandros.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amanda-ellard.png" alt="authors_amanda-ellard.png" class="preview-thumb" 
+                             title="authors_amanda-ellard.png" onclick="openModal('authors_amanda-ellard.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_biying-ma.png" alt="authors_biying-ma.png" class="preview-thumb" 
+                             title="authors_biying-ma.png" onclick="openModal('authors_biying-ma.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_dawa-drolma.png" alt="authors_dawa-drolma.png" class="preview-thumb" 
+                             title="authors_dawa-drolma.png" onclick="openModal('authors_dawa-drolma.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emily-hilliard.png" alt="authors_emily-hilliard.png" class="preview-thumb" 
+                             title="authors_emily-hilliard.png" onclick="openModal('authors_emily-hilliard.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_eowyn-stewart.png" alt="authors_eowyn-stewart.png" class="preview-thumb" 
+                             title="authors_eowyn-stewart.png" onclick="openModal('authors_eowyn-stewart.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_francesca-du-brock.png" alt="authors_francesca-du-brock.png" class="preview-thumb" 
+                             title="authors_francesca-du-brock.png" onclick="openModal('authors_francesca-du-brock.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_guest-writer.png" alt="authors_guest-writer.png" class="preview-thumb" 
+                             title="authors_guest-writer.png" onclick="openModal('authors_guest-writer.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_14.html">View All 25 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 68</div>
+                    <div class="cluster-size">3 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sino-tibetan-languages.png" alt="sino-tibetan-languages.png" class="canonical-thumbnail" 
+                             onclick="openModal('sino-tibetan-languages.png')">
+                        <p><strong>sino-tibetan-languages.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sino-tibetan-languages.png" alt="sino-tibetan-languages.png" class="preview-thumb" 
+                             title="sino-tibetan-languages.png" onclick="openModal('sino-tibetan-languages.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sino-tibetan-languages_tib-བདཡག.png" alt="sino-tibetan-languages_tib-བདཡག.png" class="preview-thumb" 
+                             title="sino-tibetan-languages_tib-བདཡག.png" onclick="openModal('sino-tibetan-languages_tib-བདཡག.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sino-tibetan-languages_zho-中文.png" alt="sino-tibetan-languages_zho-中文.png" class="preview-thumb" 
+                             title="sino-tibetan-languages_zho-中文.png" onclick="openModal('sino-tibetan-languages_zho-中文.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_68.html">View All 3 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 22</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/contact_smithsonian.png" alt="contact_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('contact_smithsonian.png')">
+                        <p><strong>contact_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/contact_smithsonian.png" alt="contact_smithsonian.png" class="preview-thumb" 
+                             title="contact_smithsonian.png" onclick="openModal('contact_smithsonian.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/press_smithsonian.png" alt="press_smithsonian.png" class="preview-thumb" 
+                             title="press_smithsonian.png" onclick="openModal('press_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_22.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 24</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-policy_ICH_events_smithsonian.png" alt="cultural-heritage-policy_ICH_events_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-heritage-policy_ICH_events_smithsonian.png')">
+                        <p><strong>cultural-heritage-policy_ICH_events_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-policy_ICH_events_smithsonian.png" alt="cultural-heritage-policy_ICH_events_smithsonian.png" class="preview-thumb" 
+                             title="cultural-heritage-policy_ICH_events_smithsonian.png" onclick="openModal('cultural-heritage-policy_ICH_events_smithsonian.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-policy_ICH_resources_smithsonian.png" alt="cultural-heritage-policy_ICH_resources_smithsonian.png" class="preview-thumb" 
+                             title="cultural-heritage-policy_ICH_resources_smithsonian.png" onclick="openModal('cultural-heritage-policy_ICH_resources_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_24.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 31</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability.png" alt="cultural-sustainability.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-sustainability.png')">
+                        <p><strong>cultural-sustainability.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability.png" alt="cultural-sustainability.png" class="preview-thumb" 
+                             title="cultural-sustainability.png" onclick="openModal('cultural-sustainability.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-vitality.png" alt="cultural-vitality.png" class="preview-thumb" 
+                             title="cultural-vitality.png" onclick="openModal('cultural-vitality.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_31.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 39</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/jobs.png" alt="jobs.png" class="canonical-thumbnail" 
+                             onclick="openModal('jobs.png')">
+                        <p><strong>jobs.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/jobs.png" alt="jobs.png" class="preview-thumb" 
+                             title="jobs.png" onclick="openModal('jobs.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/video-production-handbook_smithsonian.png" alt="video-production-handbook_smithsonian.png" class="preview-thumb" 
+                             title="video-production-handbook_smithsonian.png" onclick="openModal('video-production-handbook_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_39.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 43</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" alt="magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png')">
+                        <p><strong>magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" alt="magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" class="preview-thumb" 
+                             title="magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" onclick="openModal('magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-spiced-ginseng-tea.png" alt="magazine_foodways-holidays-spiced-ginseng-tea.png" class="preview-thumb" 
+                             title="magazine_foodways-holidays-spiced-ginseng-tea.png" onclick="openModal('magazine_foodways-holidays-spiced-ginseng-tea.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_43.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 51</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_rigzin.png" alt="magazine_series_rigzin.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_series_rigzin.png')">
+                        <p><strong>magazine_series_rigzin.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_rigzin.png" alt="magazine_series_rigzin.png" class="preview-thumb" 
+                             title="magazine_series_rigzin.png" onclick="openModal('magazine_series_rigzin.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_tribute.png" alt="magazine_themes_tribute.png" class="preview-thumb" 
+                             title="magazine_themes_tribute.png" onclick="openModal('magazine_themes_tribute.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_51.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 52</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_by-our-interns.png" alt="magazine_themes_by-our-interns.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_themes_by-our-interns.png')">
+                        <p><strong>magazine_themes_by-our-interns.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_by-our-interns.png" alt="magazine_themes_by-our-interns.png" class="preview-thumb" 
+                             title="magazine_themes_by-our-interns.png" onclick="openModal('magazine_themes_by-our-interns.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_poetry.png" alt="magazine_themes_poetry.png" class="preview-thumb" 
+                             title="magazine_themes_poetry.png" onclick="openModal('magazine_themes_poetry.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_52.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 53</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mission-and-history.png" alt="mission-and-history.png" class="canonical-thumbnail" 
+                             onclick="openModal('mission-and-history.png')">
+                        <p><strong>mission-and-history.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mission-and-history.png" alt="mission-and-history.png" class="preview-thumb" 
+                             title="mission-and-history.png" onclick="openModal('mission-and-history.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mission-and-history_cfch-strategic-plan_smithsonian.png" alt="mission-and-history_cfch-strategic-plan_smithsonian.png" class="preview-thumb" 
+                             title="mission-and-history_cfch-strategic-plan_smithsonian.png" onclick="openModal('mission-and-history_cfch-strategic-plan_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_53.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 55</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_2025-festival-preview.png" alt="news-and-events_2025-festival-preview.png" class="canonical-thumbnail" 
+                             onclick="openModal('news-and-events_2025-festival-preview.png')">
+                        <p><strong>news-and-events_2025-festival-preview.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_2025-festival-preview.png" alt="news-and-events_2025-festival-preview.png" class="preview-thumb" 
+                             title="news-and-events_2025-festival-preview.png" onclick="openModal('news-and-events_2025-festival-preview.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_the-2020-folklife-festival-will-be-postponed.png" alt="news-and-events_the-2020-folklife-festival-will-be-postponed.png" class="preview-thumb" 
+                             title="news-and-events_the-2020-folklife-festival-will-be-postponed.png" onclick="openModal('news-and-events_the-2020-folklife-festival-will-be-postponed.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_55.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 73</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/staff_smithsonian.png" alt="staff_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('staff_smithsonian.png')">
+                        <p><strong>staff_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/staff_smithsonian.png" alt="staff_smithsonian.png" class="preview-thumb" 
+                             title="staff_smithsonian.png" onclick="openModal('staff_smithsonian.png')">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/supporters.png" alt="supporters.png" class="preview-thumb" 
+                             title="supporters.png" onclick="openModal('supporters.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_73.html">View All 2 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 1</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/advisory-council_smithsonian.png" alt="advisory-council_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('advisory-council_smithsonian.png')">
+                        <p><strong>advisory-council_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/advisory-council_smithsonian.png" alt="advisory-council_smithsonian.png" class="preview-thumb" 
+                             title="advisory-council_smithsonian.png" onclick="openModal('advisory-council_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_1.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 2</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/african-american-craft.png" alt="african-american-craft.png" class="canonical-thumbnail" 
+                             onclick="openModal('african-american-craft.png')">
+                        <p><strong>african-american-craft.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/african-american-craft.png" alt="african-american-craft.png" class="preview-thumb" 
+                             title="african-american-craft.png" onclick="openModal('african-american-craft.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_2.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 3</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/american-ginseng-stories.png" alt="american-ginseng-stories.png" class="canonical-thumbnail" 
+                             onclick="openModal('american-ginseng-stories.png')">
+                        <p><strong>american-ginseng-stories.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/american-ginseng-stories.png" alt="american-ginseng-stories.png" class="preview-thumb" 
+                             title="american-ginseng-stories.png" onclick="openModal('american-ginseng-stories.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_3.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 4</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/american-ginseng.png" alt="american-ginseng.png" class="canonical-thumbnail" 
+                             onclick="openModal('american-ginseng.png')">
+                        <p><strong>american-ginseng.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/american-ginseng.png" alt="american-ginseng.png" class="preview-thumb" 
+                             title="american-ginseng.png" onclick="openModal('american-ginseng.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_4.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 5</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_alma-mater-recording-co-audio-recordings.png" alt="archives-and-resources_alma-mater-recording-co-audio-recordings.png" class="canonical-thumbnail" 
+                             onclick="openModal('archives-and-resources_alma-mater-recording-co-audio-recordings.png')">
+                        <p><strong>archives-and-resources_alma-mater-recording-co-audio-recordings.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_alma-mater-recording-co-audio-recordings.png" alt="archives-and-resources_alma-mater-recording-co-audio-recordings.png" class="preview-thumb" 
+                             title="archives-and-resources_alma-mater-recording-co-audio-recordings.png" onclick="openModal('archives-and-resources_alma-mater-recording-co-audio-recordings.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_5.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 7</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_bobby-susser-songs-for-children-records.png" alt="archives-and-resources_bobby-susser-songs-for-children-records.png" class="canonical-thumbnail" 
+                             onclick="openModal('archives-and-resources_bobby-susser-songs-for-children-records.png')">
+                        <p><strong>archives-and-resources_bobby-susser-songs-for-children-records.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_bobby-susser-songs-for-children-records.png" alt="archives-and-resources_bobby-susser-songs-for-children-records.png" class="preview-thumb" 
+                             title="archives-and-resources_bobby-susser-songs-for-children-records.png" onclick="openModal('archives-and-resources_bobby-susser-songs-for-children-records.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_7.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 8</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_gambier-folklore-society-collection.png" alt="archives-and-resources_gambier-folklore-society-collection.png" class="canonical-thumbnail" 
+                             onclick="openModal('archives-and-resources_gambier-folklore-society-collection.png')">
+                        <p><strong>archives-and-resources_gambier-folklore-society-collection.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_gambier-folklore-society-collection.png" alt="archives-and-resources_gambier-folklore-society-collection.png" class="preview-thumb" 
+                             title="archives-and-resources_gambier-folklore-society-collection.png" onclick="openModal('archives-and-resources_gambier-folklore-society-collection.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_8.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 9</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_john-reynolds-collection.png" alt="archives-and-resources_john-reynolds-collection.png" class="canonical-thumbnail" 
+                             onclick="openModal('archives-and-resources_john-reynolds-collection.png')">
+                        <p><strong>archives-and-resources_john-reynolds-collection.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_john-reynolds-collection.png" alt="archives-and-resources_john-reynolds-collection.png" class="preview-thumb" 
+                             title="archives-and-resources_john-reynolds-collection.png" onclick="openModal('archives-and-resources_john-reynolds-collection.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_9.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 10</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_woody-guthrie-papers_smithsonian.png" alt="archives-and-resources_woody-guthrie-papers_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('archives-and-resources_woody-guthrie-papers_smithsonian.png')">
+                        <p><strong>archives-and-resources_woody-guthrie-papers_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives-and-resources_woody-guthrie-papers_smithsonian.png" alt="archives-and-resources_woody-guthrie-papers_smithsonian.png" class="preview-thumb" 
+                             title="archives-and-resources_woody-guthrie-papers_smithsonian.png" onclick="openModal('archives-and-resources_woody-guthrie-papers_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_10.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 11</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives.png" alt="archives.png" class="canonical-thumbnail" 
+                             onclick="openModal('archives.png')">
+                        <p><strong>archives.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives.png" alt="archives.png" class="preview-thumb" 
+                             title="archives.png" onclick="openModal('archives.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_11.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 12</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives_shared-stewardship-ethical-returns.png" alt="archives_shared-stewardship-ethical-returns.png" class="canonical-thumbnail" 
+                             onclick="openModal('archives_shared-stewardship-ethical-returns.png')">
+                        <p><strong>archives_shared-stewardship-ethical-returns.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archives_shared-stewardship-ethical-returns.png" alt="archives_shared-stewardship-ethical-returns.png" class="preview-thumb" 
+                             title="archives_shared-stewardship-ethical-returns.png" onclick="openModal('archives_shared-stewardship-ethical-returns.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_12.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 13</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/asian-america.png" alt="asian-america.png" class="canonical-thumbnail" 
+                             onclick="openModal('asian-america.png')">
+                        <p><strong>asian-america.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/asian-america.png" alt="asian-america.png" class="preview-thumb" 
+                             title="asian-america.png" onclick="openModal('asian-america.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_13.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 18</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_cecilia-peterson.png" alt="authors_cecilia-peterson.png" class="canonical-thumbnail" 
+                             onclick="openModal('authors_cecilia-peterson.png')">
+                        <p><strong>authors_cecilia-peterson.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_cecilia-peterson.png" alt="authors_cecilia-peterson.png" class="preview-thumb" 
+                             title="authors_cecilia-peterson.png" onclick="openModal('authors_cecilia-peterson.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_18.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 19</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_kirby-ewald.png" alt="authors_kirby-ewald.png" class="canonical-thumbnail" 
+                             onclick="openModal('authors_kirby-ewald.png')">
+                        <p><strong>authors_kirby-ewald.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_kirby-ewald.png" alt="authors_kirby-ewald.png" class="preview-thumb" 
+                             title="authors_kirby-ewald.png" onclick="openModal('authors_kirby-ewald.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_19.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 20</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sloane-keller.png" alt="authors_sloane-keller.png" class="canonical-thumbnail" 
+                             onclick="openModal('authors_sloane-keller.png')">
+                        <p><strong>authors_sloane-keller.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sloane-keller.png" alt="authors_sloane-keller.png" class="preview-thumb" 
+                             title="authors_sloane-keller.png" onclick="openModal('authors_sloane-keller.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_20.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 21</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/building-arts-and-traditional-architecture.png" alt="building-arts-and-traditional-architecture.png" class="canonical-thumbnail" 
+                             onclick="openModal('building-arts-and-traditional-architecture.png')">
+                        <p><strong>building-arts-and-traditional-architecture.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/building-arts-and-traditional-architecture.png" alt="building-arts-and-traditional-architecture.png" class="preview-thumb" 
+                             title="building-arts-and-traditional-architecture.png" onclick="openModal('building-arts-and-traditional-architecture.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_21.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 23</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-policy_ICH_about_smithsonian.png" alt="cultural-heritage-policy_ICH_about_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-heritage-policy_ICH_about_smithsonian.png')">
+                        <p><strong>cultural-heritage-policy_ICH_about_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-policy_ICH_about_smithsonian.png" alt="cultural-heritage-policy_ICH_about_smithsonian.png" class="preview-thumb" 
+                             title="cultural-heritage-policy_ICH_about_smithsonian.png" onclick="openModal('cultural-heritage-policy_ICH_about_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_23.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 25</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-policy_ICH_smithsonian.png" alt="cultural-heritage-policy_ICH_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-heritage-policy_ICH_smithsonian.png')">
+                        <p><strong>cultural-heritage-policy_ICH_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-policy_ICH_smithsonian.png" alt="cultural-heritage-policy_ICH_smithsonian.png" class="preview-thumb" 
+                             title="cultural-heritage-policy_ICH_smithsonian.png" onclick="openModal('cultural-heritage-policy_ICH_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_25.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 26</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-policy_ICH_video_smithsonian.png" alt="cultural-heritage-policy_ICH_video_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-heritage-policy_ICH_video_smithsonian.png')">
+                        <p><strong>cultural-heritage-policy_ICH_video_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-policy_ICH_video_smithsonian.png" alt="cultural-heritage-policy_ICH_video_smithsonian.png" class="preview-thumb" 
+                             title="cultural-heritage-policy_ICH_video_smithsonian.png" onclick="openModal('cultural-heritage-policy_ICH_video_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_26.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 27</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-tourism.png" alt="cultural-heritage-tourism.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-heritage-tourism.png')">
+                        <p><strong>cultural-heritage-tourism.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-tourism.png" alt="cultural-heritage-tourism.png" class="preview-thumb" 
+                             title="cultural-heritage-tourism.png" onclick="openModal('cultural-heritage-tourism.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_27.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 28</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-tourism_uplift-north-carolina.png" alt="cultural-heritage-tourism_uplift-north-carolina.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-heritage-tourism_uplift-north-carolina.png')">
+                        <p><strong>cultural-heritage-tourism_uplift-north-carolina.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-heritage-tourism_uplift-north-carolina.png" alt="cultural-heritage-tourism_uplift-north-carolina.png" class="preview-thumb" 
+                             title="cultural-heritage-tourism_uplift-north-carolina.png" onclick="openModal('cultural-heritage-tourism_uplift-north-carolina.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_28.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 29</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-industries-initiatives.png" alt="cultural-industries-initiatives.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-industries-initiatives.png')">
+                        <p><strong>cultural-industries-initiatives.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-industries-initiatives.png" alt="cultural-industries-initiatives.png" class="preview-thumb" 
+                             title="cultural-industries-initiatives.png" onclick="openModal('cultural-industries-initiatives.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_29.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 30</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability-research-group_smithsonian.png" alt="cultural-sustainability-research-group_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-sustainability-research-group_smithsonian.png')">
+                        <p><strong>cultural-sustainability-research-group_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability-research-group_smithsonian.png" alt="cultural-sustainability-research-group_smithsonian.png" class="preview-thumb" 
+                             title="cultural-sustainability-research-group_smithsonian.png" onclick="openModal('cultural-sustainability-research-group_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_30.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 32</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability_my-armenia_smithsonian.png" alt="cultural-sustainability_my-armenia_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-sustainability_my-armenia_smithsonian.png')">
+                        <p><strong>cultural-sustainability_my-armenia_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability_my-armenia_smithsonian.png" alt="cultural-sustainability_my-armenia_smithsonian.png" class="preview-thumb" 
+                             title="cultural-sustainability_my-armenia_smithsonian.png" onclick="openModal('cultural-sustainability_my-armenia_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_32.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 33</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability_smithsonian-artisan-initiative_smithsonian.png" alt="cultural-sustainability_smithsonian-artisan-initiative_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('cultural-sustainability_smithsonian-artisan-initiative_smithsonian.png')">
+                        <p><strong>cultural-sustainability_smithsonian-artisan-initiative_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability_smithsonian-artisan-initiative_smithsonian.png" alt="cultural-sustainability_smithsonian-artisan-initiative_smithsonian.png" class="preview-thumb" 
+                             title="cultural-sustainability_smithsonian-artisan-initiative_smithsonian.png" onclick="openModal('cultural-sustainability_smithsonian-artisan-initiative_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_33.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 34</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/education.png" alt="education.png" class="canonical-thumbnail" 
+                             onclick="openModal('education.png')">
+                        <p><strong>education.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/education.png" alt="education.png" class="preview-thumb" 
+                             title="education.png" onclick="openModal('education.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_34.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 35</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/fellowships_smithsonian.png" alt="fellowships_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('fellowships_smithsonian.png')">
+                        <p><strong>fellowships_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/fellowships_smithsonian.png" alt="fellowships_smithsonian.png" class="preview-thumb" 
+                             title="fellowships_smithsonian.png" onclick="openModal('fellowships_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_35.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 36</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/freedom-sounds_smithsonian.png" alt="freedom-sounds_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('freedom-sounds_smithsonian.png')">
+                        <p><strong>freedom-sounds_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/freedom-sounds_smithsonian.png" alt="freedom-sounds_smithsonian.png" class="preview-thumb" 
+                             title="freedom-sounds_smithsonian.png" onclick="openModal('freedom-sounds_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_36.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 37</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/homepage.png" alt="homepage.png" class="canonical-thumbnail" 
+                             onclick="openModal('homepage.png')">
+                        <p><strong>homepage.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/homepage.png" alt="homepage.png" class="preview-thumb" 
+                             title="homepage.png" onclick="openModal('homepage.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_37.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 38</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/immigration-and-migration_smithsonian.png" alt="immigration-and-migration_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('immigration-and-migration_smithsonian.png')">
+                        <p><strong>immigration-and-migration_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/immigration-and-migration_smithsonian.png" alt="immigration-and-migration_smithsonian.png" class="preview-thumb" 
+                             title="immigration-and-migration_smithsonian.png" onclick="openModal('immigration-and-migration_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_38.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 40</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/lag-zo.png" alt="lag-zo.png" class="canonical-thumbnail" 
+                             onclick="openModal('lag-zo.png')">
+                        <p><strong>lag-zo.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/lag-zo.png" alt="lag-zo.png" class="preview-thumb" 
+                             title="lag-zo.png" onclick="openModal('lag-zo.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_40.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 41</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/language-vitality-initiative.png" alt="language-vitality-initiative.png" class="canonical-thumbnail" 
+                             onclick="openModal('language-vitality-initiative.png')">
+                        <p><strong>language-vitality-initiative.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/language-vitality-initiative.png" alt="language-vitality-initiative.png" class="preview-thumb" 
+                             title="language-vitality-initiative.png" onclick="openModal('language-vitality-initiative.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_41.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 42</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/legacy-honorees_smithsonian.png" alt="legacy-honorees_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('legacy-honorees_smithsonian.png')">
+                        <p><strong>legacy-honorees_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/legacy-honorees_smithsonian.png" alt="legacy-honorees_smithsonian.png" class="preview-thumb" 
+                             title="legacy-honorees_smithsonian.png" onclick="openModal('legacy-honorees_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_42.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 44</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-avko-aluke-kurdish-american-thanksgiving.png" alt="magazine_foodways-holidays-avko-aluke-kurdish-american-thanksgiving.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_foodways-holidays-avko-aluke-kurdish-american-thanksgiving.png')">
+                        <p><strong>magazine_foodways-holidays-avko-aluke-kurdish-american-thanksgiving.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-avko-aluke-kurdish-american-thanksgiving.png" alt="magazine_foodways-holidays-avko-aluke-kurdish-american-thanksgiving.png" class="preview-thumb" 
+                             title="magazine_foodways-holidays-avko-aluke-kurdish-american-thanksgiving.png" onclick="openModal('magazine_foodways-holidays-avko-aluke-kurdish-american-thanksgiving.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_44.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 45</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-lights-family-latkes-hanukkah-recipe.png" alt="magazine_foodways-holidays-lights-family-latkes-hanukkah-recipe.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_foodways-holidays-lights-family-latkes-hanukkah-recipe.png')">
+                        <p><strong>magazine_foodways-holidays-lights-family-latkes-hanukkah-recipe.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-lights-family-latkes-hanukkah-recipe.png" alt="magazine_foodways-holidays-lights-family-latkes-hanukkah-recipe.png" class="preview-thumb" 
+                             title="magazine_foodways-holidays-lights-family-latkes-hanukkah-recipe.png" onclick="openModal('magazine_foodways-holidays-lights-family-latkes-hanukkah-recipe.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_45.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 46</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-pavlova.png" alt="magazine_foodways-holidays-pavlova.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_foodways-holidays-pavlova.png')">
+                        <p><strong>magazine_foodways-holidays-pavlova.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-pavlova.png" alt="magazine_foodways-holidays-pavlova.png" class="preview-thumb" 
+                             title="magazine_foodways-holidays-pavlova.png" onclick="openModal('magazine_foodways-holidays-pavlova.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_46.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 47</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-risengrod-danish-rice-porridge.png" alt="magazine_foodways-holidays-risengrod-danish-rice-porridge.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_foodways-holidays-risengrod-danish-rice-porridge.png')">
+                        <p><strong>magazine_foodways-holidays-risengrod-danish-rice-porridge.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-risengrod-danish-rice-porridge.png" alt="magazine_foodways-holidays-risengrod-danish-rice-porridge.png" class="preview-thumb" 
+                             title="magazine_foodways-holidays-risengrod-danish-rice-porridge.png" onclick="openModal('magazine_foodways-holidays-risengrod-danish-rice-porridge.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_47.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 48</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_forklife-swedish-potatis-korv-potato-sausage.png" alt="magazine_forklife-swedish-potatis-korv-potato-sausage.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_forklife-swedish-potatis-korv-potato-sausage.png')">
+                        <p><strong>magazine_forklife-swedish-potatis-korv-potato-sausage.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_forklife-swedish-potatis-korv-potato-sausage.png" alt="magazine_forklife-swedish-potatis-korv-potato-sausage.png" class="preview-thumb" 
+                             title="magazine_forklife-swedish-potatis-korv-potato-sausage.png" onclick="openModal('magazine_forklife-swedish-potatis-korv-potato-sausage.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_48.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 49</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_ronnie-simpkins-folkways-seldom-scene.png" alt="magazine_ronnie-simpkins-folkways-seldom-scene.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_ronnie-simpkins-folkways-seldom-scene.png')">
+                        <p><strong>magazine_ronnie-simpkins-folkways-seldom-scene.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_ronnie-simpkins-folkways-seldom-scene.png" alt="magazine_ronnie-simpkins-folkways-seldom-scene.png" class="preview-thumb" 
+                             title="magazine_ronnie-simpkins-folkways-seldom-scene.png" onclick="openModal('magazine_ronnie-simpkins-folkways-seldom-scene.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_49.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 50</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_forklife.png" alt="magazine_series_forklife.png" class="canonical-thumbnail" 
+                             onclick="openModal('magazine_series_forklife.png')">
+                        <p><strong>magazine_series_forklife.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_forklife.png" alt="magazine_series_forklife.png" class="preview-thumb" 
+                             title="magazine_series_forklife.png" onclick="openModal('magazine_series_forklife.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_50.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 54</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mother-tongue-media.png" alt="mother-tongue-media.png" class="canonical-thumbnail" 
+                             onclick="openModal('mother-tongue-media.png')">
+                        <p><strong>mother-tongue-media.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mother-tongue-media.png" alt="mother-tongue-media.png" class="preview-thumb" 
+                             title="mother-tongue-media.png" onclick="openModal('mother-tongue-media.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_54.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 56</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_bob-dole-tribute-world-war-ii-reunion.png" alt="news-and-events_bob-dole-tribute-world-war-ii-reunion.png" class="canonical-thumbnail" 
+                             onclick="openModal('news-and-events_bob-dole-tribute-world-war-ii-reunion.png')">
+                        <p><strong>news-and-events_bob-dole-tribute-world-war-ii-reunion.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_bob-dole-tribute-world-war-ii-reunion.png" alt="news-and-events_bob-dole-tribute-world-war-ii-reunion.png" class="preview-thumb" 
+                             title="news-and-events_bob-dole-tribute-world-war-ii-reunion.png" onclick="openModal('news-and-events_bob-dole-tribute-world-war-ii-reunion.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_56.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 57</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_communities-connecting-heritage-a-folklife-field-trip-to-india.png" alt="news-and-events_communities-connecting-heritage-a-folklife-field-trip-to-india.png" class="canonical-thumbnail" 
+                             onclick="openModal('news-and-events_communities-connecting-heritage-a-folklife-field-trip-to-india.png')">
+                        <p><strong>news-and-events_communities-connecting-heritage-a-folklife-field-trip-to-india.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_communities-connecting-heritage-a-folklife-field-trip-to-india.png" alt="news-and-events_communities-connecting-heritage-a-folklife-field-trip-to-india.png" class="preview-thumb" 
+                             title="news-and-events_communities-connecting-heritage-a-folklife-field-trip-to-india.png" onclick="openModal('news-and-events_communities-connecting-heritage-a-folklife-field-trip-to-india.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_57.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 58</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_convocatoria-de-solicitudes-oaxaca.png" alt="news-and-events_convocatoria-de-solicitudes-oaxaca.png" class="canonical-thumbnail" 
+                             onclick="openModal('news-and-events_convocatoria-de-solicitudes-oaxaca.png')">
+                        <p><strong>news-and-events_convocatoria-de-solicitudes-oaxaca.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_convocatoria-de-solicitudes-oaxaca.png" alt="news-and-events_convocatoria-de-solicitudes-oaxaca.png" class="preview-thumb" 
+                             title="news-and-events_convocatoria-de-solicitudes-oaxaca.png" onclick="openModal('news-and-events_convocatoria-de-solicitudes-oaxaca.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_58.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 59</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_do-you-have-the-will-to-adorn-app.png" alt="news-and-events_do-you-have-the-will-to-adorn-app.png" class="canonical-thumbnail" 
+                             onclick="openModal('news-and-events_do-you-have-the-will-to-adorn-app.png')">
+                        <p><strong>news-and-events_do-you-have-the-will-to-adorn-app.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_do-you-have-the-will-to-adorn-app.png" alt="news-and-events_do-you-have-the-will-to-adorn-app.png" class="preview-thumb" 
+                             title="news-and-events_do-you-have-the-will-to-adorn-app.png" onclick="openModal('news-and-events_do-you-have-the-will-to-adorn-app.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_59.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 60</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_rinzler-archives-renovation.png" alt="news-and-events_rinzler-archives-renovation.png" class="canonical-thumbnail" 
+                             onclick="openModal('news-and-events_rinzler-archives-renovation.png')">
+                        <p><strong>news-and-events_rinzler-archives-renovation.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/news-and-events_rinzler-archives-renovation.png" alt="news-and-events_rinzler-archives-renovation.png" class="preview-thumb" 
+                             title="news-and-events_rinzler-archives-renovation.png" onclick="openModal('news-and-events_rinzler-archives-renovation.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_60.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 61</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithsonian.png" alt="online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithsonian.png')">
+                        <p><strong>online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithsonian.png" alt="online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithsonian.png" class="preview-thumb" 
+                             title="online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithsonian.png" onclick="openModal('online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_61.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 62</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/online-exhibitions_modern-islamic-ceramics_artists-spotlight-ibrahim-erdeyer_smithsonian.png" alt="online-exhibitions_modern-islamic-ceramics_artists-spotlight-ibrahim-erdeyer_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('online-exhibitions_modern-islamic-ceramics_artists-spotlight-ibrahim-erdeyer_smithsonian.png')">
+                        <p><strong>online-exhibitions_modern-islamic-ceramics_artists-spotlight-ibrahim-erdeyer_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/online-exhibitions_modern-islamic-ceramics_artists-spotlight-ibrahim-erdeyer_smithsonian.png" alt="online-exhibitions_modern-islamic-ceramics_artists-spotlight-ibrahim-erdeyer_smithsonian.png" class="preview-thumb" 
+                             title="online-exhibitions_modern-islamic-ceramics_artists-spotlight-ibrahim-erdeyer_smithsonian.png" onclick="openModal('online-exhibitions_modern-islamic-ceramics_artists-spotlight-ibrahim-erdeyer_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_62.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 63</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smithsonian.png" alt="online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smithsonian.png')">
+                        <p><strong>online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smithsonian.png" alt="online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smithsonian.png" class="preview-thumb" 
+                             title="online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smithsonian.png" onclick="openModal('online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_63.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 64</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/online-exhibitions_modern-islamic-ceramics_smithsonian.png" alt="online-exhibitions_modern-islamic-ceramics_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('online-exhibitions_modern-islamic-ceramics_smithsonian.png')">
+                        <p><strong>online-exhibitions_modern-islamic-ceramics_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/online-exhibitions_modern-islamic-ceramics_smithsonian.png" alt="online-exhibitions_modern-islamic-ceramics_smithsonian.png" class="preview-thumb" 
+                             title="online-exhibitions_modern-islamic-ceramics_smithsonian.png" onclick="openModal('online-exhibitions_modern-islamic-ceramics_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_64.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 65</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/production-credits_smithsonian.png" alt="production-credits_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('production-credits_smithsonian.png')">
+                        <p><strong>production-credits_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/production-credits_smithsonian.png" alt="production-credits_smithsonian.png" class="preview-thumb" 
+                             title="production-credits_smithsonian.png" onclick="openModal('production-credits_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_65.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 66</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/research.png" alt="research.png" class="canonical-thumbnail" 
+                             onclick="openModal('research.png')">
+                        <p><strong>research.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/research.png" alt="research.png" class="preview-thumb" 
+                             title="research.png" onclick="openModal('research.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_66.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 67</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/resources_unesco_index.htm.png" alt="resources_unesco_index.htm.png" class="canonical-thumbnail" 
+                             onclick="openModal('resources_unesco_index.htm.png')">
+                        <p><strong>resources_unesco_index.htm.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/resources_unesco_index.htm.png" alt="resources_unesco_index.htm.png" class="preview-thumb" 
+                             title="resources_unesco_index.htm.png" onclick="openModal('resources_unesco_index.htm.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_67.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 69</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smile.png" alt="smile.png" class="canonical-thumbnail" 
+                             onclick="openModal('smile.png')">
+                        <p><strong>smile.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smile.png" alt="smile.png" class="preview-thumb" 
+                             title="smile.png" onclick="openModal('smile.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_69.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 70</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smithsonian-artisan-initiative_artisan-in-residence.png" alt="smithsonian-artisan-initiative_artisan-in-residence.png" class="canonical-thumbnail" 
+                             onclick="openModal('smithsonian-artisan-initiative_artisan-in-residence.png')">
+                        <p><strong>smithsonian-artisan-initiative_artisan-in-residence.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smithsonian-artisan-initiative_artisan-in-residence.png" alt="smithsonian-artisan-initiative_artisan-in-residence.png" class="preview-thumb" 
+                             title="smithsonian-artisan-initiative_artisan-in-residence.png" onclick="openModal('smithsonian-artisan-initiative_artisan-in-residence.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_70.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 71</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smithsonian-artisan-initiative_heritage-handicrafts-oaxaca.png" alt="smithsonian-artisan-initiative_heritage-handicrafts-oaxaca.png" class="canonical-thumbnail" 
+                             onclick="openModal('smithsonian-artisan-initiative_heritage-handicrafts-oaxaca.png')">
+                        <p><strong>smithsonian-artisan-initiative_heritage-handicrafts-oaxaca.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smithsonian-artisan-initiative_heritage-handicrafts-oaxaca.png" alt="smithsonian-artisan-initiative_heritage-handicrafts-oaxaca.png" class="preview-thumb" 
+                             title="smithsonian-artisan-initiative_heritage-handicrafts-oaxaca.png" onclick="openModal('smithsonian-artisan-initiative_heritage-handicrafts-oaxaca.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_71.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 72</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smithsonian-artisan-initiative_kazakhstan.png" alt="smithsonian-artisan-initiative_kazakhstan.png" class="canonical-thumbnail" 
+                             onclick="openModal('smithsonian-artisan-initiative_kazakhstan.png')">
+                        <p><strong>smithsonian-artisan-initiative_kazakhstan.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smithsonian-artisan-initiative_kazakhstan.png" alt="smithsonian-artisan-initiative_kazakhstan.png" class="preview-thumb" 
+                             title="smithsonian-artisan-initiative_kazakhstan.png" onclick="openModal('smithsonian-artisan-initiative_kazakhstan.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_72.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 74</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_2014_five-on-the-black-hand-sideorigins-and-evolutions-of-the-dap.png" alt="talkstory_2014_five-on-the-black-hand-sideorigins-and-evolutions-of-the-dap.png" class="canonical-thumbnail" 
+                             onclick="openModal('talkstory_2014_five-on-the-black-hand-sideorigins-and-evolutions-of-the-dap.png')">
+                        <p><strong>talkstory_2014_five-on-the-black-hand-sideorigins-and-evolutions-of-the-dap.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_2014_five-on-the-black-hand-sideorigins-and-evolutions-of-the-dap.png" alt="talkstory_2014_five-on-the-black-hand-sideorigins-and-evolutions-of-the-dap.png" class="preview-thumb" 
+                             title="talkstory_2014_five-on-the-black-hand-sideorigins-and-evolutions-of-the-dap.png" onclick="openModal('talkstory_2014_five-on-the-black-hand-sideorigins-and-evolutions-of-the-dap.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_74.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 75</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_2015_object-oriented-a-welsh-apex-stone-connects-past-to-present.png" alt="talkstory_2015_object-oriented-a-welsh-apex-stone-connects-past-to-present.png" class="canonical-thumbnail" 
+                             onclick="openModal('talkstory_2015_object-oriented-a-welsh-apex-stone-connects-past-to-present.png')">
+                        <p><strong>talkstory_2015_object-oriented-a-welsh-apex-stone-connects-past-to-present.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_2015_object-oriented-a-welsh-apex-stone-connects-past-to-present.png" alt="talkstory_2015_object-oriented-a-welsh-apex-stone-connects-past-to-present.png" class="preview-thumb" 
+                             title="talkstory_2015_object-oriented-a-welsh-apex-stone-connects-past-to-present.png" onclick="openModal('talkstory_2015_object-oriented-a-welsh-apex-stone-connects-past-to-present.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_75.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 76</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_2016_honoring-the-amazon-a-rainforest-craft-activity-for-kids.png" alt="talkstory_2016_honoring-the-amazon-a-rainforest-craft-activity-for-kids.png" class="canonical-thumbnail" 
+                             onclick="openModal('talkstory_2016_honoring-the-amazon-a-rainforest-craft-activity-for-kids.png')">
+                        <p><strong>talkstory_2016_honoring-the-amazon-a-rainforest-craft-activity-for-kids.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_2016_honoring-the-amazon-a-rainforest-craft-activity-for-kids.png" alt="talkstory_2016_honoring-the-amazon-a-rainforest-craft-activity-for-kids.png" class="preview-thumb" 
+                             title="talkstory_2016_honoring-the-amazon-a-rainforest-craft-activity-for-kids.png" onclick="openModal('talkstory_2016_honoring-the-amazon-a-rainforest-craft-activity-for-kids.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_76.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 77</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_2017_the-downside-of-high-cultural-status-a-look-at-the-great-mosque-of-djenne.png" alt="talkstory_2017_the-downside-of-high-cultural-status-a-look-at-the-great-mosque-of-djenne.png" class="canonical-thumbnail" 
+                             onclick="openModal('talkstory_2017_the-downside-of-high-cultural-status-a-look-at-the-great-mosque-of-djenne.png')">
+                        <p><strong>talkstory_2017_the-downside-of-high-cultural-status-a-look-at-the-great-mosque-of-djenne.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_2017_the-downside-of-high-cultural-status-a-look-at-the-great-mosque-of-djenne.png" alt="talkstory_2017_the-downside-of-high-cultural-status-a-look-at-the-great-mosque-of-djenne.png" class="preview-thumb" 
+                             title="talkstory_2017_the-downside-of-high-cultural-status-a-look-at-the-great-mosque-of-djenne.png" onclick="openModal('talkstory_2017_the-downside-of-high-cultural-status-a-look-at-the-great-mosque-of-djenne.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_77.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 78</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_tibetan-wall-building-songs.png" alt="talkstory_tibetan-wall-building-songs.png" class="canonical-thumbnail" 
+                             onclick="openModal('talkstory_tibetan-wall-building-songs.png')">
+                        <p><strong>talkstory_tibetan-wall-building-songs.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/talkstory_tibetan-wall-building-songs.png" alt="talkstory_tibetan-wall-building-songs.png" class="preview-thumb" 
+                             title="talkstory_tibetan-wall-building-songs.png" onclick="openModal('talkstory_tibetan-wall-building-songs.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_78.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 79</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/the-smithsonian-folklife-and-oral-history-interviewing-guide_smithsonian.png" alt="the-smithsonian-folklife-and-oral-history-interviewing-guide_smithsonian.png" class="canonical-thumbnail" 
+                             onclick="openModal('the-smithsonian-folklife-and-oral-history-interviewing-guide_smithsonian.png')">
+                        <p><strong>the-smithsonian-folklife-and-oral-history-interviewing-guide_smithsonian.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/the-smithsonian-folklife-and-oral-history-interviewing-guide_smithsonian.png" alt="the-smithsonian-folklife-and-oral-history-interviewing-guide_smithsonian.png" class="preview-thumb" 
+                             title="the-smithsonian-folklife-and-oral-history-interviewing-guide_smithsonian.png" onclick="openModal('the-smithsonian-folklife-and-oral-history-interviewing-guide_smithsonian.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_79.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="cluster-title">Layout 80</div>
+                    <div class="cluster-size">1 screenshots</div>
+                </div>
+                
+                <div class="cluster-content">
+                    <div class="canonical-section">
+                        <h3>Canonical Image</h3>
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/will-to-adorn.png" alt="will-to-adorn.png" class="canonical-thumbnail" 
+                             onclick="openModal('will-to-adorn.png')">
+                        <p><strong>will-to-adorn.png</strong></p>
+                        <p>This image represents the standard layout for this layout group.</p>
+                    </div>
+                    
+                    <div class="preview-grid">
+                        <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/will-to-adorn.png" alt="will-to-adorn.png" class="preview-thumb" 
+                             title="will-to-adorn.png" onclick="openModal('will-to-adorn.png')">
+                    </div>
+                    
+                    <div class="view-all">
+                        <a href="layout_80.html">View All 1 Screenshots</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'images/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

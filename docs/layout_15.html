@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout 15 Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .back-link { display: inline-block; margin-bottom: 2rem; color: #3498db; text-decoration: none; font-size: 1.1rem; }
+        .back-link:hover { text-decoration: underline; }
+        
+        .cluster-info { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .canonical-section h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-thumbnail { max-width: 300px; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }
+        .canonical-thumbnail:hover { opacity: 0.8; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        
+        .image-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .image-card img { width: 100%; height: auto; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; margin-bottom: 0.5rem; color: #2c3e50; }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        .canonical-badge { background: #27ae60; color: white; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; margin-left: 0.5rem; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Layout 15 Details</h1>
+        <p>51 screenshots with similar layouts</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to All Layouts</a>
+        
+        <div class="cluster-info">
+            <div class="canonical-section">
+                <h3>Canonical Image</h3>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amanda-holmes-duffy.png" alt="authors_amanda-holmes-duffy.png" class="canonical-thumbnail" 
+                     onclick="openModal('authors_amanda-holmes-duffy.png')">
+                <p><strong>authors_amanda-holmes-duffy.png</strong></p>
+                <p>This image represents the standard layout for this layout group.</p>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amanda-holmes-duffy.png" alt="authors_amanda-holmes-duffy.png" 
+                     onclick="openModal('authors_amanda-holmes-duffy.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_amanda-holmes-duffy.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.158304
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amelia-tseng.png" alt="authors_amelia-tseng.png" 
+                     onclick="openModal('authors_amelia-tseng.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_amelia-tseng.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.193392
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_andrea-mayorga.png" alt="authors_andrea-mayorga.png" 
+                     onclick="openModal('authors_andrea-mayorga.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_andrea-mayorga.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.184796
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_anne-rappaport.png" alt="authors_anne-rappaport.png" 
+                     onclick="openModal('authors_anne-rappaport.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_anne-rappaport.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.179485
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_antonio-jorge-medeiros-batista-silva.png" alt="authors_antonio-jorge-medeiros-batista-silva.png" 
+                     onclick="openModal('authors_antonio-jorge-medeiros-batista-silva.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_antonio-jorge-medeiros-batista-silva.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.127130
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_astrid-stephenson.png" alt="authors_astrid-stephenson.png" 
+                     onclick="openModal('authors_astrid-stephenson.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_astrid-stephenson.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.156589
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_benedict-cook.png" alt="authors_benedict-cook.png" 
+                     onclick="openModal('authors_benedict-cook.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_benedict-cook.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.105957
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_brianna-melgar.png" alt="authors_brianna-melgar.png" 
+                     onclick="openModal('authors_brianna-melgar.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_brianna-melgar.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.112630
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_cassie-roshu.png" alt="authors_cassie-roshu.png" 
+                     onclick="openModal('authors_cassie-roshu.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_cassie-roshu.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.153584
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_claire-smith.png" alt="authors_claire-smith.png" 
+                     onclick="openModal('authors_claire-smith.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_claire-smith.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.169245
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_daria-boltokova.png" alt="authors_daria-boltokova.png" 
+                     onclick="openModal('authors_daria-boltokova.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_daria-boltokova.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.109505
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_drukmo-gyal.png" alt="authors_drukmo-gyal.png" 
+                     onclick="openModal('authors_drukmo-gyal.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_drukmo-gyal.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.183767
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_eric-galm.png" alt="authors_eric-galm.png" 
+                     onclick="openModal('authors_eric-galm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_eric-galm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.167569
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_gabe-silverstein-rivera.png" alt="authors_gabe-silverstein-rivera.png" 
+                     onclick="openModal('authors_gabe-silverstein-rivera.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_gabe-silverstein-rivera.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.138142
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_gwen-mallow.png" alt="authors_gwen-mallow.png" 
+                     onclick="openModal('authors_gwen-mallow.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_gwen-mallow.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.168941
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_henry-lesperance.png" alt="authors_henry-lesperance.png" 
+                     onclick="openModal('authors_henry-lesperance.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_henry-lesperance.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.117546
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hope-zhu.png" alt="authors_hope-zhu.png" 
+                     onclick="openModal('authors_hope-zhu.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_hope-zhu.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.125521
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hyein-hazel-lee.png" alt="authors_hyein-hazel-lee.png" 
+                     onclick="openModal('authors_hyein-hazel-lee.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_hyein-hazel-lee.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.115800
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_igor-xoyon.png" alt="authors_igor-xoyon.png" 
+                     onclick="openModal('authors_igor-xoyon.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_igor-xoyon.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.110499
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jaiha-lee.png" alt="authors_jaiha-lee.png" 
+                     onclick="openModal('authors_jaiha-lee.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jaiha-lee.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.182215
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jc-gibbs.png" alt="authors_jc-gibbs.png" 
+                     onclick="openModal('authors_jc-gibbs.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jc-gibbs.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.200201
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jean-young.png" alt="authors_jean-young.png" 
+                     onclick="openModal('authors_jean-young.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jean-young.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.133483
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jennifer-m-everett.png" alt="authors_jennifer-m-everett.png" 
+                     onclick="openModal('authors_jennifer-m-everett.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jennifer-m-everett.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.161282
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_joan-hua.png" alt="authors_joan-hua.png" 
+                     onclick="openModal('authors_joan-hua.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_joan-hua.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.172766
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_joe-alonso.png" alt="authors_joe-alonso.png" 
+                     onclick="openModal('authors_joe-alonso.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_joe-alonso.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.213763
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jorge-g-f-moreno-soto.png" alt="authors_jorge-g-f-moreno-soto.png" 
+                     onclick="openModal('authors_jorge-g-f-moreno-soto.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jorge-g-f-moreno-soto.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.140342
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_juliette-murphy.png" alt="authors_juliette-murphy.png" 
+                     onclick="openModal('authors_juliette-murphy.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_juliette-murphy.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.137211
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_kaitlyn-mcconnell.png" alt="authors_kaitlyn-mcconnell.png" 
+                     onclick="openModal('authors_kaitlyn-mcconnell.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_kaitlyn-mcconnell.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.152327
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_kimberley-watson.png" alt="authors_kimberley-watson.png" 
+                     onclick="openModal('authors_kimberley-watson.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_kimberley-watson.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.148935
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_kyle-baker.png" alt="authors_kyle-baker.png" 
+                     onclick="openModal('authors_kyle-baker.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_kyle-baker.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.117494
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_lauren-safranek.png" alt="authors_lauren-safranek.png" 
+                     onclick="openModal('authors_lauren-safranek.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_lauren-safranek.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.124271
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_lena-pham.png" alt="authors_lena-pham.png" 
+                     onclick="openModal('authors_lena-pham.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_lena-pham.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_liana-aghajanian.png" alt="authors_liana-aghajanian.png" 
+                     onclick="openModal('authors_liana-aghajanian.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_liana-aghajanian.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.199485
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_lily-horne.png" alt="authors_lily-horne.png" 
+                     onclick="openModal('authors_lily-horne.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_lily-horne.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.166921
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_lindsey-max.png" alt="authors_lindsey-max.png" 
+                     onclick="openModal('authors_lindsey-max.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_lindsey-max.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.115696
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_meda-dewitt.png" alt="authors_meda-dewitt.png" 
+                     onclick="openModal('authors_meda-dewitt.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_meda-dewitt.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.121553
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_natalie-amador-solis.png" alt="authors_natalie-amador-solis.png" 
+                     onclick="openModal('authors_natalie-amador-solis.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_natalie-amador-solis.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.087901
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_pete-reiniger.png" alt="authors_pete-reiniger.png" 
+                     onclick="openModal('authors_pete-reiniger.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_pete-reiniger.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.155007
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_roland-keates.png" alt="authors_roland-keates.png" 
+                     onclick="openModal('authors_roland-keates.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_roland-keates.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.187007
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sean-tomlinson.png" alt="authors_sean-tomlinson.png" 
+                     onclick="openModal('authors_sean-tomlinson.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_sean-tomlinson.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.202395
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sharon-nelson.png" alt="authors_sharon-nelson.png" 
+                     onclick="openModal('authors_sharon-nelson.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_sharon-nelson.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.149540
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sunny-jain.png" alt="authors_sunny-jain.png" 
+                     onclick="openModal('authors_sunny-jain.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_sunny-jain.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.183015
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_thanvi-thodati.png" alt="authors_thanvi-thodati.png" 
+                     onclick="openModal('authors_thanvi-thodati.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_thanvi-thodati.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.165445
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_ty-juana-taylor.png" alt="authors_ty-juana-taylor.png" 
+                     onclick="openModal('authors_ty-juana-taylor.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_ty-juana-taylor.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.190434
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_yingying-yang.png" alt="authors_yingying-yang.png" 
+                     onclick="openModal('authors_yingying-yang.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_yingying-yang.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.100994
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_yu-lha.png" alt="authors_yu-lha.png" 
+                     onclick="openModal('authors_yu-lha.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_yu-lha.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.174926
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_zachary-tumlin.png" alt="authors_zachary-tumlin.png" 
+                     onclick="openModal('authors_zachary-tumlin.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_zachary-tumlin.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.176982
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_zanta.png" alt="authors_zanta.png" 
+                     onclick="openModal('authors_zanta.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_zanta.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.155208
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_zoe-tribur.png" alt="authors_zoe-tribur.png" 
+                     onclick="openModal('authors_zoe-tribur.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_zoe-tribur.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.140924
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_zubair-torwali.png" alt="authors_zubair-torwali.png" 
+                     onclick="openModal('authors_zubair-torwali.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_zubair-torwali.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.124429
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/join.png" alt="join.png" 
+                     onclick="openModal('join.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        join.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.145498
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

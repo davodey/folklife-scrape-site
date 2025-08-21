@@ -20,6 +20,9 @@ THUMBNAIL_SIZE = (300, 225)
 MAX_IMAGES_PER_CLUSTER = 20
 OUTPUT_DIR = Path("static_site")
 
+# DigitalOcean Spaces CDN configuration
+SPACES_CDN_BASE = "https://quotient.nyc3.cdn.digitaloceanspaces.com"
+
 def load_cluster_data():
     """Load cluster data from CSV"""
     if not CSV_FILE.exists():
@@ -40,8 +43,12 @@ def load_cluster_data():
     
     return clusters
 
+def create_thumbnail_url(filename, size=THUMBNAIL_SIZE):
+    """Create a CDN URL for the image (no local processing needed)"""
+    return f"{SPACES_CDN_BASE}/{filename}"
+
 def create_thumbnail(image_path, size=THUMBNAIL_SIZE):
-    """Create a thumbnail and return as base64 data URL"""
+    """Create a thumbnail and return as base64 data URL (fallback for local files)"""
     try:
         with Image.open(image_path) as img:
             img = img.convert('RGB')
@@ -143,12 +150,15 @@ def generate_main_page(clusters, summary):
     <div class="container">
         <div class="clusters-grid">"""
 
-    for cluster_id, screenshots in clusters.items():
+    # Sort clusters by number of screenshots (descending) - same as Flask app
+    sorted_clusters = sorted(clusters.items(), key=lambda x: len(x[1]), reverse=True)
+
+    for cluster_id, screenshots in sorted_clusters:
         # Find canonical image
         canonical = next((s for s in screenshots if s['canonical']), screenshots[0])
         
-        # Create thumbnail for canonical
-        canonical_thumbnail = create_thumbnail(f"folklife-screens-x/{canonical['filename']}")
+        # Create CDN URL for canonical image
+        canonical_thumbnail_url = create_thumbnail_url(canonical['filename'])
         
         # Get preview thumbnails (up to 8)
         preview_screenshots = screenshots[:8]
@@ -164,9 +174,9 @@ def generate_main_page(clusters, summary):
                     <div class="canonical-section">
                         <h3>Canonical Image</h3>"""
         
-        if canonical_thumbnail:
-            html += f"""
-                        <img src="{canonical_thumbnail}" alt="{canonical['filename']}" class="canonical-thumbnail" 
+        # Use CDN URL for canonical image
+        html += f"""
+                        <img src="{canonical_thumbnail_url}" alt="{canonical['filename']}" class="canonical-thumbnail" 
                              onclick="openModal('{canonical['filename']}')">"""
         
         html += f"""
@@ -177,10 +187,10 @@ def generate_main_page(clusters, summary):
                     <div class="preview-grid">"""
         
         for screenshot in preview_screenshots:
-            thumbnail = create_thumbnail(f"folklife-screens-x/{screenshot['filename']}")
-            if thumbnail:
-                html += f"""
-                        <img src="{thumbnail}" alt="{screenshot['filename']}" class="preview-thumb" 
+            # Use CDN URL for preview thumbnails
+            thumbnail_url = create_thumbnail_url(screenshot['filename'])
+            html += f"""
+                        <img src="{thumbnail_url}" alt="{screenshot['filename']}" class="preview-thumb" 
                              title="{screenshot['filename']}" onclick="openModal('{screenshot['filename']}')">"""
         
         html += f"""
@@ -297,11 +307,10 @@ def generate_cluster_detail_page(cluster_id, screenshots):
             <div class="canonical-section">
                 <h3>Canonical Image</h3>"""
     
-    # Create thumbnail for canonical
-    canonical_thumbnail = create_thumbnail(f"folklife-screens-x/{canonical['filename']}")
-    if canonical_thumbnail:
-        html += f"""
-                <img src="{canonical_thumbnail}" alt="{canonical['filename']}" class="canonical-thumbnail" 
+    # Use CDN URL for canonical image
+    canonical_thumbnail_url = create_thumbnail_url(canonical['filename'])
+    html += f"""
+                <img src="{canonical_thumbnail_url}" alt="{canonical['filename']}" class="canonical-thumbnail" 
                      onclick="openModal('{canonical['filename']}')">"""
     
     html += f"""
@@ -313,9 +322,11 @@ def generate_cluster_detail_page(cluster_id, screenshots):
         <div class="images-grid">"""
     
     for screenshot in screenshots:
+        # Use CDN URL for all images
+        image_url = create_thumbnail_url(screenshot['filename'])
         html += f"""
             <div class="image-card">
-                <img src="images/{screenshot['filename']}" alt="{screenshot['filename']}" 
+                <img src="{image_url}" alt="{screenshot['filename']}" 
                      onclick="openModal('{screenshot['filename']}')">
                 <div class="image-info">
                     <div class="image-name">
@@ -350,7 +361,7 @@ def generate_cluster_detail_page(cluster_id, screenshots):
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'images/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
             caption.innerHTML = filename;
         }
         
@@ -379,23 +390,9 @@ def generate_cluster_detail_page(cluster_id, screenshots):
     return html
 
 def copy_images():
-    """Copy images to the static site directory"""
-    images_dir = OUTPUT_DIR / "images"
-    images_dir.mkdir(exist_ok=True)
-    
-    source_dir = Path("folklife-screens-x")
-    if not source_dir.exists():
-        print(f"Warning: {source_dir} not found. Images will not be copied.")
-        return
-    
-    print("Copying images...")
-    for image_file in source_dir.glob("*.png"):
-        dest_file = images_dir / image_file.name
-        if not dest_file.exists():
-            print(f"  Copying {image_file.name}")
-            # Copy the file
-            import shutil
-            shutil.copy2(image_file, dest_file)
+    """Images are served from DigitalOcean Spaces CDN - no local copying needed"""
+    print("Images served from DigitalOcean Spaces CDN - skipping local copy")
+    pass
 
 def main():
     """Generate the static site"""
@@ -420,7 +417,9 @@ def main():
     
     # Generate cluster detail pages
     print("Generating cluster detail pages...")
-    for cluster_id, screenshots in clusters.items():
+    # Use the same sorted order as the main page
+    sorted_clusters = sorted(clusters.items(), key=lambda x: len(x[1]), reverse=True)
+    for cluster_id, screenshots in sorted_clusters:
         detail_html = generate_cluster_detail_page(cluster_id, screenshots)
         with open(OUTPUT_DIR / f"layout_{cluster_id}.html", "w") as f:
             f.write(detail_html)
@@ -430,7 +429,7 @@ def main():
     
     print(f"\n✅ Static site generated successfully in {OUTPUT_DIR}/")
     print(f"📁 Main page: {OUTPUT_DIR}/index.html")
-    print(f"🖼️  Images: {OUTPUT_DIR}/images/")
+    print(f"🖼️  Images: Served from DigitalOcean Spaces CDN")
     print(f"📄 Cluster pages: {len(clusters)} detail pages")
     print("\n🚀 Deploy to DigitalOcean Spaces or GitHub Pages for cheap hosting!")
 

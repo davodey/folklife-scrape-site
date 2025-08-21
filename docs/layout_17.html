@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout 17 Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .back-link { display: inline-block; margin-bottom: 2rem; color: #3498db; text-decoration: none; font-size: 1.1rem; }
+        .back-link:hover { text-decoration: underline; }
+        
+        .cluster-info { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .canonical-section h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-thumbnail { max-width: 300px; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }
+        .canonical-thumbnail:hover { opacity: 0.8; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        
+        .image-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .image-card img { width: 100%; height: auto; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; margin-bottom: 0.5rem; color: #2c3e50; }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        .canonical-badge { background: #27ae60; color: white; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; margin-left: 0.5rem; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Layout 17 Details</h1>
+        <p>39 screenshots with similar layouts</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to All Layouts</a>
+        
+        <div class="cluster-info">
+            <div class="canonical-section">
+                <h3>Canonical Image</h3>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="authors_betty-belanus.png" class="canonical-thumbnail" 
+                     onclick="openModal('authors_betty-belanus.png')">
+                <p><strong>authors_betty-belanus.png</strong></p>
+                <p>This image represents the standard layout for this layout group.</p>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="authors_betty-belanus.png" 
+                     onclick="openModal('authors_betty-belanus.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_betty-belanus.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.165039
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_daniel-sheehy.png" alt="authors_daniel-sheehy.png" 
+                     onclick="openModal('authors_daniel-sheehy.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_daniel-sheehy.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.206312
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emily-buhrow-rogers.png" alt="authors_emily-buhrow-rogers.png" 
+                     onclick="openModal('authors_emily-buhrow-rogers.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_emily-buhrow-rogers.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.176182
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emma-cieslik.png" alt="authors_emma-cieslik.png" 
+                     onclick="openModal('authors_emma-cieslik.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_emma-cieslik.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.167056
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hali-dardar.png" alt="authors_hali-dardar.png" 
+                     onclick="openModal('authors_hali-dardar.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_hali-dardar.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.197848
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_james-deutsch.png" alt="authors_james-deutsch.png" 
+                     onclick="openModal('authors_james-deutsch.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_james-deutsch.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.183976
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_maddie-vanoostenburg.png" alt="authors_maddie-vanoostenburg.png" 
+                     onclick="openModal('authors_maddie-vanoostenburg.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_maddie-vanoostenburg.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.170532
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine.png" alt="magazine.png" 
+                     onclick="openModal('magazine.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.131975
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_dc-local.png" alt="magazine_dc-local.png" 
+                     onclick="openModal('magazine_dc-local.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_dc-local.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.156422
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_deep-dive.png" alt="magazine_deep-dive.png" 
+                     onclick="openModal('magazine_deep-dive.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_deep-dive.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.136143
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_material-world.png" alt="magazine_material-world.png" 
+                     onclick="openModal('magazine_material-world.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_material-world.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.117386
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_news-and-events.png" alt="magazine_news-and-events.png" 
+                     onclick="openModal('magazine_news-and-events.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_news-and-events.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.134060
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_perspectives.png" alt="magazine_perspectives.png" 
+                     onclick="openModal('magazine_perspectives.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_perspectives.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.148096
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_crisis.png" alt="magazine_series_crisis.png" 
+                     onclick="openModal('magazine_series_crisis.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_series_crisis.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_foodways-of-holidays.png" alt="magazine_series_foodways-of-holidays.png" 
+                     onclick="openModal('magazine_series_foodways-of-holidays.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_series_foodways-of-holidays.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.106142
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_stream-of-voices.png" alt="magazine_series_stream-of-voices.png" 
+                     onclick="openModal('magazine_series_stream-of-voices.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_series_stream-of-voices.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.170427
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_sights-and-sounds.png" alt="magazine_sights-and-sounds.png" 
+                     onclick="openModal('magazine_sights-and-sounds.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_sights-and-sounds.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.136723
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_art-design.png" alt="magazine_themes_art-design.png" 
+                     onclick="openModal('magazine_themes_art-design.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_art-design.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.147793
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_building-arts.png" alt="magazine_themes_building-arts.png" 
+                     onclick="openModal('magazine_themes_building-arts.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_building-arts.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.167761
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_celebrations.png" alt="magazine_themes_celebrations.png" 
+                     onclick="openModal('magazine_themes_celebrations.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_celebrations.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.136544
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_community.png" alt="magazine_themes_community.png" 
+                     onclick="openModal('magazine_themes_community.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_community.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.153254
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_crafts.png" alt="magazine_themes_crafts.png" 
+                     onclick="openModal('magazine_themes_crafts.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_crafts.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.120006
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-sustainability.png" alt="magazine_themes_cultural-sustainability.png" 
+                     onclick="openModal('magazine_themes_cultural-sustainability.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_cultural-sustainability.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.133470
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-transmission.png" alt="magazine_themes_cultural-transmission.png" 
+                     onclick="openModal('magazine_themes_cultural-transmission.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_cultural-transmission.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.141844
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dance.png" alt="magazine_themes_dance.png" 
+                     onclick="openModal('magazine_themes_dance.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_dance.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.159574
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dress.png" alt="magazine_themes_dress.png" 
+                     onclick="openModal('magazine_themes_dress.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_dress.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.132888
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_education.png" alt="magazine_themes_education.png" 
+                     onclick="openModal('magazine_themes_education.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_education.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.143332
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_environment.png" alt="magazine_themes_environment.png" 
+                     onclick="openModal('magazine_themes_environment.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_environment.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.125044
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_foodways.png" alt="magazine_themes_foodways.png" 
+                     onclick="openModal('magazine_themes_foodways.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_foodways.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.126380
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_history.png" alt="magazine_themes_history.png" 
+                     onclick="openModal('magazine_themes_history.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_history.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.132978
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_immigration-migration.png" alt="magazine_themes_immigration-migration.png" 
+                     onclick="openModal('magazine_themes_immigration-migration.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_immigration-migration.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.145529
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_language.png" alt="magazine_themes_language.png" 
+                     onclick="openModal('magazine_themes_language.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_language.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.153012
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_music.png" alt="magazine_themes_music.png" 
+                     onclick="openModal('magazine_themes_music.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_music.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.133311
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_religion-spirituality.png" alt="magazine_themes_religion-spirituality.png" 
+                     onclick="openModal('magazine_themes_religion-spirituality.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_religion-spirituality.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.118851
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_social-justice.png" alt="magazine_themes_social-justice.png" 
+                     onclick="openModal('magazine_themes_social-justice.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_social-justice.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.137860
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_sports-games.png" alt="magazine_themes_sports-games.png" 
+                     onclick="openModal('magazine_themes_sports-games.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_sports-games.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.104990
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_storytelling.png" alt="magazine_themes_storytelling.png" 
+                     onclick="openModal('magazine_themes_storytelling.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_storytelling.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.151162
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_traditional-knowledge.png" alt="magazine_themes_traditional-knowledge.png" 
+                     onclick="openModal('magazine_themes_traditional-knowledge.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_traditional-knowledge.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.134342
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_work-life.png" alt="magazine_themes_work-life.png" 
+                     onclick="openModal('magazine_themes_work-life.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        magazine_themes_work-life.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.118828
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

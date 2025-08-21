@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout 0 Details</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .back-link { display: inline-block; margin-bottom: 2rem; color: #3498db; text-decoration: none; font-size: 1.1rem; }
+        .back-link:hover { text-decoration: underline; }
+        
+        .cluster-info { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .canonical-section h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-thumbnail { max-width: 300px; height: auto; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; margin: 1rem 0; }
+        .canonical-thumbnail:hover { opacity: 0.8; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        
+        .image-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .image-card img { width: 100%; height: auto; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; margin-bottom: 0.5rem; color: #2c3e50; }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        .canonical-badge { background: #27ae60; color: white; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; margin-left: 0.5rem; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Layout 0 Details</h1>
+        <p>58 screenshots with similar layouts</p>
+    </div>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to All Layouts</a>
+        
+        <div class="cluster-info">
+            <div class="canonical-section">
+                <h3>Canonical Image</h3>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/1989Recommendation.htm.png" alt="1989Recommendation.htm.png" class="canonical-thumbnail" 
+                     onclick="openModal('1989Recommendation.htm.png')">
+                <p><strong>1989Recommendation.htm.png</strong></p>
+                <p>This image represents the standard layout for this layout group.</p>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/1989Recommendation.htm.png" alt="1989Recommendation.htm.png" 
+                     onclick="openModal('1989Recommendation.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        1989Recommendation.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/abeita.htm.png" alt="abeita.htm.png" 
+                     onclick="openModal('abeita.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        abeita.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/acknowledgements.htm.png" alt="acknowledgements.htm.png" 
+                     onclick="openModal('acknowledgements.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        acknowledgements.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan.htm.png" alt="actionplan.htm.png" 
+                     onclick="openModal('actionplan.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        actionplan.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan_french.htm.png" alt="actionplan_french.htm.png" 
+                     onclick="openModal('actionplan_french.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        actionplan_french.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan_spanish.htm.png" alt="actionplan_spanish.htm.png" 
+                     onclick="openModal('actionplan_spanish.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        actionplan_spanish.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/aikawa.htm.png" alt="aikawa.htm.png" 
+                     onclick="openModal('aikawa.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        aikawa.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archive.png" alt="archive.png" 
+                     onclick="openModal('archive.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        archive.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/bancroft.htm.png" alt="bancroft.htm.png" 
+                     onclick="openModal('bancroft.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        bancroft.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/berman.htm.png" alt="berman.htm.png" 
+                     onclick="openModal('berman.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        berman.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/blake.htm.png" alt="blake.htm.png" 
+                     onclick="openModal('blake.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        blake.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/borisova.htm.png" alt="borisova.htm.png" 
+                     onclick="openModal('borisova.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        borisova.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/bouchenakiaddress.htm.png" alt="bouchenakiaddress.htm.png" 
+                     onclick="openModal('bouchenakiaddress.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        bouchenakiaddress.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/collier.htm.png" alt="collier.htm.png" 
+                     onclick="openModal('collier.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        collier.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/contributors.htm.png" alt="contributors.htm.png" 
+                     onclick="openModal('contributors.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        contributors.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png" alt="cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png" 
+                     onclick="openModal('cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/dacunha.htm.png" alt="dacunha.htm.png" 
+                     onclick="openModal('dacunha.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        dacunha.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/elhouda.htm.png" alt="elhouda.htm.png" 
+                     onclick="openModal('elhouda.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        elhouda.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/elhouda_eng.htm.png" alt="elhouda_eng.htm.png" 
+                     onclick="openModal('elhouda_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        elhouda_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/finalreport_eng.htm.png" alt="finalreport_eng.htm.png" 
+                     onclick="openModal('finalreport_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        finalreport_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/finalreport_french.htm.png" alt="finalreport_french.htm.png" 
+                     onclick="openModal('finalreport_french.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        finalreport_french.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/finalreport_spanish.htm.png" alt="finalreport_spanish.htm.png" 
+                     onclick="openModal('finalreport_spanish.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        finalreport_spanish.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife.si.edu_magazine_basketry-traditions-southwest-china.png" alt="folklife.si.edu_magazine_basketry-traditions-southwest-china.png" 
+                     onclick="openModal('folklife.si.edu_magazine_basketry-traditions-southwest-china.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        folklife.si.edu_magazine_basketry-traditions-southwest-china.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife@si.edu.png" alt="folklife@si.edu.png" 
+                     onclick="openModal('folklife@si.edu.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        folklife@si.edu.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/garba.htm.png" alt="garba.htm.png" 
+                     onclick="openModal('garba.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        garba.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/garba_eng.htm.png" alt="garba_eng.htm.png" 
+                     onclick="openModal('garba_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        garba_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/hoppal.htm.png" alt="hoppal.htm.png" 
+                     onclick="openModal('hoppal.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        hoppal.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/hornedo.htm.png" alt="hornedo.htm.png" 
+                     onclick="openModal('hornedo.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        hornedo.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kawada.htm.png" alt="kawada.htm.png" 
+                     onclick="openModal('kawada.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kawada.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kirkinen.htm.png" alt="kirkinen.htm.png" 
+                     onclick="openModal('kirkinen.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kirkinen.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/koch.htm.png" alt="koch.htm.png" 
+                     onclick="openModal('koch.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        koch.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kouyate.htm.png" alt="kouyate.htm.png" 
+                     onclick="openModal('kouyate.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kouyate.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kouyate_eng.htm.png" alt="kouyate_eng.htm.png" 
+                     onclick="openModal('kouyate_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kouyate_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kurin.htm.png" alt="kurin.htm.png" 
+                     onclick="openModal('kurin.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        kurin.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mambetova.htm.png" alt="mambetova.htm.png" 
+                     onclick="openModal('mambetova.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        mambetova.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/matusse.htm.png" alt="matusse.htm.png" 
+                     onclick="openModal('matusse.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        matusse.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mayormessage.htm.png" alt="mayormessage.htm.png" 
+                     onclick="openModal('mayormessage.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        mayormessage.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mccann.htm.png" alt="mccann.htm.png" 
+                     onclick="openModal('mccann.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        mccann.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/nketia.htm.png" alt="nketia.htm.png" 
+                     onclick="openModal('nketia.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        nketia.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/preface.htm.png" alt="preface.htm.png" 
+                     onclick="openModal('preface.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        preface.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/prott.htm.png" alt="prott.htm.png" 
+                     onclick="openModal('prott.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        prott.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/pualani.htm.png" alt="pualani.htm.png" 
+                     onclick="openModal('pualani.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        pualani.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/puri.htm.png" alt="puri.htm.png" 
+                     onclick="openModal('puri.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        puri.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/puwainchir.htm.png" alt="puwainchir.htm.png" 
+                     onclick="openModal('puwainchir.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        puwainchir.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/saunders.htm.png" alt="saunders.htm.png" 
+                     onclick="openModal('saunders.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        saunders.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/seeger.htm.png" alt="seeger.htm.png" 
+                     onclick="openModal('seeger.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        seeger.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sethi.htm.png" alt="sethi.htm.png" 
+                     onclick="openModal('sethi.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        sethi.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/shalaan.htm.png" alt="shalaan.htm.png" 
+                     onclick="openModal('shalaan.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        shalaan.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sherkin.htm.png" alt="sherkin.htm.png" 
+                     onclick="openModal('sherkin.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        sherkin.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/simon.htm.png" alt="simon.htm.png" 
+                     onclick="openModal('simon.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        simon.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/thomas.htm.png" alt="thomas.htm.png" 
+                     onclick="openModal('thomas.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        thomas.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/tora.htm.png" alt="tora.htm.png" 
+                     onclick="openModal('tora.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        tora.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png" 
+                     onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png" 
+                     onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png" 
+                     onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/yamaguti.htm.png" alt="yamaguti.htm.png" 
+                     onclick="openModal('yamaguti.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        yamaguti.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/yugar.htm.png" alt="yugar.htm.png" 
+                     onclick="openModal('yugar.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        yugar.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/yugar_eng.htm.png" alt="yugar_eng.htm.png" 
+                     onclick="openModal('yugar_eng.htm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        yugar_eng.htm.png
+                    </div>
+                    <div class="image-distance">
+                        Distance: 0.000000
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
