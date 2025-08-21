@@ -23,17 +23,29 @@ if ! doctl account get &> /dev/null; then
     exit 1
 fi
 
-# Check if app exists
-if doctl apps list | grep -q "$APP_NAME"; then
-    echo "📝 Updating existing app: $APP_NAME"
-    APP_ID=$(doctl apps list --format ID,Name --no-header | grep "$APP_NAME" | awk '{print $1}')
-    doctl apps update "$APP_ID" --spec do-app.yaml
-    echo "✅ App updated successfully!"
-else
-    echo "🆕 Creating new app: $APP_NAME"
-    doctl apps create --spec do-app.yaml
-    echo "✅ App created successfully!"
-fi
+       # Check if app exists
+       if doctl apps list | grep -q "$APP_NAME"; then
+           echo "📝 Updating existing app: $APP_NAME"
+           APP_ID=$(doctl apps list --format ID,Name --no-header | grep "$APP_NAME" | awk '{print $1}')
+           doctl apps update "$APP_ID" --spec do-app.yaml
+           echo "✅ App updated successfully!"
+       else
+           echo "🆕 Creating new app: $APP_NAME"
+           doctl apps create --spec do-app.yaml
+           echo "✅ App created successfully!"
+       fi
+       
+       echo ""
+       echo "🔄 Waiting for app to be ready..."
+       sleep 30
+       
+       # Get app info
+       APP_ID=$(doctl apps list --format ID,Name --no-header | grep "$APP_NAME" | awk '{print $1}')
+       APP_URL=$(doctl apps get "$APP_ID" --format URL --no-header)
+       
+       echo ""
+       echo "🧪 Testing deployment..."
+       python test_deployment.py "$APP_URL"
 
 echo ""
 echo "🌐 Your app should be available at:"

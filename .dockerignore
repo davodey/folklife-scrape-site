@@ -27,6 +27,6 @@ test_*.py
 *.md
 layout_clusters/
 folklife-screens/
-folklife-screens-x/
+# folklife-screens-x/  # Commented out - needed for image serving
 festival-screens/
 test_screenshots/

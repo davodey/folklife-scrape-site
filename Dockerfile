@@ -14,6 +14,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+# Verify critical directories exist
+RUN ls -la && \
+    echo "Checking folklife-screens-x..." && \
+    ls -la folklife-screens-x/ | head -10
+
 # Create templates directory and generate templates
 RUN python cluster_viewer.py --generate-templates-only
 

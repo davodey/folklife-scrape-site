@@ -139,7 +139,46 @@ def cluster_detail(cluster_id):
 @app.route('/images/<path:filename>')
 def serve_image(filename):
     """Serve image files"""
-    return send_from_directory('folklife-screens-x', filename)
+    # Try multiple possible image directories
+    image_dirs = [
+        'folklife-screens-x',
+        './folklife-screens-x',
+        '../folklife-screens-x',
+        '/app/folklife-screens-x'  # Docker path
+    ]
+    
+    for img_dir in image_dirs:
+        if os.path.exists(img_dir):
+            try:
+                return send_from_directory(img_dir, filename)
+            except Exception as e:
+                print(f"Error serving {filename} from {img_dir}: {e}")
+                continue
+    
+    # If no directory found, return 404
+    return f"Image directory not found. Available dirs: {[d for d in image_dirs if os.path.exists(d)]}", 404
+
+@app.route('/debug')
+def debug_info():
+    """Debug information for troubleshooting"""
+    info = {
+        'working_directory': os.getcwd(),
+        'available_directories': [d for d in os.listdir('.') if os.path.isdir(d)],
+        'folklife_screens_x_exists': os.path.exists('folklife-screens-x'),
+        'folklife_screens_x_path': os.path.abspath('folklife-screens-x') if os.path.exists('folklife-screens-x') else None,
+        'csv_file_exists': os.path.exists(CSV_FILE),
+        'csv_file_path': os.path.abspath(CSV_FILE) if os.path.exists(CSV_FILE) else None,
+        'clusters_dir_exists': os.path.exists(CLUSTERS_DIR),
+        'clusters_dir_path': os.path.abspath(CLUSTERS_DIR) if os.path.exists(CLUSTERS_DIR) else None
+    }
+    
+    if os.path.exists('folklife-screens-x'):
+        try:
+            info['folklife_screens_x_contents'] = os.listdir('folklife-screens-x')[:10]
+        except Exception as e:
+            info['folklife_screens_x_error'] = str(e)
+    
+    return jsonify(info)
 
 @app.route('/api/cluster/<cluster_id>/thumbnails')
 def cluster_thumbnails(cluster_id):
@@ -443,31 +482,36 @@ def create_templates():
 
 if __name__ == '__main__':
     import argparse
-    
+
     parser = argparse.ArgumentParser(description='folklife.si.edu Layouts Viewer')
-    parser.add_argument('--generate-templates-only', action='store_true', 
-                       help='Generate HTML templates and exit')
+    parser.add_argument('--generate-templates-only', action='store_true',
+                        help='Generate HTML templates and exit')
     parser.add_argument('--host', default='0.0.0.0', help='Host to bind to')
     parser.add_argument('--port', type=int, default=5000, help='Port to bind to')
     parser.add_argument('--debug', action='store_true', help='Enable debug mode')
-    
+
     args = parser.parse_args()
-    
+
     # Create templates directory if it doesn't exist
     templates_dir = Path("templates")
     templates_dir.mkdir(exist_ok=True)
-    
+
     # Create basic templates
     create_templates()
-    
+
     if args.generate_templates_only:
         print("Templates generated successfully")
         exit(0)
-    
+
     print("Starting folklife.si.edu Layouts Viewer...")
     print(f"Clusters directory: {CLUSTERS_DIR}")
     print(f"CSV file: {CSV_FILE}")
+    print(f"Current working directory: {os.getcwd()}")
+    print(f"Available directories: {[d for d in os.listdir('.') if os.path.isdir(d)]}")
+    print(f"folklife-screens-x exists: {os.path.exists('folklife-screens-x')}")
+    if os.path.exists('folklife-screens-x'):
+        print(f"folklife-screens-x contents: {os.listdir('folklife-screens-x')[:5]}...")
     print(f"Open http://{args.host}:{args.port} in your browser")
-    
+
     # Run the Flask app
     app.run(debug=args.debug, host=args.host, port=args.port)
