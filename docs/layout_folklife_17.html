@@ -57,155 +57,191 @@
         .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
         .header p { font-size: 1.1rem; opacity: 0.9; }
         
-        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
-        .back-link { margin-bottom: 2rem; }
+        .container { max-width: 1600px; margin: 0 auto; padding: 3rem 2rem; }
+        .back-link { margin-bottom: 3rem; }
         .back-btn { 
-            background: #2c3e50; 
+            background: linear-gradient(135deg, #2c3e50, #2c3e50dd); 
             color: white; 
-            padding: 0.75rem 1.5rem; 
+            padding: 1rem 2.5rem; 
             text-decoration: none; 
-            border-radius: 6px; 
+            border-radius: 16px; 
             display: inline-block;
-            transition: opacity 0.2s;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
         }
-        .back-btn:hover { opacity: 0.9; }
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .back-btn:hover::before {
+            left: 100%;
+        }
+        .back-btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, #2c3e50dd, #2c3e50);
+        }
         
-        .cluster-info { background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .cluster-header { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }
-        .canonical-image { width: 200px; height: 150px; object-fit: cover; border-radius: 8px; }
-        .cluster-details h2 { color: #2c3e50; margin-bottom: 1rem; }
-        .cluster-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
-        .stat-item { text-align: center; }
-        .stat-number { font-size: 1.5rem; font-weight: bold; color: #2c3e50; }
-        .stat-label { color: #7f8c8d; font-size: 0.9rem; }
-        
-        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-        .image-card { 
-            background: white; 
-            border-radius: 8px; 
-            overflow: hidden; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
-            transition: transform 0.2s; 
+        .cluster-info { 
+            background: linear-gradient(135deg, #ffffff, #f8f9fa); 
+            padding: 3rem; 
+            border-radius: 24px; 
+            margin-bottom: 3rem; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
         }
-        .image-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-        .image-card img { width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: opacity 0.2s; }
-        .image-card img:hover { opacity: 0.8; }
-        .image-info { padding: 1rem; }
-        .image-name { font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem; word-break: break-word; }
-        .canonical-badge { 
-            background: #2c3e50; 
-            color: white; 
-            padding: 0.25rem 0.5rem; 
-            border-radius: 4px; 
-            font-size: 0.8rem; 
-            margin-left: 0.5rem; 
-        }
-        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
-        
-        /* User feedback styles */
-        .feedback-section { 
-            background: #f8f9fa; 
-            border: 1px solid #dee2e6; 
-            border-radius: 8px; 
-            padding: 1rem; 
-            margin-top: 1rem; 
-        }
-        .feedback-title { 
-            font-weight: bold; 
-            color: #495057; 
-            margin-bottom: 0.5rem; 
-        }
-        .feedback-buttons { 
+        .cluster-header { 
             display: flex; 
-            gap: 0.5rem; 
-            flex-wrap: wrap; 
+            align-items: flex-start; 
+            gap: 3rem; 
+            margin-bottom: 2.5rem; 
         }
-        .feedback-btn { 
-            background: #6c757d; 
-            color: white; 
-            border: none; 
-            padding: 0.25rem 0.5rem; 
-            border-radius: 4px; 
-            font-size: 0.8rem; 
-            cursor: pointer; 
-            transition: background 0.2s; 
+        .canonical-image { 
+            width: 300px; 
+            height: 220px; 
+            object-fit: cover; 
+            border-radius: 20px;
+            border: 2px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
         }
-        .feedback-btn:hover { background: #5a6268; }
-        .feedback-btn.flag { background: #dc3545; }
-        .feedback-btn.flag:hover { background: #c82333; }
-        .feedback-btn.correct { background: #28a745; }
-        .feedback-btn.correct:hover { background: #218838; }
-        .feedback-form { 
-            display: none; 
-            margin-top: 1rem; 
-            padding: 1rem; 
-            background: white; 
-            border-radius: 6px; 
-            border: 1px solid #ced4da; 
+        .canonical-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
         }
-        .feedback-form.show { display: block; }
-        .feedback-form textarea { 
-            width: 100%; 
-            min-height: 80px; 
-            padding: 0.5rem; 
-            border: 1px solid #ced4da; 
-            border-radius: 4px; 
-            margin-bottom: 0.5rem; 
-            font-family: inherit; 
+        .cluster-details h2 { 
+            color: #1a1a1a; 
+            margin-bottom: 1.5rem; 
+            font-size: 2.2rem; 
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
-        .feedback-form button { 
-            background: #007bff; 
-            color: white; 
-            border: none; 
-            padding: 0.5rem 1rem; 
-            border-radius: 4px; 
-            cursor: pointer; 
+        .cluster-stats { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 2rem; 
         }
-        .feedback-form button:hover { background: #0056b3; }
-        .similarity-warning { 
-            background: #fff3cd; 
-            border: 1px solid #ffeaa7; 
-            color: #856404; 
-            padding: 0.5rem; 
-            border-radius: 4px; 
-            margin-bottom: 0.5rem; 
-            font-size: 0.9rem; 
+        .stat-item { 
+            text-align: center; 
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
-        
-        /* Loading overlay styles */
-        .image-container { position: relative; }
-        .loading-overlay { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            bottom: 0; 
-            background: #f8f9fa; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
+        .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        .stat-number { 
+            font-size: 2rem; 
+            font-weight: 800; 
+            color: #2c3e50; 
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        .stat-label { 
             color: #6c757d; 
-            font-size: 0.8rem;
-            border-radius: 4px;
-        }
-        .loading-overlay.skeleton { 
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
-        .loading-overlay.failed { 
-            background: #dc3545; 
-            color: white; 
-            font-weight: bold; 
-            font-size: 1.1rem; 
-        }
-        .loading-overlay.loaded { 
-            display: none; 
+            font-size: 1rem; 
+            font-weight: 600;
         }
         
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+        .images-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); 
+            gap: 2rem; 
+        }
+        .image-card { 
+            background: linear-gradient(135deg, #ffffff, #f8f9fa); 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        .image-card:hover { 
+            transform: translateY(-6px) scale(1.02); 
+            box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+            border-color: rgba(0,0,0,0.1);
+        }
+        .image-card img { 
+            width: 100%; 
+            height: 240px; 
+            object-fit: cover; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+        }
+        .image-card:hover img { 
+            transform: scale(1.05);
+        }
+        .image-info { 
+            padding: 2rem; 
+            background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+        }
+        .image-name { 
+            font-weight: 700; 
+            color: #1a1a1a; 
+            margin-bottom: 1rem; 
+            word-break: break-word; 
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }
+        .canonical-badge { 
+            background: linear-gradient(135deg, #2c3e50, #2c3e50dd); 
+            color: white; 
+            padding: 0.5rem 1rem; 
+            border-radius: 12px; 
+            font-size: 0.85rem; 
+            margin-left: 0.75rem; 
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .image-distance { 
+            color: #6c757d; 
+            font-size: 1rem; 
+            margin-bottom: 1rem; 
+            font-weight: 500;
+        }
+        
+        /* URL link styles */
+        .image-url-link {
+            display: inline-block;
+            padding: 0.5rem 0.75rem;
+            background: #f8f9fa;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 0.5rem;
+        }
+        .image-url-link:hover {
+            background: #e9ecef;
+            color: #212529;
+            border-color: #dee2e6;
+            text-decoration: none;
+        }
+        .url-icon {
+            margin-right: 0.5rem;
+            opacity: 0.7;
         }
         
         /* Modal/Lightbox styles */
@@ -222,7 +258,7 @@
             <a href="index.html" class="site-btn active">
                 Folklife
             </a>
-            <a href="index_festival.html" class="site-btn">
+            <a href="index_folklife.html" class="site-btn">
                 Festival
             </a>
         </div>
@@ -243,68 +279,32 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-canonical">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="Canonical" class="canonical-image clickable" 
-                         onclick="openModal('authors_betty-belanus.png')"
-                         onload="imageLoaded(this, 'loading-17-canonical')"
-                         onerror="imageError(this, 'loading-17-canonical')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('authors_betty-belanus.png')">
                 <div class="cluster-details">
                     <h2>Layout 17</h2>
-                    <p><strong>Canonical Image:</strong> authors_betty-belanus.png</p>
-                    <p style="font-size: 0.9rem; color: #666; margin: 0.5rem 0;">
-                        💡 <strong>Canonical:</strong> The most representative image for this layout. 
-                        Other images are sorted by how similar they are to this one.
-                    </p>
+                    <a href="https://folklife.si.edu/authors/betty-belanus" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
+                    
                     <div class="cluster-stats">
                         <div class="stat-item">
                             <div class="stat-number">39</div>
                             <div class="stat-label">Total Screenshots</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">39.0</div>
-                            <div class="stat-label">Avg per Layout</div>
+                            <div class="stat-number">39</div>
+                            <div class="stat-label">Images in Layout</div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- User Feedback Section -->
-            <div class="feedback-section">
-                <div class="feedback-title">🤔 Found a misclassified image?</div>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
-                    Help improve our layout detection by flagging images that don't belong here or suggesting new layouts.
-                </p>
-                <div class="feedback-buttons">
-                    <button class="feedback-btn flag" onclick="showFeedbackForm('flag', '17')">
-                        🚩 Flag for Review
-                    </button>
-                    <button class="feedback-btn correct" onclick="showFeedbackForm('correct', '17')">
-                        ✏️ Suggest New Layout
-                    </button>
-                </div>
-                
-                <div id="feedback-form-17" class="feedback-form">
-                    <textarea id="feedback-text-17" placeholder="Please describe why this image should be reviewed or what new layout it represents..."></textarea>
-                    <button onclick="submitFeedback('17', 'folklife')">Submit Feedback</button>
                 </div>
             </div>
         </div>
         
         <div class="images-grid">
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_series_crisis_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_crisis.png" alt="magazine_series_crisis.png" 
-                         onclick="openModal('magazine_series_crisis.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_series_crisis_png')"
-                         onerror="imageError(this, 'loading-17-magazine_series_crisis_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_crisis.png" alt="magazine_series_crisis.png" 
+                     onclick="openModal('magazine_series_crisis.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_series_crisis.png
@@ -312,18 +312,14 @@
                     <div class="image-distance">
                         Similarity: 100.0%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/series/crisis" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_sports-games_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_sports-games.png" alt="magazine_themes_sports-games.png" 
-                         onclick="openModal('magazine_themes_sports-games.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_sports-games_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_sports-games_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_sports-games.png" alt="magazine_themes_sports-games.png" 
+                     onclick="openModal('magazine_themes_sports-games.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_sports-games.png
@@ -331,18 +327,14 @@
                     <div class="image-distance">
                         Similarity: 89.5%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/sports-games" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_series_foodways-of-holidays_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_foodways-of-holidays.png" alt="magazine_series_foodways-of-holidays.png" 
-                         onclick="openModal('magazine_series_foodways-of-holidays.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_series_foodways-of-holidays_png')"
-                         onerror="imageError(this, 'loading-17-magazine_series_foodways-of-holidays_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_foodways-of-holidays.png" alt="magazine_series_foodways-of-holidays.png" 
+                     onclick="openModal('magazine_series_foodways-of-holidays.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_series_foodways-of-holidays.png
@@ -350,18 +342,14 @@
                     <div class="image-distance">
                         Similarity: 89.4%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/series/foodways-of-holidays" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_material-world_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_material-world.png" alt="magazine_material-world.png" 
-                         onclick="openModal('magazine_material-world.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_material-world_png')"
-                         onerror="imageError(this, 'loading-17-magazine_material-world_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_material-world.png" alt="magazine_material-world.png" 
+                     onclick="openModal('magazine_material-world.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_material-world.png
@@ -369,18 +357,14 @@
                     <div class="image-distance">
                         Similarity: 88.3%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/material-world" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_work-life_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_work-life.png" alt="magazine_themes_work-life.png" 
-                         onclick="openModal('magazine_themes_work-life.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_work-life_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_work-life_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_work-life.png" alt="magazine_themes_work-life.png" 
+                     onclick="openModal('magazine_themes_work-life.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_work-life.png
@@ -388,18 +372,14 @@
                     <div class="image-distance">
                         Similarity: 88.1%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/work-life" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_religion-spirituality_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_religion-spirituality.png" alt="magazine_themes_religion-spirituality.png" 
-                         onclick="openModal('magazine_themes_religion-spirituality.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_religion-spirituality_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_religion-spirituality_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_religion-spirituality.png" alt="magazine_themes_religion-spirituality.png" 
+                     onclick="openModal('magazine_themes_religion-spirituality.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_religion-spirituality.png
@@ -407,18 +387,14 @@
                     <div class="image-distance">
                         Similarity: 88.1%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/religion-spirituality" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_crafts_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_crafts.png" alt="magazine_themes_crafts.png" 
-                         onclick="openModal('magazine_themes_crafts.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_crafts_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_crafts_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_crafts.png" alt="magazine_themes_crafts.png" 
+                     onclick="openModal('magazine_themes_crafts.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_crafts.png
@@ -426,18 +402,14 @@
                     <div class="image-distance">
                         Similarity: 88.0%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/crafts" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_environment_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_environment.png" alt="magazine_themes_environment.png" 
-                         onclick="openModal('magazine_themes_environment.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_environment_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_environment_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_environment.png" alt="magazine_themes_environment.png" 
+                     onclick="openModal('magazine_themes_environment.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_environment.png
@@ -445,18 +417,14 @@
                     <div class="image-distance">
                         Similarity: 87.5%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/environment" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_foodways_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_foodways.png" alt="magazine_themes_foodways.png" 
-                         onclick="openModal('magazine_themes_foodways.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_foodways_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_foodways_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_foodways.png" alt="magazine_themes_foodways.png" 
+                     onclick="openModal('magazine_themes_foodways.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_foodways.png
@@ -464,18 +432,14 @@
                     <div class="image-distance">
                         Similarity: 87.4%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/foodways" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine.png" alt="magazine.png" 
-                         onclick="openModal('magazine.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_png')"
-                         onerror="imageError(this, 'loading-17-magazine_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine.png" alt="magazine.png" 
+                     onclick="openModal('magazine.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine.png
@@ -483,18 +447,14 @@
                     <div class="image-distance">
                         Similarity: 86.8%
                     </div>
+                    <a href="https://folklife.si.edu/magazine" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_dress_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dress.png" alt="magazine_themes_dress.png" 
-                         onclick="openModal('magazine_themes_dress.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_dress_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_dress_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dress.png" alt="magazine_themes_dress.png" 
+                     onclick="openModal('magazine_themes_dress.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_dress.png
@@ -502,18 +462,14 @@
                     <div class="image-distance">
                         Similarity: 86.7%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/dress" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_history_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_history.png" alt="magazine_themes_history.png" 
-                         onclick="openModal('magazine_themes_history.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_history_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_history_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_history.png" alt="magazine_themes_history.png" 
+                     onclick="openModal('magazine_themes_history.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_history.png
@@ -521,18 +477,14 @@
                     <div class="image-distance">
                         Similarity: 86.7%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/history" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_music_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_music.png" alt="magazine_themes_music.png" 
-                         onclick="openModal('magazine_themes_music.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_music_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_music_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_music.png" alt="magazine_themes_music.png" 
+                     onclick="openModal('magazine_themes_music.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_music.png
@@ -540,18 +492,14 @@
                     <div class="image-distance">
                         Similarity: 86.7%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/music" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_cultural-sustainability_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-sustainability.png" alt="magazine_themes_cultural-sustainability.png" 
-                         onclick="openModal('magazine_themes_cultural-sustainability.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_cultural-sustainability_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_cultural-sustainability_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-sustainability.png" alt="magazine_themes_cultural-sustainability.png" 
+                     onclick="openModal('magazine_themes_cultural-sustainability.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_cultural-sustainability.png
@@ -559,18 +507,14 @@
                     <div class="image-distance">
                         Similarity: 86.7%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/cultural-sustainability" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_news-and-events_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_news-and-events.png" alt="magazine_news-and-events.png" 
-                         onclick="openModal('magazine_news-and-events.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_news-and-events_png')"
-                         onerror="imageError(this, 'loading-17-magazine_news-and-events_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_news-and-events.png" alt="magazine_news-and-events.png" 
+                     onclick="openModal('magazine_news-and-events.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_news-and-events.png
@@ -578,18 +522,14 @@
                     <div class="image-distance">
                         Similarity: 86.6%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/news-and-events" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_traditional-knowledge_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_traditional-knowledge.png" alt="magazine_themes_traditional-knowledge.png" 
-                         onclick="openModal('magazine_themes_traditional-knowledge.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_traditional-knowledge_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_traditional-knowledge_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_traditional-knowledge.png" alt="magazine_themes_traditional-knowledge.png" 
+                     onclick="openModal('magazine_themes_traditional-knowledge.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_traditional-knowledge.png
@@ -597,18 +537,14 @@
                     <div class="image-distance">
                         Similarity: 86.6%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/traditional-knowledge" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_deep-dive_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_deep-dive.png" alt="magazine_deep-dive.png" 
-                         onclick="openModal('magazine_deep-dive.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_deep-dive_png')"
-                         onerror="imageError(this, 'loading-17-magazine_deep-dive_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_deep-dive.png" alt="magazine_deep-dive.png" 
+                     onclick="openModal('magazine_deep-dive.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_deep-dive.png
@@ -616,18 +552,14 @@
                     <div class="image-distance">
                         Similarity: 86.4%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/deep-dive" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_celebrations_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_celebrations.png" alt="magazine_themes_celebrations.png" 
-                         onclick="openModal('magazine_themes_celebrations.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_celebrations_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_celebrations_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_celebrations.png" alt="magazine_themes_celebrations.png" 
+                     onclick="openModal('magazine_themes_celebrations.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_celebrations.png
@@ -635,18 +567,14 @@
                     <div class="image-distance">
                         Similarity: 86.3%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/celebrations" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_sights-and-sounds_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_sights-and-sounds.png" alt="magazine_sights-and-sounds.png" 
-                         onclick="openModal('magazine_sights-and-sounds.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_sights-and-sounds_png')"
-                         onerror="imageError(this, 'loading-17-magazine_sights-and-sounds_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_sights-and-sounds.png" alt="magazine_sights-and-sounds.png" 
+                     onclick="openModal('magazine_sights-and-sounds.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_sights-and-sounds.png
@@ -654,18 +582,14 @@
                     <div class="image-distance">
                         Similarity: 86.3%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/sights-and-sounds" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_social-justice_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_social-justice.png" alt="magazine_themes_social-justice.png" 
-                         onclick="openModal('magazine_themes_social-justice.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_social-justice_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_social-justice_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_social-justice.png" alt="magazine_themes_social-justice.png" 
+                     onclick="openModal('magazine_themes_social-justice.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_social-justice.png
@@ -673,18 +597,14 @@
                     <div class="image-distance">
                         Similarity: 86.2%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/social-justice" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_cultural-transmission_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-transmission.png" alt="magazine_themes_cultural-transmission.png" 
-                         onclick="openModal('magazine_themes_cultural-transmission.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_cultural-transmission_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_cultural-transmission_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-transmission.png" alt="magazine_themes_cultural-transmission.png" 
+                     onclick="openModal('magazine_themes_cultural-transmission.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_cultural-transmission.png
@@ -692,18 +612,14 @@
                     <div class="image-distance">
                         Similarity: 85.8%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/cultural-transmission" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_education_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_education.png" alt="magazine_themes_education.png" 
-                         onclick="openModal('magazine_themes_education.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_education_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_education_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_education.png" alt="magazine_themes_education.png" 
+                     onclick="openModal('magazine_themes_education.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_education.png
@@ -711,18 +627,14 @@
                     <div class="image-distance">
                         Similarity: 85.7%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/education" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_immigration-migration_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_immigration-migration.png" alt="magazine_themes_immigration-migration.png" 
-                         onclick="openModal('magazine_themes_immigration-migration.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_immigration-migration_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_immigration-migration_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_immigration-migration.png" alt="magazine_themes_immigration-migration.png" 
+                     onclick="openModal('magazine_themes_immigration-migration.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_immigration-migration.png
@@ -730,18 +642,14 @@
                     <div class="image-distance">
                         Similarity: 85.4%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/immigration-migration" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_art-design_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_art-design.png" alt="magazine_themes_art-design.png" 
-                         onclick="openModal('magazine_themes_art-design.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_art-design_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_art-design_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_art-design.png" alt="magazine_themes_art-design.png" 
+                     onclick="openModal('magazine_themes_art-design.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_art-design.png
@@ -749,18 +657,14 @@
                     <div class="image-distance">
                         Similarity: 85.2%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/art-design" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_perspectives_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_perspectives.png" alt="magazine_perspectives.png" 
-                         onclick="openModal('magazine_perspectives.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_perspectives_png')"
-                         onerror="imageError(this, 'loading-17-magazine_perspectives_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_perspectives.png" alt="magazine_perspectives.png" 
+                     onclick="openModal('magazine_perspectives.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_perspectives.png
@@ -768,18 +672,14 @@
                     <div class="image-distance">
                         Similarity: 85.2%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/perspectives?page=10" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_storytelling_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_storytelling.png" alt="magazine_themes_storytelling.png" 
-                         onclick="openModal('magazine_themes_storytelling.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_storytelling_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_storytelling_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_storytelling.png" alt="magazine_themes_storytelling.png" 
+                     onclick="openModal('magazine_themes_storytelling.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_storytelling.png
@@ -787,18 +687,14 @@
                     <div class="image-distance">
                         Similarity: 84.9%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/storytelling" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_language_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_language.png" alt="magazine_themes_language.png" 
-                         onclick="openModal('magazine_themes_language.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_language_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_language_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_language.png" alt="magazine_themes_language.png" 
+                     onclick="openModal('magazine_themes_language.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_language.png
@@ -806,18 +702,14 @@
                     <div class="image-distance">
                         Similarity: 84.7%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/language" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_community_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_community.png" alt="magazine_themes_community.png" 
-                         onclick="openModal('magazine_themes_community.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_community_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_community_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_community.png" alt="magazine_themes_community.png" 
+                     onclick="openModal('magazine_themes_community.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_community.png
@@ -825,18 +717,14 @@
                     <div class="image-distance">
                         Similarity: 84.7%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/community" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_dc-local_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_dc-local.png" alt="magazine_dc-local.png" 
-                         onclick="openModal('magazine_dc-local.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_dc-local_png')"
-                         onerror="imageError(this, 'loading-17-magazine_dc-local_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_dc-local.png" alt="magazine_dc-local.png" 
+                     onclick="openModal('magazine_dc-local.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_dc-local.png
@@ -844,18 +732,14 @@
                     <div class="image-distance">
                         Similarity: 84.4%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/dc-local" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_dance_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dance.png" alt="magazine_themes_dance.png" 
-                         onclick="openModal('magazine_themes_dance.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_dance_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_dance_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dance.png" alt="magazine_themes_dance.png" 
+                     onclick="openModal('magazine_themes_dance.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_dance.png
@@ -863,18 +747,14 @@
                     <div class="image-distance">
                         Similarity: 84.0%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/dance" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-authors_betty-belanus_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="authors_betty-belanus.png" 
-                         onclick="openModal('authors_betty-belanus.png')"
-                         onload="imageLoaded(this, 'loading-17-authors_betty-belanus_png')"
-                         onerror="imageError(this, 'loading-17-authors_betty-belanus_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="authors_betty-belanus.png" 
+                     onclick="openModal('authors_betty-belanus.png')">
                 <div class="image-info">
                     <div class="image-name">
                         authors_betty-belanus.png
@@ -882,18 +762,14 @@
                     <div class="image-distance">
                         Similarity: 83.5%
                     </div>
+                    <a href="https://folklife.si.edu/authors/betty-belanus" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-authors_emma-cieslik_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emma-cieslik.png" alt="authors_emma-cieslik.png" 
-                         onclick="openModal('authors_emma-cieslik.png')"
-                         onload="imageLoaded(this, 'loading-17-authors_emma-cieslik_png')"
-                         onerror="imageError(this, 'loading-17-authors_emma-cieslik_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emma-cieslik.png" alt="authors_emma-cieslik.png" 
+                     onclick="openModal('authors_emma-cieslik.png')">
                 <div class="image-info">
                     <div class="image-name">
                         authors_emma-cieslik.png
@@ -901,18 +777,14 @@
                     <div class="image-distance">
                         Similarity: 83.3%
                     </div>
+                    <a href="https://folklife.si.edu/authors/emma-cieslik" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_building-arts_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_building-arts.png" alt="magazine_themes_building-arts.png" 
-                         onclick="openModal('magazine_themes_building-arts.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_themes_building-arts_png')"
-                         onerror="imageError(this, 'loading-17-magazine_themes_building-arts_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_building-arts.png" alt="magazine_themes_building-arts.png" 
+                     onclick="openModal('magazine_themes_building-arts.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_building-arts.png
@@ -920,18 +792,14 @@
                     <div class="image-distance">
                         Similarity: 83.2%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/themes/building-arts?page=2" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-magazine_series_stream-of-voices_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_stream-of-voices.png" alt="magazine_series_stream-of-voices.png" 
-                         onclick="openModal('magazine_series_stream-of-voices.png')"
-                         onload="imageLoaded(this, 'loading-17-magazine_series_stream-of-voices_png')"
-                         onerror="imageError(this, 'loading-17-magazine_series_stream-of-voices_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_stream-of-voices.png" alt="magazine_series_stream-of-voices.png" 
+                     onclick="openModal('magazine_series_stream-of-voices.png')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_series_stream-of-voices.png
@@ -939,18 +807,14 @@
                     <div class="image-distance">
                         Similarity: 83.0%
                     </div>
+                    <a href="https://folklife.si.edu/magazine/series/stream-of-voices" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-authors_maddie-vanoostenburg_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_maddie-vanoostenburg.png" alt="authors_maddie-vanoostenburg.png" 
-                         onclick="openModal('authors_maddie-vanoostenburg.png')"
-                         onload="imageLoaded(this, 'loading-17-authors_maddie-vanoostenburg_png')"
-                         onerror="imageError(this, 'loading-17-authors_maddie-vanoostenburg_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_maddie-vanoostenburg.png" alt="authors_maddie-vanoostenburg.png" 
+                     onclick="openModal('authors_maddie-vanoostenburg.png')">
                 <div class="image-info">
                     <div class="image-name">
                         authors_maddie-vanoostenburg.png
@@ -958,18 +822,14 @@
                     <div class="image-distance">
                         Similarity: 82.9%
                     </div>
+                    <a href="https://folklife.si.edu/authors/maddie-vanoostenburg" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-authors_emily-buhrow-rogers_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emily-buhrow-rogers.png" alt="authors_emily-buhrow-rogers.png" 
-                         onclick="openModal('authors_emily-buhrow-rogers.png')"
-                         onload="imageLoaded(this, 'loading-17-authors_emily-buhrow-rogers_png')"
-                         onerror="imageError(this, 'loading-17-authors_emily-buhrow-rogers_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emily-buhrow-rogers.png" alt="authors_emily-buhrow-rogers.png" 
+                     onclick="openModal('authors_emily-buhrow-rogers.png')">
                 <div class="image-info">
                     <div class="image-name">
                         authors_emily-buhrow-rogers.png
@@ -977,18 +837,14 @@
                     <div class="image-distance">
                         Similarity: 82.4%
                     </div>
+                    <a href="https://folklife.si.edu/authors/emily-buhrow-rogers" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-authors_james-deutsch_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_james-deutsch.png" alt="authors_james-deutsch.png" 
-                         onclick="openModal('authors_james-deutsch.png')"
-                         onload="imageLoaded(this, 'loading-17-authors_james-deutsch_png')"
-                         onerror="imageError(this, 'loading-17-authors_james-deutsch_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_james-deutsch.png" alt="authors_james-deutsch.png" 
+                     onclick="openModal('authors_james-deutsch.png')">
                 <div class="image-info">
                     <div class="image-name">
                         authors_james-deutsch.png
@@ -996,18 +852,14 @@
                     <div class="image-distance">
                         Similarity: 81.6%
                     </div>
+                    <a href="https://folklife.si.edu/authors/james-deutsch?page=2" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-authors_hali-dardar_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hali-dardar.png" alt="authors_hali-dardar.png" 
-                         onclick="openModal('authors_hali-dardar.png')"
-                         onload="imageLoaded(this, 'loading-17-authors_hali-dardar_png')"
-                         onerror="imageError(this, 'loading-17-authors_hali-dardar_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hali-dardar.png" alt="authors_hali-dardar.png" 
+                     onclick="openModal('authors_hali-dardar.png')">
                 <div class="image-info">
                     <div class="image-name">
                         authors_hali-dardar.png
@@ -1015,18 +867,14 @@
                     <div class="image-distance">
                         Similarity: 80.2%
                     </div>
+                    <a href="https://folklife.si.edu/authors/hali-dardar" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-17-authors_daniel-sheehy_png">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_daniel-sheehy.png" alt="authors_daniel-sheehy.png" 
-                         onclick="openModal('authors_daniel-sheehy.png')"
-                         onload="imageLoaded(this, 'loading-17-authors_daniel-sheehy_png')"
-                         onerror="imageError(this, 'loading-17-authors_daniel-sheehy_png')">
-                </div>
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_daniel-sheehy.png" alt="authors_daniel-sheehy.png" 
+                     onclick="openModal('authors_daniel-sheehy.png')">
                 <div class="image-info">
                     <div class="image-name">
                         authors_daniel-sheehy.png
@@ -1034,9 +882,9 @@
                     <div class="image-distance">
                         Similarity: 79.4%
                     </div>
-                    <div class="similarity-warning">
-                        ⚠️ <strong>Review Recommended:</strong> This image has low similarity and may need human review.
-                    </div>
+                    <a href="https://folklife.si.edu/authors/daniel-sheehy" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
                 </div>
             </div>
         </div>
@@ -1078,73 +926,6 @@
                 closeModal();
             }
         });
-        
-        // Image loading functions
-        function imageLoaded(img, loadingId) {
-            // Hide loading overlay and show image
-            const loadingOverlay = document.getElementById(loadingId);
-            if (loadingOverlay) {
-                loadingOverlay.classList.remove('skeleton');
-                loadingOverlay.classList.add('loaded');
-            }
-            img.classList.remove('loading');
-            img.classList.add('loaded');
-        }
-        
-        function imageError(img, loadingId) {
-            // Show error state with red background and "Failed" text
-            const loadingOverlay = document.getElementById(loadingId);
-            if (loadingOverlay) {
-                loadingOverlay.classList.remove('skeleton');
-                loadingOverlay.classList.add('failed');
-                loadingOverlay.innerHTML = '<span>Failed</span>';
-            }
-            img.style.display = 'none';
-        }
-        
-        // Feedback system functions
-        function showFeedbackForm(type, clusterId) {
-            const form = document.getElementById(`feedback-form-${clusterId}`);
-            const textarea = document.getElementById(`feedback-text-${clusterId}`);
-            
-            // Clear previous content
-            textarea.value = '';
-            
-            // Show form
-            form.classList.add('show');
-            
-            // Focus on textarea
-            textarea.focus();
-        }
-        
-        function submitFeedback(clusterId, site) {
-            const textarea = document.getElementById(`feedback-text-${clusterId}`);
-            const feedback = textarea.value.trim();
-            
-            if (!feedback) {
-                alert('Please provide feedback before submitting.');
-                return;
-            }
-            
-            // Here you would typically send this to your backend
-            // For now, we'll just show a success message
-            alert('Thank you for your feedback! This will be reviewed by our team.');
-            
-            // Hide the form
-            document.getElementById(`feedback-form-${clusterId}`).classList.remove('show');
-            
-            // In a real implementation, you would:
-            // 1. Send feedback to your backend API
-            // 2. Store it in a database
-            // 3. Create a review queue for human moderators
-            // 4. Potentially create new layout buckets
-            console.log('Feedback submitted:', {
-                clusterId: clusterId,
-                site: site,
-                feedback: feedback,
-                timestamp: new Date().toISOString()
-            });
-        }
     </script>
 </body>
 </html>

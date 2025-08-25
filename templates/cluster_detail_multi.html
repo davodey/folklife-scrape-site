@@ -62,45 +62,124 @@
         .back-btn { 
             background: {{ site_config.color }}; 
             color: white; 
-            padding: 0.75rem 1.5rem; 
+            padding: 0.875rem 1.75rem; 
             text-decoration: none; 
-            border-radius: 6px; 
+            border-radius: 8px; 
             display: inline-block;
-            transition: opacity 0.2s;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
-        .back-btn:hover { opacity: 0.9; }
+        .back-btn:hover { 
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background: {{ site_config.color }}dd;
+        }
         
-        .cluster-info { background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .cluster-header { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }
-        .canonical-image { width: 200px; height: 150px; object-fit: cover; border-radius: 8px; }
-        .cluster-details h2 { color: #2c3e50; margin-bottom: 1rem; }
-        .cluster-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .cluster-info { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 12px; 
+            margin-bottom: 2rem; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .cluster-header { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 2rem; 
+            margin-bottom: 2rem; 
+        }
+        .canonical-image { 
+            width: 250px; 
+            height: 180px; 
+            object-fit: cover; 
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        .cluster-details h2 { color: #2c3e50; margin-bottom: 1rem; font-size: 1.8rem; }
+        .cluster-stats { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            gap: 1rem; 
+            margin-top: 1.5rem; 
+        }
         .stat-item { text-align: center; }
         .stat-number { font-size: 1.5rem; font-weight: bold; color: {{ site_config.color }}; }
         .stat-label { color: #7f8c8d; font-size: 0.9rem; }
         
-        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .images-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 1.5rem; 
+        }
         .image-card { 
             background: white; 
-            border-radius: 8px; 
+            border-radius: 12px; 
             overflow: hidden; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
-            transition: transform 0.2s; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        .image-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-        .image-card img { width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: opacity 0.2s; }
+        .image-card:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-color: rgba(0,0,0,0.1);
+        }
+        .image-card img { 
+            width: 100%; 
+            height: 200px; 
+            object-fit: cover; 
+            cursor: pointer; 
+            transition: opacity 0.2s; 
+        }
         .image-card img:hover { opacity: 0.8; }
-        .image-info { padding: 1rem; }
-        .image-name { font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem; word-break: break-word; }
+        .image-info { padding: 1.25rem; }
+        .image-name { 
+            font-weight: 600; 
+            color: #2c3e50; 
+            margin-bottom: 0.75rem; 
+            word-break: break-word; 
+            line-height: 1.4;
+        }
         .canonical-badge { 
             background: {{ site_config.color }}; 
             color: white; 
             padding: 0.25rem 0.5rem; 
-            border-radius: 4px; 
+            border-radius: 6px; 
             font-size: 0.8rem; 
             margin-left: 0.5rem; 
+            font-weight: 500;
         }
-        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        .image-distance { color: #6c757d; font-size: 0.9rem; margin-bottom: 0.75rem; }
+        
+        /* URL link styles */
+        .image-url-link {
+            display: inline-block;
+            padding: 0.5rem 0.75rem;
+            background: #f8f9fa;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 0.5rem;
+        }
+        .image-url-link:hover {
+            background: #e9ecef;
+            color: #212529;
+            border-color: #dee2e6;
+            text-decoration: none;
+        }
+        .url-icon {
+            margin-right: 0.5rem;
+            opacity: 0.7;
+        }
         
         /* Modal/Lightbox styles */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
@@ -141,15 +220,21 @@
                      onclick="openModal('{{ canonical.path }}', '{{ canonical.filename }}')">
                 <div class="cluster-details">
                     <h2>Layout {{ cluster_id }}</h2>
-                    <p><strong>Canonical Image:</strong> {{ canonical.filename }}</p>
+                    
+                    {% if canonical_url %}
+                    <a href="{{ canonical_url }}" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
+                    {% endif %}
+                    
                     <div class="cluster-stats">
                         <div class="stat-item">
                             <div class="stat-number">{{ cluster_data|length }}</div>
                             <div class="stat-label">Total Screenshots</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">{{ "%.1f"|format(cluster_data|length / 1) }}</div>
-                            <div class="stat-label">Avg per Layout</div>
+                            <div class="stat-number">{{ cluster_data|length }}</div>
+                            <div class="stat-label">Images in Layout</div>
                         </div>
                     </div>
                 </div>
@@ -171,6 +256,12 @@
                     <div class="image-distance">
                         Distance: {{ "%.6f"|format(screenshot.distance) }}
                     </div>
+                    
+                    {% if screenshot.url %}
+                    <a href="{{ screenshot.url }}" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

@@ -42,6 +42,25 @@ MAX_IMAGES_PER_CLUSTER = 20
 OUTPUT_DIR = Path("docs")
 SPACES_CDN_BASE = "https://quotient.nyc3.cdn.digitaloceanspaces.com"
 
+def load_url_mapping(site):
+    """Load URL mapping for a specific site"""
+    site_config = SITE_CONFIGS[site]
+    url_mapping_file = site_config['images_dir'] / 'url_mapping.json'
+    
+    if not url_mapping_file.exists():
+        print(f"Warning: {url_mapping_file} not found for {site}")
+        return {}
+    
+    try:
+        with open(url_mapping_file, 'r') as f:
+            url_mapping = json.load(f)
+        # Reverse the mapping to go from filename to URL
+        filename_to_url = {v: k for k, v in url_mapping.items()}
+        return filename_to_url
+    except Exception as e:
+        print(f"Error loading URL mapping for {site}: {e}")
+        return {}
+
 def load_cluster_data(site):
     """Load cluster data from CSV for a specific site"""
     site_config = SITE_CONFIGS[site]
@@ -146,86 +165,225 @@ def generate_main_page(summary, site_configs):
         .stat-number {{ font-size: 2rem; font-weight: bold; color: {summary['site_config']['color']}; }}
         .stat-label {{ color: #7f8c8d; margin-top: 0.5rem; }}
         
-        .clusters-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }}
-        .cluster-card {{ background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s; }}
-        .cluster-card:hover {{ transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }}
-        .cluster-header {{ background: #ecf0f1; padding: 1rem; border-bottom: 1px solid #ddd; }}
-        .cluster-title {{ font-size: 1.2rem; font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem; }}
-        .cluster-size {{ color: #7f8c8d; font-size: 0.9rem; }}
+        .clusters-grid {{ 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); 
+            gap: 3rem; 
+            padding: 1rem 0;
+        }}
+        .cluster-card {{ 
+            background: white; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }}
+        .cluster-card:hover {{ 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border-color: rgba(0,0,0,0.1);
+        }}
+        .cluster-header {{ 
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+            padding: 2rem; 
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }}
+        .cluster-header::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, {summary['site_config']['color']}, {summary['site_config']['color']}dd);
+        }}
+        .cluster-title {{ 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            color: #1a1a1a; 
+            margin-bottom: 0.75rem; 
+            letter-spacing: -0.02em;
+        }}
+        .cluster-size {{ 
+            color: #6c757d; 
+            font-size: 1rem; 
+            font-weight: 500; 
+            opacity: 0.8;
+        }}
         .canonical-image {{ 
             width: 100%; 
-            height: 150px; 
+            height: 220px; 
             object-fit: cover; 
-            transition: opacity 0.3s ease;
+            transition: transform 0.3s ease;
         }}
-        .canonical-image.loading {{ opacity: 0.3; }}
-        .canonical-image.loaded {{ opacity: 1; }}
-        
-        .cluster-preview {{ padding: 1rem; }}
-        .preview-grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-top: 1rem; }}
+        .cluster-card:hover .canonical-image {{
+            transform: scale(1.05);
+        }}
+        .cluster-preview {{ 
+            padding: 2.5rem; 
+            background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+        }}
+        .preview-grid {{ 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 1rem; 
+            margin: 2rem 0; 
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.7);
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }}
         .preview-thumb {{ 
             width: 100%; 
-            height: 40px; 
+            height: 60px; 
             object-fit: cover; 
-            border-radius: 4px; 
-            transition: opacity 0.3s ease;
+            border-radius: 12px;
+            border: 2px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }}
-        .preview-thumb.loading {{ opacity: 0.3; }}
-        .preview-thumb.loaded {{ opacity: 1; }}
-        
-        /* Skeleton loading states */
-        .skeleton {{ 
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            border-radius: 4px;
+        .preview-thumb:hover {{
+            transform: scale(1.1);
+            border-color: {summary['site_config']['color']};
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
         }}
-        
-        @keyframes loading {{
-            0% {{ background-position: 200% 0; }}
-            100% {{ background-position: -200% 0; }}
+        .view-all {{ 
+            text-align: center; 
+            margin-top: 2rem; 
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
         }}
-        
-        .image-container {{ position: relative; }}
-        .loading-overlay {{ 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            bottom: 0; 
-            background: #f8f9fa; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: #6c757d; 
-            font-size: 0.8rem;
-            border-radius: 4px;
-        }}
-        .loading-overlay.skeleton {{ 
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }}
-        .loading-overlay.failed {{ 
-            background: #dc3545; 
-            color: white; 
-            font-weight: bold; 
-            font-size: 1.1rem; 
-        }}
-        .loading-overlay.loaded {{ 
-            display: none; 
-        }}
-        .view-all {{ text-align: center; margin-top: 1rem; }}
         .view-btn {{ 
-            background: {summary['site_config']['color']}; 
+            background: linear-gradient(135deg, {summary['site_config']['color']}, {summary['site_config']['color']}dd); 
             color: white; 
-            padding: 0.5rem 1rem; 
+            padding: 1rem 2.5rem; 
             text-decoration: none; 
-            border-radius: 4px; 
+            border-radius: 16px; 
             display: inline-block; 
-            transition: background 0.2s;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }}
-        .view-btn:hover {{ opacity: 0.9; }}
+        .view-btn::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }}
+        .view-btn:hover::before {{
+            left: 100%;
+        }}
+        .view-btn:hover {{ 
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, {summary['site_config']['color']}dd, {summary['site_config']['color']});
+        }}
+        .view-btn:active {{ 
+            transform: translateY(0);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }}
+        .loading {{ text-align: center; padding: 2rem; color: #7f8c8d; }}
+        
+        /* Canonical page link styles */
+        .canonical-page-link {{
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: #495057;
+            text-decoration: none;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            border: 2px solid rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }}
+        .canonical-page-link::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.05), transparent);
+            transition: left 0.5s;
+        }}
+        .canonical-page-link:hover::before {{
+            left: 100%;
+        }}
+        .canonical-page-link:hover {{
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            color: #212529;
+            border-color: rgba(0,0,0,0.1);
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }}
+        
+        /* Enhanced container spacing */
+        .container {{
+            max-width: 1600px; 
+            margin: 0 auto; 
+            padding: 3rem 2rem; 
+        }}
+        
+        /* Enhanced stats styling */
+        .stats {{
+            background: linear-gradient(135deg, #ffffff, #f8f9fa); 
+            padding: 3rem; 
+            border-radius: 24px; 
+            margin-bottom: 3rem; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+        }}
+        .stats-grid {{
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 2rem; 
+        }}
+        .stat-item {{
+            text-align: center; 
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.7);
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }}
+        .stat-item:hover {{
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }}
+        .stat-number {{
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            color: {summary['site_config']['color']}; 
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }}
+        .stat-label {{
+            color: #6c757d; 
+            margin-top: 0.5rem; 
+            font-weight: 600;
+            font-size: 1rem;
+        }}
         
         /* Modal/Lightbox styles */
         .modal {{ display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }}
@@ -234,6 +392,34 @@ def generate_main_page(summary, site_configs):
         .modal-close:hover {{ color: #bbb; }}
         .clickable {{ cursor: pointer; transition: opacity 0.2s; }}
         .clickable:hover {{ opacity: 0.8; }}
+        
+        /* URL link styles */
+        .image-url-link {{
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: #f8f9fa;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }}
+        .image-url-link:hover {{
+            background: #e9ecef;
+            color: #212529;
+            border-color: #dee2e6;
+            text-decoration: none;
+        }}
+        .url-icon {{
+            margin-right: 0.5rem;
+            opacity: 0.7;
+        }}
     </style>
 </head>
 <body>
@@ -252,14 +438,14 @@ def generate_main_page(summary, site_configs):
         </div>
     </div>
     
-            <div class="header">
-            <h1>{summary['site_config']['display_name']} Layouts Viewer</h1>
-            <p>Visual overview of {summary['total_clusters']} unique layouts from {summary['total_screenshots']} screenshots</p>
-            <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">
-                💡 <strong>How it works:</strong> Each cluster groups screenshots with similar visual layouts. 
-                Images are sorted by similarity to the "canonical" (most representative) image.
-            </p>
-        </div>
+    <div class="header">
+        <h1>{summary['site_config']['display_name']} Layouts Viewer</h1>
+        <p>Visual overview of {summary['total_clusters']} unique layouts from {summary['total_screenshots']} screenshots</p>
+        <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">
+            💡 <strong>How it works:</strong> Each cluster groups screenshots with similar visual layouts. 
+            Images are sorted by similarity to the "canonical" (most representative) image.
+        </p>
+    </div>
     
     <div class="container">
         <div class="stats">
@@ -281,6 +467,9 @@ def generate_main_page(summary, site_configs):
         
         <div class="clusters-grid">"""
     
+    # Load URL mapping for this site
+    url_mapping = load_url_mapping(summary['site'])
+    
     # Sort clusters by size (largest first)
     sorted_clusters = sorted(summary['clusters'].items(), key=lambda x: len(x[1]), reverse=True)
     
@@ -291,6 +480,9 @@ def generate_main_page(summary, site_configs):
         # Get preview images (up to 8)
         preview_images = screenshots[:8]
         
+        # Get URL for canonical image
+        canonical_url = url_mapping.get(canonical['filename'], '')
+        
         html += f"""
             <div class="cluster-card">
                 <div class="cluster-header">
@@ -298,43 +490,35 @@ def generate_main_page(summary, site_configs):
                     <div class="cluster-size">{len(screenshots)} screenshots</div>
                 </div>
                 
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-{cluster_id}-canonical">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="{SPACES_CDN_BASE}/{canonical['filename']}" 
-                         alt="Canonical" 
-                         class="canonical-image clickable loading" 
-                         onclick="openModal('{canonical['filename']}')"
-                         onload="imageLoaded(this, 'loading-{cluster_id}-canonical')"
-                         onerror="imageError(this, 'loading-{cluster_id}-canonical')">
-                </div>
+                <img src="{SPACES_CDN_BASE}/{canonical['filename']}" 
+                     alt="Canonical" 
+                     class="canonical-image clickable" 
+                     onclick="openModal('{canonical['filename']}')">
                 
                 <div class="cluster-preview">
-                    <div><strong>Canonical:</strong> {canonical['filename']}</div>
                     
                     <div class="preview-grid">"""
         
-        for i, screenshot in enumerate(preview_images):
+        for screenshot in preview_images:
             html += f"""
-                        <div class="image-container">
-                            <div class="loading-overlay skeleton" id="loading-{cluster_id}-preview-{i}">
-                                <span>...</span>
-                            </div>
-                            <img src="{SPACES_CDN_BASE}/{screenshot['filename']}" 
-                                 alt="{screenshot['filename']}" 
-                                 class="preview-thumb clickable loading" 
-                                 title="{screenshot['filename']}" 
-                                 onclick="openModal('{screenshot['filename']}')"
-                                 onload="imageLoaded(this, 'loading-{cluster_id}-preview-{i}')"
-                                 onerror="imageError(this, 'loading-{cluster_id}-preview-{i}')">
-                        </div>"""
+                        <img src="{SPACES_CDN_BASE}/{screenshot['filename']}" 
+                             alt="{screenshot['filename']}" 
+                             class="preview-thumb clickable" 
+                             title="{screenshot['filename']}" 
+                             onclick="openModal('{screenshot['filename']}')">"""
         
         html += f"""
                     </div>
                     
                     <div class="view-all">
-                        <a href="layout_{summary['site']}_{cluster_id}.html" class="view-btn">View All {len(screenshots)} Images</a>
+                        <a href="layout_{summary['site']}_{cluster_id}.html" class="view-btn">View All {len(screenshots)} Images</a>"""
+        
+        # Add canonical page link if available
+        if canonical_url:
+            html += f"""
+                        <a href="{canonical_url}" target="_blank" class="canonical-page-link">🔗 View Source Page</a>"""
+        
+        html += f"""
                     </div>
                 </div>
             </div>"""
@@ -365,28 +549,6 @@ def generate_main_page(summary, site_configs):
             document.getElementById('imageModal').style.display = 'none';
         }
         
-        function imageLoaded(img, loadingId) {
-            // Hide loading overlay and show image
-            const loadingOverlay = document.getElementById(loadingId);
-            if (loadingOverlay) {
-                loadingOverlay.classList.remove('skeleton');
-                loadingOverlay.classList.add('loaded');
-            }
-            img.classList.remove('loading');
-            img.classList.add('loaded');
-        }
-        
-        function imageError(img, loadingId) {
-            // Show error state with red background and "Failed" text
-            const loadingOverlay = document.getElementById(loadingId);
-            if (loadingOverlay) {
-                loadingOverlay.classList.remove('skeleton');
-                loadingOverlay.classList.add('failed');
-                loadingOverlay.innerHTML = '<span>Failed</span>';
-            }
-            img.style.display = 'none';
-        }
-        
         // Close modal when clicking outside the image
         window.onclick = function(event) {
             const modal = document.getElementById('imageModal');
@@ -408,12 +570,13 @@ def generate_main_page(summary, site_configs):
     return html
 
 def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
-    """Generate a cluster detail page"""
-    # Sort screenshots by distance (0.0 first)
-    sorted_screenshots = sorted(screenshots, key=lambda x: x['distance'])
-    
-    # Find canonical image
+    """Generate a detailed page for a specific cluster"""
+    # Sort screenshots by distance (canonical first, then by similarity)
+    sorted_screenshots = sorted(screenshots, key=lambda x: (not x['canonical'], x['distance']))
     canonical = next((s for s in screenshots if s['canonical']), screenshots[0])
+    
+    # Load URL mapping for this site
+    url_mapping = load_url_mapping(site)
     
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -474,155 +637,191 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
         .header h1 {{ font-size: 2.5rem; margin-bottom: 0.5rem; }}
         .header p {{ font-size: 1.1rem; opacity: 0.9; }}
         
-        .container {{ max-width: 1400px; margin: 0 auto; padding: 2rem; }}
-        .back-link {{ margin-bottom: 2rem; }}
+        .container {{ max-width: 1600px; margin: 0 auto; padding: 3rem 2rem; }}
+        .back-link {{ margin-bottom: 3rem; }}
         .back-btn {{ 
-            background: {site_config['color']}; 
+            background: linear-gradient(135deg, {site_config['color']}, {site_config['color']}dd); 
             color: white; 
-            padding: 0.75rem 1.5rem; 
+            padding: 1rem 2.5rem; 
             text-decoration: none; 
-            border-radius: 6px; 
+            border-radius: 16px; 
             display: inline-block;
-            transition: opacity 0.2s;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
         }}
-        .back-btn:hover {{ opacity: 0.9; }}
+        .back-btn::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }}
+        .back-btn:hover::before {{
+            left: 100%;
+        }}
+        .back-btn:hover {{ 
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            background: linear-gradient(135deg, {site_config['color']}dd, {site_config['color']});
+        }}
         
-        .cluster-info {{ background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
-        .cluster-header {{ display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }}
-        .canonical-image {{ width: 200px; height: 150px; object-fit: cover; border-radius: 8px; }}
-        .cluster-details h2 {{ color: #2c3e50; margin-bottom: 1rem; }}
-        .cluster-stats {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }}
-        .stat-item {{ text-align: center; }}
-        .stat-number {{ font-size: 1.5rem; font-weight: bold; color: {site_config['color']}; }}
-        .stat-label {{ color: #7f8c8d; font-size: 0.9rem; }}
-        
-        .images-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }}
-        .image-card {{ 
-            background: white; 
-            border-radius: 8px; 
-            overflow: hidden; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
-            transition: transform 0.2s; 
+        .cluster-info {{ 
+            background: linear-gradient(135deg, #ffffff, #f8f9fa); 
+            padding: 3rem; 
+            border-radius: 24px; 
+            margin-bottom: 3rem; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
         }}
-        .image-card:hover {{ transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }}
-        .image-card img {{ width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: opacity 0.2s; }}
-        .image-card img:hover {{ opacity: 0.8; }}
-        .image-info {{ padding: 1rem; }}
-        .image-name {{ font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem; word-break: break-word; }}
-        .canonical-badge {{ 
-            background: {site_config['color']}; 
-            color: white; 
-            padding: 0.25rem 0.5rem; 
-            border-radius: 4px; 
-            font-size: 0.8rem; 
-            margin-left: 0.5rem; 
-        }}
-        .image-distance {{ color: #7f8c8d; font-size: 0.9rem; }}
-        
-        /* User feedback styles */
-        .feedback-section {{ 
-            background: #f8f9fa; 
-            border: 1px solid #dee2e6; 
-            border-radius: 8px; 
-            padding: 1rem; 
-            margin-top: 1rem; 
-        }}
-        .feedback-title {{ 
-            font-weight: bold; 
-            color: #495057; 
-            margin-bottom: 0.5rem; 
-        }}
-        .feedback-buttons {{ 
+        .cluster-header {{ 
             display: flex; 
-            gap: 0.5rem; 
-            flex-wrap: wrap; 
+            align-items: flex-start; 
+            gap: 3rem; 
+            margin-bottom: 2.5rem; 
         }}
-        .feedback-btn {{ 
-            background: #6c757d; 
-            color: white; 
-            border: none; 
-            padding: 0.25rem 0.5rem; 
-            border-radius: 4px; 
-            font-size: 0.8rem; 
-            cursor: pointer; 
-            transition: background 0.2s; 
+        .canonical-image {{ 
+            width: 300px; 
+            height: 220px; 
+            object-fit: cover; 
+            border-radius: 20px;
+            border: 2px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
         }}
-        .feedback-btn:hover {{ background: #5a6268; }}
-        .feedback-btn.flag {{ background: #dc3545; }}
-        .feedback-btn.flag:hover {{ background: #c82333; }}
-        .feedback-btn.correct {{ background: #28a745; }}
-        .feedback-btn.correct:hover {{ background: #218838; }}
-        .feedback-form {{ 
-            display: none; 
-            margin-top: 1rem; 
-            padding: 1rem; 
-            background: white; 
-            border-radius: 6px; 
-            border: 1px solid #ced4da; 
+        .canonical-image:hover {{
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
         }}
-        .feedback-form.show {{ display: block; }}
-        .feedback-form textarea {{ 
-            width: 100%; 
-            min-height: 80px; 
-            padding: 0.5rem; 
-            border: 1px solid #ced4da; 
-            border-radius: 4px; 
-            margin-bottom: 0.5rem; 
-            font-family: inherit; 
+        .cluster-details h2 {{ 
+            color: #1a1a1a; 
+            margin-bottom: 1.5rem; 
+            font-size: 2.2rem; 
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }}
-        .feedback-form button {{ 
-            background: #007bff; 
-            color: white; 
-            border: none; 
-            padding: 0.5rem 1rem; 
-            border-radius: 4px; 
-            cursor: pointer; 
+        .cluster-stats {{ 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 2rem; 
         }}
-        .feedback-form button:hover {{ background: #0056b3; }}
-        .similarity-warning {{ 
-            background: #fff3cd; 
-            border: 1px solid #ffeaa7; 
-            color: #856404; 
-            padding: 0.5rem; 
-            border-radius: 4px; 
-            margin-bottom: 0.5rem; 
-            font-size: 0.9rem; 
+        .stat-item {{ 
+            text-align: center; 
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }}
-        
-        /* Loading overlay styles */
-        .image-container {{ position: relative; }}
-        .loading-overlay {{ 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            bottom: 0; 
-            background: #f8f9fa; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
+        .stat-item:hover {{
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }}
+        .stat-number {{ 
+            font-size: 2rem; 
+            font-weight: 800; 
+            color: {site_config['color']}; 
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }}
+        .stat-label {{ 
             color: #6c757d; 
-            font-size: 0.8rem;
-            border-radius: 4px;
-        }}
-        .loading-overlay.skeleton {{ 
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }}
-        .loading-overlay.failed {{ 
-            background: #dc3545; 
-            color: white; 
-            font-weight: bold; 
-            font-size: 1.1rem; 
-        }}
-        .loading-overlay.loaded {{ 
-            display: none; 
+            font-size: 1rem; 
+            font-weight: 600;
         }}
         
-        @keyframes loading {{
-            0% {{ background-position: 200% 0; }}
-            100% {{ background-position: -200% 0; }}
+        .images-grid {{ 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); 
+            gap: 2rem; 
+        }}
+        .image-card {{ 
+            background: linear-gradient(135deg, #ffffff, #f8f9fa); 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }}
+        .image-card:hover {{ 
+            transform: translateY(-6px) scale(1.02); 
+            box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+            border-color: rgba(0,0,0,0.1);
+        }}
+        .image-card img {{ 
+            width: 100%; 
+            height: 240px; 
+            object-fit: cover; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+        }}
+        .image-card:hover img {{ 
+            transform: scale(1.05);
+        }}
+        .image-info {{ 
+            padding: 2rem; 
+            background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+        }}
+        .image-name {{ 
+            font-weight: 700; 
+            color: #1a1a1a; 
+            margin-bottom: 1rem; 
+            word-break: break-word; 
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }}
+        .canonical-badge {{ 
+            background: linear-gradient(135deg, {site_config['color']}, {site_config['color']}dd); 
+            color: white; 
+            padding: 0.5rem 1rem; 
+            border-radius: 12px; 
+            font-size: 0.85rem; 
+            margin-left: 0.75rem; 
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }}
+        .image-distance {{ 
+            color: #6c757d; 
+            font-size: 1rem; 
+            margin-bottom: 1rem; 
+            font-weight: 500;
+        }}
+        
+        /* URL link styles */
+        .image-url-link {{
+            display: inline-block;
+            padding: 0.5rem 0.75rem;
+            background: #f8f9fa;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 0.5rem;
+        }}
+        .image-url-link:hover {{
+            background: #e9ecef;
+            color: #212529;
+            border-color: #dee2e6;
+            text-decoration: none;
+        }}
+        .url-icon {{
+            margin-right: 0.5rem;
+            opacity: 0.7;
         }}
         
         /* Modal/Lightbox styles */
@@ -636,10 +835,10 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
     <!-- Site Toggle Toolbar -->
     <div class="site-toolbar">
         <div class="site-toggle">
-            <a href="index.html" class="site-btn{' active' if site == 'folklife' else ''}">
+            <a href="{'index.html' if site == 'folklife' else f'index_{site}.html'}" class="site-btn{' active' if site == 'folklife' else ''}">
                 {SITE_CONFIGS['folklife']['display_name']}
             </a>
-            <a href="index_festival.html" class="site-btn{' active' if site == 'festival' else ''}">
+            <a href="{'index.html' if site == 'festival' else f'index_{site}.html'}" class="site-btn{' active' if site == 'festival' else ''}">
                 {SITE_CONFIGS['festival']['display_name']}
             </a>
         </div>
@@ -660,53 +859,31 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-{cluster_id}-canonical">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="{SPACES_CDN_BASE}/{canonical['filename']}" alt="Canonical" class="canonical-image clickable" 
-                         onclick="openModal('{canonical['filename']}')"
-                         onload="imageLoaded(this, 'loading-{cluster_id}-canonical')"
-                         onerror="imageError(this, 'loading-{cluster_id}-canonical')">
-                </div>
+                <img src="{SPACES_CDN_BASE}/{canonical['filename']}" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('{canonical['filename']}')">
                 <div class="cluster-details">
-                    <h2>Layout {cluster_id}</h2>
-                    <p><strong>Canonical Image:</strong> {canonical['filename']}</p>
-                    <p style="font-size: 0.9rem; color: #666; margin: 0.5rem 0;">
-                        💡 <strong>Canonical:</strong> The most representative image for this layout. 
-                        Other images are sorted by how similar they are to this one.
-                    </p>
+                    <h2>Layout {cluster_id}</h2>"""
+    
+    # Add URL link for canonical image if available
+    canonical_url = url_mapping.get(canonical['filename'], '')
+    if canonical_url:
+        html += f"""
+                    <a href="{canonical_url}" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>"""
+    
+    html += f"""
+                    
                     <div class="cluster-stats">
                         <div class="stat-item">
                             <div class="stat-number">{len(screenshots)}</div>
                             <div class="stat-label">Total Screenshots</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">{len(screenshots):.1f}</div>
-                            <div class="stat-label">Avg per Layout</div>
+                            <div class="stat-number">{len(screenshots)}</div>
+                            <div class="stat-label">Images in Layout</div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- User Feedback Section -->
-            <div class="feedback-section">
-                <div class="feedback-title">🤔 Found a misclassified image?</div>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
-                    Help improve our layout detection by flagging images that don't belong here or suggesting new layouts.
-                </p>
-                <div class="feedback-buttons">
-                    <button class="feedback-btn flag" onclick="showFeedbackForm('flag', '{cluster_id}')">
-                        🚩 Flag for Review
-                    </button>
-                    <button class="feedback-btn correct" onclick="showFeedbackForm('correct', '{cluster_id}')">
-                        ✏️ Suggest New Layout
-                    </button>
-                </div>
-                
-                <div id="feedback-form-{cluster_id}" class="feedback-form">
-                    <textarea id="feedback-text-{cluster_id}" placeholder="Please describe why this image should be reviewed or what new layout it represents..."></textarea>
-                    <button onclick="submitFeedback('{cluster_id}', '{site}')">Submit Feedback</button>
                 </div>
             </div>
         </div>
@@ -715,19 +892,11 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
     
     for screenshot in sorted_screenshots:
         similarity = 100 - (screenshot['distance'] * 100)
-        needs_review = similarity < 80
         
         html += f"""
             <div class="image-card">
-                <div class="image-container">
-                    <div class="loading-overlay skeleton" id="loading-{cluster_id}-{screenshot['filename'].replace('.', '_')}">
-                        <span>Loading...</span>
-                    </div>
-                    <img src="{SPACES_CDN_BASE}/{screenshot['filename']}" alt="{screenshot['filename']}" 
-                         onclick="openModal('{screenshot['filename']}')"
-                         onload="imageLoaded(this, 'loading-{cluster_id}-{screenshot['filename'].replace('.', '_')}')"
-                         onerror="imageError(this, 'loading-{cluster_id}-{screenshot['filename'].replace('.', '_')}')">
-                </div>
+                <img src="{SPACES_CDN_BASE}/{screenshot['filename']}" alt="{screenshot['filename']}" 
+                     onclick="openModal('{screenshot['filename']}')">
                 <div class="image-info">
                     <div class="image-name">
                         {screenshot['filename']}"""
@@ -742,11 +911,13 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
                         Similarity: {similarity:.1f}%
                     </div>"""
         
-        if needs_review:
+        # Add URL link if available
+        screenshot_url = url_mapping.get(screenshot['filename'], '')
+        if screenshot_url:
             html += f"""
-                    <div class="similarity-warning">
-                        ⚠️ <strong>Review Recommended:</strong> This image has low similarity and may need human review.
-                    </div>"""
+                    <a href="{screenshot_url}" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>"""
         
         html += f"""
                 </div>
@@ -792,73 +963,6 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
                 closeModal();
             }
         });
-        
-        // Image loading functions
-        function imageLoaded(img, loadingId) {
-            // Hide loading overlay and show image
-            const loadingOverlay = document.getElementById(loadingId);
-            if (loadingOverlay) {
-                loadingOverlay.classList.remove('skeleton');
-                loadingOverlay.classList.add('loaded');
-            }
-            img.classList.remove('loading');
-            img.classList.add('loaded');
-        }
-        
-        function imageError(img, loadingId) {
-            // Show error state with red background and "Failed" text
-            const loadingOverlay = document.getElementById(loadingId);
-            if (loadingOverlay) {
-                loadingOverlay.classList.remove('skeleton');
-                loadingOverlay.classList.add('failed');
-                loadingOverlay.innerHTML = '<span>Failed</span>';
-            }
-            img.style.display = 'none';
-        }
-        
-        // Feedback system functions
-        function showFeedbackForm(type, clusterId) {
-            const form = document.getElementById(`feedback-form-${clusterId}`);
-            const textarea = document.getElementById(`feedback-text-${clusterId}`);
-            
-            // Clear previous content
-            textarea.value = '';
-            
-            // Show form
-            form.classList.add('show');
-            
-            // Focus on textarea
-            textarea.focus();
-        }
-        
-        function submitFeedback(clusterId, site) {
-            const textarea = document.getElementById(`feedback-text-${clusterId}`);
-            const feedback = textarea.value.trim();
-            
-            if (!feedback) {
-                alert('Please provide feedback before submitting.');
-                return;
-            }
-            
-            // Here you would typically send this to your backend
-            // For now, we'll just show a success message
-            alert('Thank you for your feedback! This will be reviewed by our team.');
-            
-            // Hide the form
-            document.getElementById(`feedback-form-${clusterId}`).classList.remove('show');
-            
-            // In a real implementation, you would:
-            // 1. Send feedback to your backend API
-            // 2. Store it in a database
-            // 3. Create a review queue for human moderators
-            // 4. Potentially create new layout buckets
-            console.log('Feedback submitted:', {
-                clusterId: clusterId,
-                site: site,
-                feedback: feedback,
-                timestamp: new Date().toISOString()
-            });
-        }
     </script>
 </body>
 </html>"""
@@ -866,56 +970,45 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
     return html
 
 def main():
-    """Generate the multi-site static site"""
-    print("🚀 Generating Multi-Site Static Site...")
-    
-    # Create output directory
+    """Main execution function"""
+    # Ensure output directory exists
     OUTPUT_DIR.mkdir(exist_ok=True)
     
-    # Generate site for each site
-    for site in SITE_CONFIGS:
-        print(f"\n📁 Generating {site} site...")
+    # Generate pages for each site
+    for site_name in SITE_CONFIGS:
+        print(f"Generating site: {site_name}")
         
         # Load cluster data
-        clusters = load_cluster_data(site)
-        if not clusters:
-            print(f"⚠️  Skipping {site} - no data found")
+        clusters = load_cluster_data(site_name)
+        if clusters is None:
             continue
         
         # Generate summary
-        summary = get_cluster_summary(clusters, site)
+        summary = get_cluster_summary(clusters, site_name)
         
-        # Generate main page
-        print(f"  📄 Generating main page...")
+        # Generate main index page
         main_html = generate_main_page(summary, SITE_CONFIGS)
         
-        # Save main page with site-specific name
-        if site == 'folklife':
-            main_filename = "index.html"
+        # Save main page
+        if site_name == 'folklife':
+            output_file = OUTPUT_DIR / 'index.html'
         else:
-            main_filename = f"index_{site}.html"
+            output_file = OUTPUT_DIR / f'index_{site_name}.html'
         
-        with open(OUTPUT_DIR / main_filename, "w") as f:
+        with open(output_file, 'w', encoding='utf-8') as f:
             f.write(main_html)
+        print(f"Generated: {output_file}")
         
         # Generate cluster detail pages
-        print(f"  🖼️  Generating {len(clusters)} cluster detail pages...")
-        sorted_clusters = sorted(clusters.items(), key=lambda x: len(x[1]), reverse=True)
-        
-        for cluster_id, screenshots in sorted_clusters:
-            detail_html = generate_cluster_detail_page(cluster_id, screenshots, site, SITE_CONFIGS[site])
-            detail_filename = f"layout_{site}_{cluster_id}.html"
+        for cluster_id, screenshots in clusters.items():
+            detail_html = generate_cluster_detail_page(cluster_id, screenshots, site_name, SITE_CONFIGS[site_name])
             
-            with open(OUTPUT_DIR / detail_filename, "w") as f:
+            output_file = OUTPUT_DIR / f'layout_{site_name}_{cluster_id}.html'
+            with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(detail_html)
+            print(f"Generated: {output_file}")
     
-    print(f"\n✅ Multi-site static site generated successfully in {OUTPUT_DIR}/")
-    print(f"📁 Main pages: index.html (folklife), index_festival.html")
-    print(f"🖼️  Images: Served from DigitalOcean Spaces CDN")
-    print(f"📄 Cluster pages: Generated for both sites")
-    print("\n🚀 Deploy to GitHub Pages or DigitalOcean Spaces for hosting!")
-    print(f"🌐 Folklife: index.html")
-    print(f"🎪 Festival: index_festival.html")
+    print("Site generation complete!")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

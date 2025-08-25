@@ -65,27 +65,88 @@
         .stat-label { color: #7f8c8d; margin-top: 0.5rem; }
         
         .clusters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
-        .cluster-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .cluster-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
-        .cluster-header { background: #ecf0f1; padding: 1rem; border-bottom: 1px solid #ddd; }
-        .cluster-title { font-size: 1.2rem; font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem; }
-        .cluster-size { color: #7f8c8d; font-size: 0.9rem; }
-        .canonical-image { width: 100%; height: 150px; object-fit: cover; }
-        .cluster-preview { padding: 1rem; }
-        .preview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-top: 1rem; }
-        .preview-thumb { width: 100%; height: 40px; object-fit: cover; border-radius: 4px; }
-        .view-all { text-align: center; margin-top: 1rem; }
+        .cluster-card { 
+            background: white; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .cluster-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-color: rgba(0,0,0,0.1);
+        }
+        .cluster-header { 
+            background: #f8f9fa; 
+            padding: 1.25rem; 
+            border-bottom: 1px solid #e9ecef;
+        }
+        .cluster-title { font-size: 1.3rem; font-weight: 600; color: #2c3e50; margin-bottom: 0.5rem; }
+        .cluster-size { color: #6c757d; font-size: 0.9rem; font-weight: 500; }
+        .canonical-image { width: 100%; height: 180px; object-fit: cover; }
+        .cluster-preview { padding: 1.5rem; }
+        .preview-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 0.75rem; 
+            margin: 1.25rem 0; 
+        }
+        .preview-thumb { 
+            width: 100%; 
+            height: 50px; 
+            object-fit: cover; 
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        .view-all { text-align: center; margin-top: 1.5rem; }
         .view-btn { 
             background: {{ summary.site_config.color }}; 
             color: white; 
-            padding: 0.5rem 1rem; 
+            padding: 0.875rem 1.75rem; 
             text-decoration: none; 
-            border-radius: 4px; 
+            border-radius: 8px; 
             display: inline-block; 
-            transition: background 0.2s;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            border: none;
+            cursor: pointer;
         }
-        .view-btn:hover { opacity: 0.9; }
+        .view-btn:hover { 
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background: {{ summary.site_config.color }}dd;
+        }
+        .view-btn:active { 
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
         .loading { text-align: center; padding: 2rem; color: #7f8c8d; }
+        
+        /* Canonical page link styles */
+        .canonical-page-link {
+            display: inline-block;
+            margin-left: 1rem;
+            padding: 0.5rem 1rem;
+            background: #f8f9fa;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .canonical-page-link:hover {
+            background: #e9ecef;
+            color: #212529;
+            border-color: #dee2e6;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
         
         /* Modal/Lightbox styles */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
@@ -94,6 +155,34 @@
         .modal-close:hover { color: #bbb; }
         .clickable { cursor: pointer; transition: opacity 0.2s; }
         .clickable:hover { opacity: 0.8; }
+        
+        /* URL link styles */
+        .image-url-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: #f8f9fa;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .image-url-link:hover {
+            background: #e9ecef;
+            color: #212529;
+            border-color: #dee2e6;
+            text-decoration: none;
+        }
+        .url-icon {
+            margin-right: 0.5rem;
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -149,7 +238,12 @@
                 {% endif %}
                 
                 <div class="cluster-preview">
-                    <div><strong>Canonical:</strong> {{ cluster.canonical.filename }}</div>
+                    
+                    {% if cluster.canonical_url %}
+                    <a href="{{ cluster.canonical_url }}" target="_blank" class="image-url-link">
+                        <span class="url-icon">🔗</span>View Source Page
+                    </a>
+                    {% endif %}
                     
                     {% if cluster.screenshots %}
                     <div class="preview-grid">
@@ -163,10 +257,16 @@
                     {% if cluster.has_more %}
                     <div class="view-all">
                         <a href="/cluster/{{ cluster.id }}?site={{ summary.site }}" class="view-btn">View All {{ cluster.size }} Images</a>
+                        {% if cluster.canonical_url %}
+                        <a href="{{ cluster.canonical_url }}" target="_blank" class="canonical-page-link">🔗 View Source Page</a>
+                        {% endif %}
                     </div>
                     {% else %}
                     <div class="view-all">
                         <a href="/cluster/{{ cluster.id }}?site={{ summary.site }}" class="view-btn">View Details</a>
+                        {% if cluster.canonical_url %}
+                        <a href="{{ cluster.canonical_url }}" target="_blank" class="canonical-page-link">🔗 View Source Page</a>
+                        {% endif %}
                     </div>
                     {% endif %}
                 </div>
