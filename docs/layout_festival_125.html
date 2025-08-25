@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/2018_on-the-move.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('2018_on-the-move.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/2018_on-the-move.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('2018_on-the-move.png', 'festival')">
                 <div class="cluster-details">
                     <h2>Layout 125</h2>
                     <a href="https://festival.si.edu/2018/on-the-move" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/2018_on-the-move.png" alt="2018_on-the-move.png" 
-                     onclick="openModal('2018_on-the-move.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/2018_on-the-move.png" alt="2018_on-the-move.png" 
+                     onclick="openModal('2018_on-the-move.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         2018_on-the-move.png
@@ -328,13 +328,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

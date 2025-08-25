@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/past-program_1995_the-cape-verdean-connection.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('past-program_1995_the-cape-verdean-connection.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/past-program_1995_the-cape-verdean-connection.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('past-program_1995_the-cape-verdean-connection.png', 'festival')">
                 <div class="cluster-details">
                     <h2>Layout 198</h2>
                     <a href="https://festival.si.edu/past-program/1995/the-cape-verdean-connection" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/past-program_1995_the-cape-verdean-connection.png" alt="past-program_1995_the-cape-verdean-connection.png" 
-                     onclick="openModal('past-program_1995_the-cape-verdean-connection.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/past-program_1995_the-cape-verdean-connection.png" alt="past-program_1995_the-cape-verdean-connection.png" 
+                     onclick="openModal('past-program_1995_the-cape-verdean-connection.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         past-program_1995_the-cape-verdean-connection.png
@@ -328,13 +328,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png', 'folklife')">
                 <div class="cluster-details">
                     <h2>Layout 43</h2>
                     <a href="https://folklife.si.edu/magazine/foodways-holidays-a-merry-varied-christmas-in-the-foreign-service" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" alt="magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" 
-                     onclick="openModal('magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" alt="magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png" 
+                     onclick="openModal('magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png', 'folklife')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_foodways-holidays-a-merry-varied-christmas-in-the-foreign-service.png
@@ -318,8 +318,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_foodways-holidays-spiced-ginseng-tea.png" alt="magazine_foodways-holidays-spiced-ginseng-tea.png" 
-                     onclick="openModal('magazine_foodways-holidays-spiced-ginseng-tea.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/magazine_foodways-holidays-spiced-ginseng-tea.png" alt="magazine_foodways-holidays-spiced-ginseng-tea.png" 
+                     onclick="openModal('magazine_foodways-holidays-spiced-ginseng-tea.png', 'folklife')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_foodways-holidays-spiced-ginseng-tea.png
@@ -343,13 +343,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

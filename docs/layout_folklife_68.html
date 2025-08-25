@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sino-tibetan-languages.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('sino-tibetan-languages.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/sino-tibetan-languages.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('sino-tibetan-languages.png', 'folklife')">
                 <div class="cluster-details">
                     <h2>Layout 68</h2>
                     <a href="https://folklife.si.edu/sino-tibetan-languages" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sino-tibetan-languages.png" alt="sino-tibetan-languages.png" 
-                     onclick="openModal('sino-tibetan-languages.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/sino-tibetan-languages.png" alt="sino-tibetan-languages.png" 
+                     onclick="openModal('sino-tibetan-languages.png', 'folklife')">
                 <div class="image-info">
                     <div class="image-name">
                         sino-tibetan-languages.png
@@ -318,8 +318,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sino-tibetan-languages_zho-中文.png" alt="sino-tibetan-languages_zho-中文.png" 
-                     onclick="openModal('sino-tibetan-languages_zho-中文.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/sino-tibetan-languages_zho-中文.png" alt="sino-tibetan-languages_zho-中文.png" 
+                     onclick="openModal('sino-tibetan-languages_zho-中文.png', 'folklife')">
                 <div class="image-info">
                     <div class="image-name">
                         sino-tibetan-languages_zho-中文.png
@@ -333,8 +333,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sino-tibetan-languages_tib-བདཡག.png" alt="sino-tibetan-languages_tib-བདཡག.png" 
-                     onclick="openModal('sino-tibetan-languages_tib-བདཡག.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/sino-tibetan-languages_tib-བདཡག.png" alt="sino-tibetan-languages_tib-བདཡག.png" 
+                     onclick="openModal('sino-tibetan-languages_tib-བདཡག.png', 'folklife')">
                 <div class="image-info">
                     <div class="image-name">
                         sino-tibetan-languages_tib-བདཡག.png
@@ -358,13 +358,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

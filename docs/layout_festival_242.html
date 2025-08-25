@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_festival-recordings.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('storied-objects_festival-recordings.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_festival-recordings.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('storied-objects_festival-recordings.png', 'festival')">
                 <div class="cluster-details">
                     <h2>Layout 242</h2>
                     <a href="https://festival.si.edu/storied-objects/festival-recordings" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_festival-recordings.png" alt="storied-objects_festival-recordings.png" 
-                     onclick="openModal('storied-objects_festival-recordings.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_festival-recordings.png" alt="storied-objects_festival-recordings.png" 
+                     onclick="openModal('storied-objects_festival-recordings.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         storied-objects_festival-recordings.png
@@ -318,8 +318,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_mekong-river-fish-traps.png" alt="storied-objects_mekong-river-fish-traps.png" 
-                     onclick="openModal('storied-objects_mekong-river-fish-traps.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_mekong-river-fish-traps.png" alt="storied-objects_mekong-river-fish-traps.png" 
+                     onclick="openModal('storied-objects_mekong-river-fish-traps.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         storied-objects_mekong-river-fish-traps.png
@@ -343,13 +343,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

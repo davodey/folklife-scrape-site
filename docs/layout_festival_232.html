@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_commemorative-stone.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('storied-objects_commemorative-stone.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_commemorative-stone.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('storied-objects_commemorative-stone.png', 'festival')">
                 <div class="cluster-details">
                     <h2>Layout 232</h2>
                     <a href="https://festival.si.edu/storied-objects/commemorative-stone" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_commemorative-stone.png" alt="storied-objects_commemorative-stone.png" 
-                     onclick="openModal('storied-objects_commemorative-stone.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_commemorative-stone.png" alt="storied-objects_commemorative-stone.png" 
+                     onclick="openModal('storied-objects_commemorative-stone.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         storied-objects_commemorative-stone.png
@@ -318,8 +318,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_smithsonian-sun.png" alt="storied-objects_smithsonian-sun.png" 
-                     onclick="openModal('storied-objects_smithsonian-sun.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_smithsonian-sun.png" alt="storied-objects_smithsonian-sun.png" 
+                     onclick="openModal('storied-objects_smithsonian-sun.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         storied-objects_smithsonian-sun.png
@@ -343,13 +343,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

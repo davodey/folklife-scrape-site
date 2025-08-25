@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival-program_1995_heartbeat-the-voices-of-first-nations-women.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('festival-program_1995_heartbeat-the-voices-of-first-nations-women.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/festival-program_1995_heartbeat-the-voices-of-first-nations-women.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('festival-program_1995_heartbeat-the-voices-of-first-nations-women.png', 'festival')">
                 <div class="cluster-details">
                     <h2>Layout 191</h2>
                     <a href="https://festival.si.edu/festival-program/1995/heartbeat-the-voices-of-first-nations-women" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/past-program_1995_russian-roots-american-branches-music-in-two-worlds.png" alt="past-program_1995_russian-roots-american-branches-music-in-two-worlds.png" 
-                     onclick="openModal('past-program_1995_russian-roots-american-branches-music-in-two-worlds.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/past-program_1995_russian-roots-american-branches-music-in-two-worlds.png" alt="past-program_1995_russian-roots-american-branches-music-in-two-worlds.png" 
+                     onclick="openModal('past-program_1995_russian-roots-american-branches-music-in-two-worlds.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         past-program_1995_russian-roots-american-branches-music-in-two-worlds.png
@@ -318,8 +318,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival-program_1995_heartbeat-the-voices-of-first-nations-women.png" alt="festival-program_1995_heartbeat-the-voices-of-first-nations-women.png" 
-                     onclick="openModal('festival-program_1995_heartbeat-the-voices-of-first-nations-women.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/festival-program_1995_heartbeat-the-voices-of-first-nations-women.png" alt="festival-program_1995_heartbeat-the-voices-of-first-nations-women.png" 
+                     onclick="openModal('festival-program_1995_heartbeat-the-voices-of-first-nations-women.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         festival-program_1995_heartbeat-the-voices-of-first-nations-women.png
@@ -333,8 +333,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/past-program_1995_heartbeat-the-voices-of-first-nations-women.png" alt="past-program_1995_heartbeat-the-voices-of-first-nations-women.png" 
-                     onclick="openModal('past-program_1995_heartbeat-the-voices-of-first-nations-women.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/past-program_1995_heartbeat-the-voices-of-first-nations-women.png" alt="past-program_1995_heartbeat-the-voices-of-first-nations-women.png" 
+                     onclick="openModal('past-program_1995_heartbeat-the-voices-of-first-nations-women.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         past-program_1995_heartbeat-the-voices-of-first-nations-women.png
@@ -348,8 +348,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/past-program_1969_performances.png" alt="past-program_1969_performances.png" 
-                     onclick="openModal('past-program_1969_performances.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/past-program_1969_performances.png" alt="past-program_1969_performances.png" 
+                     onclick="openModal('past-program_1969_performances.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         past-program_1969_performances.png
@@ -373,13 +373,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

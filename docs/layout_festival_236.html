@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_double-fan-tower.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('storied-objects_double-fan-tower.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_double-fan-tower.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('storied-objects_double-fan-tower.png', 'festival')">
                 <div class="cluster-details">
                     <h2>Layout 236</h2>
                     <a href="https://festival.si.edu/storied-objects/double-fan-tower" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_double-fan-tower.png" alt="storied-objects_double-fan-tower.png" 
-                     onclick="openModal('storied-objects_double-fan-tower.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_double-fan-tower.png" alt="storied-objects_double-fan-tower.png" 
+                     onclick="openModal('storied-objects_double-fan-tower.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         storied-objects_double-fan-tower.png
@@ -318,8 +318,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_rocking-horse.png" alt="storied-objects_rocking-horse.png" 
-                     onclick="openModal('storied-objects_rocking-horse.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_rocking-horse.png" alt="storied-objects_rocking-horse.png" 
+                     onclick="openModal('storied-objects_rocking-horse.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         storied-objects_rocking-horse.png
@@ -333,8 +333,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_virgin-of-the-mall.png" alt="storied-objects_virgin-of-the-mall.png" 
-                     onclick="openModal('storied-objects_virgin-of-the-mall.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/festival/storied-objects_virgin-of-the-mall.png" alt="storied-objects_virgin-of-the-mall.png" 
+                     onclick="openModal('storied-objects_virgin-of-the-mall.png', 'festival')">
                 <div class="image-info">
                     <div class="image-name">
                         storied-objects_virgin-of-the-mall.png
@@ -358,13 +358,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

@@ -803,10 +803,10 @@ def generate_main_page(summary, site_configs):
                     </div>
                 </div>
                 
-                <img src="{SPACES_CDN_BASE}/{canonical['filename']}" 
+                <img src="{SPACES_CDN_BASE}/{summary['site']}/{canonical['filename']}" 
                      alt="Canonical" 
                      class="canonical-image clickable" 
-                     onclick="openModal('{canonical['filename']}')">
+                     onclick="openModal('{canonical['filename']}', '{summary['site']}')">
                 
                 <div class="cluster-preview">
                     
@@ -814,11 +814,11 @@ def generate_main_page(summary, site_configs):
         
         for screenshot in preview_images:
             html += f"""
-                        <img src="{SPACES_CDN_BASE}/{screenshot['filename']}" 
+                        <img src="{SPACES_CDN_BASE}/{summary['site']}/{screenshot['filename']}" 
                              alt="{screenshot['filename']}" 
                              class="preview-thumb clickable" 
                              title="{screenshot['filename']}" 
-                             onclick="openModal('{screenshot['filename']}')">"""
+                             onclick="openModal('{screenshot['filename']}', '{summary['site']}')">"""
         
         html += f"""
                     </div>
@@ -848,13 +848,13 @@ def generate_main_page(summary, site_configs):
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         
@@ -1204,8 +1204,8 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="{SPACES_CDN_BASE}/{canonical['filename']}" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('{canonical['filename']}')">
+                <img src="{SPACES_CDN_BASE}/{site}/{canonical['filename']}" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('{canonical['filename']}', '{site}')">
                 <div class="cluster-details">
                     <h2>Layout {cluster_id}</h2>"""
     
@@ -1240,8 +1240,8 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
         
         html += f"""
             <div class="image-card">
-                <img src="{SPACES_CDN_BASE}/{screenshot['filename']}" alt="{screenshot['filename']}" 
-                     onclick="openModal('{screenshot['filename']}')">
+                <img src="{SPACES_CDN_BASE}/{site}/{screenshot['filename']}" alt="{screenshot['filename']}" 
+                     onclick="openModal('{screenshot['filename']}', '{site}')">
                 <div class="image-info">
                     <div class="image-name">
                         {screenshot['filename']}"""
@@ -1280,13 +1280,13 @@ def generate_cluster_detail_page(cluster_id, screenshots, site, site_config):
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

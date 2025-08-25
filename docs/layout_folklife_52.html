@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_by-our-interns.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('magazine_themes_by-our-interns.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/magazine_themes_by-our-interns.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('magazine_themes_by-our-interns.png', 'folklife')">
                 <div class="cluster-details">
                     <h2>Layout 52</h2>
                     <a href="https://folklife.si.edu/magazine/themes/by-our-interns" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_by-our-interns.png" alt="magazine_themes_by-our-interns.png" 
-                     onclick="openModal('magazine_themes_by-our-interns.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/magazine_themes_by-our-interns.png" alt="magazine_themes_by-our-interns.png" 
+                     onclick="openModal('magazine_themes_by-our-interns.png', 'folklife')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_by-our-interns.png
@@ -318,8 +318,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_poetry.png" alt="magazine_themes_poetry.png" 
-                     onclick="openModal('magazine_themes_poetry.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/magazine_themes_poetry.png" alt="magazine_themes_poetry.png" 
+                     onclick="openModal('magazine_themes_poetry.png', 'folklife')">
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_poetry.png
@@ -343,13 +343,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         

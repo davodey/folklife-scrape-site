@@ -279,8 +279,8 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mission-and-history.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('mission-and-history.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/mission-and-history.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('mission-and-history.png', 'folklife')">
                 <div class="cluster-details">
                     <h2>Layout 53</h2>
                     <a href="https://folklife.si.edu/mission-and-history" target="_blank" class="image-url-link">
@@ -303,8 +303,8 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mission-and-history.png" alt="mission-and-history.png" 
-                     onclick="openModal('mission-and-history.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/mission-and-history.png" alt="mission-and-history.png" 
+                     onclick="openModal('mission-and-history.png', 'folklife')">
                 <div class="image-info">
                     <div class="image-name">
                         mission-and-history.png
@@ -318,8 +318,8 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mission-and-history_cfch-strategic-plan_smithsonian.png" alt="mission-and-history_cfch-strategic-plan_smithsonian.png" 
-                     onclick="openModal('mission-and-history_cfch-strategic-plan_smithsonian.png')">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife/mission-and-history_cfch-strategic-plan_smithsonian.png" alt="mission-and-history_cfch-strategic-plan_smithsonian.png" 
+                     onclick="openModal('mission-and-history_cfch-strategic-plan_smithsonian.png', 'folklife')">
                 <div class="image-info">
                     <div class="image-name">
                         mission-and-history_cfch-strategic-plan_smithsonian.png
@@ -343,13 +343,13 @@
     </div>
     
     <script>
-        function openModal(filename) {
+        function openModal(filename, site) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
             
             modal.style.display = 'block';
-            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + site + '/' + filename;
             caption.innerHTML = filename;
         }
         
