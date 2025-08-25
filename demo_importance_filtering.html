@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importance Filtering Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: #f5f5f5; 
+            padding: 2rem;
+        }
+        
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        
+        .header { 
+            background: #8e44ad; 
+            color: white; 
+            padding: 2rem; 
+            border-radius: 12px;
+            text-align: center; 
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        
+        /* Importance Filter Bar */
+        .importance-filter { 
+            background: white; 
+            padding: 1.5rem; 
+            border-radius: 8px; 
+            margin-bottom: 2rem; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .filter-label { 
+            font-weight: 600; 
+            color: #495057; 
+            margin-right: 0.5rem;
+        }
+        .filter-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .filter-btn { 
+            padding: 0.5rem 1rem; 
+            border: 2px solid #dee2e6; 
+            border-radius: 6px; 
+            background: white; 
+            color: #6c757d; 
+            cursor: pointer; 
+            font-weight: 500; 
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+        .filter-btn:hover { 
+            border-color: #8e44ad; 
+            color: #8e44ad;
+        }
+        .filter-btn.active { 
+            background: #8e44ad; 
+            color: white; 
+            border-color: #8e44ad;
+        }
+        .filter-btn.count { 
+            background: #f8f9fa; 
+            border-color: #ced4da;
+            color: #495057;
+        }
+        
+        .clusters-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+            gap: 2rem; 
+            padding: 1rem 0;
+        }
+        .cluster-card { 
+            background: white; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08); 
+            transition: all 0.4s;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+        .cluster-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        
+        /* Importance Label */
+        .importance-label { 
+            position: absolute; 
+            top: 1rem; 
+            right: 1rem; 
+            padding: 0.25rem 0.75rem; 
+            border-radius: 20px; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            z-index: 10;
+        }
+        .importance-label.high { 
+            background: #dc3545; 
+            color: white; 
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+        }
+        .importance-label.medium { 
+            background: #fd7e14; 
+            color: white; 
+            box-shadow: 0 2px 8px rgba(253, 126, 20, 0.3);
+        }
+        .importance-label.low { 
+            background: #6c757d; 
+            color: white; 
+            box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+        }
+        
+        .cluster-header { 
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+            padding: 1.5rem; 
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .cluster-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #8e44ad, #8e44addd);
+        }
+        .cluster-title { 
+            font-size: 1.25rem; 
+            font-weight: 700; 
+            color: #1a1a1a; 
+            margin-bottom: 0.5rem; 
+        }
+        .cluster-size { 
+            color: #6c757d; 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+        }
+        
+        .cluster-content { 
+            padding: 1.5rem; 
+        }
+        .cluster-description { 
+            color: #6c757d; 
+            line-height: 1.5; 
+            margin-bottom: 1rem;
+        }
+        .cluster-stats { 
+            display: flex; 
+            gap: 1rem; 
+            font-size: 0.85rem; 
+            color: #495057;
+        }
+        .stat { 
+            background: #f8f9fa; 
+            padding: 0.5rem 0.75rem; 
+            border-radius: 6px; 
+            border: 1px solid #e9ecef;
+        }
+        
+        /* Hidden cards for filtering */
+        .cluster-card.hidden { display: none; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .importance-filter { flex-direction: column; align-items: stretch; }
+            .filter-buttons { justify-content: center; }
+            .clusters-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Importance Filtering Demo</h1>
+            <p>Demonstrating the new importance filtering system for layout clusters</p>
+        </div>
+        
+        <!-- Importance Filter Bar -->
+        <div class="importance-filter">
+            <div class="filter-label">Filter by Importance:</div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all" onclick="filterByImportance('all')">
+                    All Layouts
+                </button>
+                <button class="filter-btn" data-filter="high" onclick="filterByImportance('high')">
+                    🔴 High Priority
+                </button>
+                <button class="filter-btn" data-filter="medium" onclick="filterByImportance('medium')">
+                    🟠 Medium Priority
+                </button>
+                <button class="filter-btn" data-filter="low" onclick="filterByImportance('low')">
+                    ⚫ Low Priority
+                </button>
+            </div>
+            <div class="filter-btn count" id="filterCount">
+                Showing all 12 layouts
+            </div>
+        </div>
+        
+        <div class="clusters-grid">
+            <!-- High Priority Layouts -->
+            <div class="cluster-card" data-importance="high">
+                <div class="importance-label high">HIGH</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Homepage Layout</div>
+                    <div class="cluster-size">25 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        Main homepage template used across multiple years. High consistency and frequent usage.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 25</div>
+                        <div class="stat">Consistency: 95%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cluster-card" data-importance="high">
+                <div class="importance-label high">HIGH</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Program Schedule</div>
+                    <div class="cluster-size">18 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        Festival program schedule layout. Critical for user navigation and information display.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 18</div>
+                        <div class="stat">Consistency: 92%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cluster-card" data-importance="high">
+                <div class="importance-label high">HIGH</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Event Details</div>
+                    <div class="cluster-size">22 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        Individual event detail pages. High volume and consistent structure.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 22</div>
+                        <div class="stat">Consistency: 88%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Medium Priority Layouts -->
+            <div class="cluster-card" data-importance="medium">
+                <div class="importance-label medium">MEDIUM</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Blog Posts</div>
+                    <div class="cluster-size">12 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        Blog post layout with moderate consistency. Important for content presentation.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 12</div>
+                        <div class="stat">Consistency: 75%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cluster-card" data-importance="medium">
+                <div class="importance-label medium">MEDIUM</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">About Pages</div>
+                    <div class="cluster-size">8 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        About and information pages. Moderate importance for site navigation.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 8</div>
+                        <div class="stat">Consistency: 70%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cluster-card" data-importance="medium">
+                <div class="importance-label medium">MEDIUM</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Search Results</div>
+                    <div class="cluster-size">6 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        Search functionality pages. Important but less frequent usage.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 6</div>
+                        <div class="stat">Consistency: 65%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cluster-card" data-importance="medium">
+                <div class="importance-label medium">MEDIUM</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Contact Forms</div>
+                    <div class="cluster-size">5 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        Contact and feedback forms. Functional importance but limited usage.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 5</div>
+                        <div class="stat">Consistency: 60%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Low Priority Layouts -->
+            <div class="cluster-card" data-importance="low">
+                <div class="importance-label low">LOW</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Error Pages</div>
+                    <div class="cluster-size">3 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        404 and error page layouts. Low priority but necessary for user experience.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 3</div>
+                        <div class="stat">Consistency: 40%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cluster-card" data-importance="low">
+                <div class="importance-label low">LOW</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Legal Pages</div>
+                    <div class="cluster-size">2 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        Terms of service and privacy policy. Required but rarely viewed.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 2</div>
+                        <div class="stat">Consistency: 35%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cluster-card" data-importance="low">
+                <div class="importance-label low">LOW</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Archive Pages</div>
+                    <div class="cluster-size">4 screenshots</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        Historical archive layouts. Low usage and inconsistent structure.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 4</div>
+                        <div class="stat">Consistency: 30%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cluster-card" data-importance="low">
+                <div class="importance-label low">LOW</div>
+                <div class="cluster-header">
+                    <div class="cluster-title">Test Pages</div>
+                    <div class="cluster-size">1 screenshot</div>
+                </div>
+                <div class="cluster-content">
+                    <div class="cluster-description">
+                        Development and testing pages. Minimal importance for production.
+                    </div>
+                    <div class="cluster-stats">
+                        <div class="stat">Size: 1</div>
+                        <div class="stat">Consistency: 20%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function filterByImportance(importance) {
+            const cards = document.querySelectorAll('.cluster-card');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            let visibleCount = 0;
+            
+            // Update active filter button
+            filterBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === importance) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (importance === 'all' || card.dataset.importance === importance) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // Update count display
+            const countElement = document.getElementById('filterCount');
+            if (importance === 'all') {
+                countElement.textContent = `Showing all ${cards.length} layouts`;
+            } else {
+                countElement.textContent = `Showing ${visibleCount} ${importance} priority layouts`;
+            }
+        }
+    </script>
+</body>
+</html>

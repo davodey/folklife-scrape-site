@@ -97,8 +97,117 @@ def get_cluster_summary(clusters, site):
         'clusters': clusters
     }
 
+def calculate_cluster_importance(cluster_size, avg_distance, site_type, canonical_filename, cluster_id):
+    """Calculate importance score for a cluster based on multiple factors"""
+    
+    # Base importance from cluster size (but cap it to avoid overvaluing large clusters)
+    size_score = min(cluster_size / 15.0, 1.0)  # Normalize to 0-1, cap at 15+ screenshots
+    
+    # Distance score (closer to canonical = more important)
+    distance_score = 1.0 - min(avg_distance, 1.0)
+    
+    # Layout type importance - identify truly important layouts
+    layout_importance = 0.0
+    layout_reason = ""
+    is_critical_page = False
+    
+    # Check for homepage and main navigation layouts (ALWAYS high priority)
+    if any(keyword in canonical_filename.lower() for keyword in ['homepage', 'index', 'main', 'navigation']):
+        layout_importance = 1.0
+        layout_reason = "Critical page type (homepage/navigation)"
+        is_critical_page = True
+    # Check for top-level navigation categories (ALWAYS high priority)
+    elif any(keyword in canonical_filename.lower() for keyword in ['magazine', 'research', 'cultural', 'education', 'archives', 'about']):
+        layout_importance = 1.0
+        layout_reason = "Critical page type (top-level navigation)"
+        is_critical_page = True
+    # Check for Festival-specific navigation categories (ALWAYS high priority)
+    elif any(keyword in canonical_filename.lower() for keyword in ['festival', 'visit', 'learn', 'schedule', 'sponsors']):
+        layout_importance = 1.0
+        layout_reason = "Critical page type (top-level navigation)"
+        is_critical_page = True
+    # Check for program/schedule layouts
+    elif any(keyword in canonical_filename.lower() for keyword in ['schedule', 'program', 'events', 'festival']):
+        layout_importance = 0.9
+        layout_reason = "Important page type (program/schedule)"
+    # Check for visitor information
+    elif any(keyword in canonical_filename.lower() for keyword in ['visit', 'visitor', 'information', 'directions']):
+        layout_importance = 0.8
+        layout_reason = "Important page type (visitor info)"
+    # Check for about pages
+    elif any(keyword in canonical_filename.lower() for keyword in ['about', 'mission', 'history']):
+        layout_importance = 0.7
+        layout_reason = "Important page type (about/mission)"
+    # Check for blog/content pages
+    elif any(keyword in canonical_filename.lower() for keyword in ['blog', 'news', 'article', 'story']):
+        layout_importance = 0.6
+        layout_reason = "Content page type (blog/article)"
+    # Check for archive/historical pages
+    elif any(keyword in canonical_filename.lower() for keyword in ['archive', 'past', 'history', 'legacy']):
+        layout_importance = 0.5
+        layout_reason = "Archive page type (historical)"
+    # Check for utility pages
+    elif any(keyword in canonical_filename.lower() for keyword in ['search', 'contact', 'legal', 'privacy']):
+        layout_importance = 0.4
+        layout_reason = "Utility page type (search/contact)"
+    # Default for other pages
+    else:
+        layout_importance = 0.3
+        layout_reason = "Standard page type"
+    
+    # Site-specific importance (festival might be more important than folklife)
+    site_multiplier = 1.1 if site_type == 'festival' else 1.0
+    
+    # For critical pages (homepage, navigation), force high priority
+    if is_critical_page:
+        importance = 0.85  # Force high priority
+    else:
+        # Combined importance score (0-1)
+        # Weight: Layout type (50%), Size (25%), Consistency (15%), Site (10%)
+        importance = (
+            layout_importance * 0.5 + 
+            size_score * 0.25 + 
+            distance_score * 0.15
+        ) * site_multiplier
+    
+    # Ensure importance is within bounds
+    importance = max(0.0, min(1.0, importance))
+    
+    # Convert to importance level
+    if importance >= 0.7:
+        level = 'high'
+    elif importance >= 0.4:
+        level = 'medium'
+    else:
+        level = 'low'
+    
+    # Create explanation for the importance level
+    if level == 'high':
+        if is_critical_page:
+            explanation = f"High priority: {layout_reason}"
+        elif layout_importance >= 0.9:
+            explanation = f"High priority: {layout_reason}"
+        elif size_score >= 0.8:
+            explanation = f"High priority: Frequently used layout ({cluster_size} similar pages)"
+        else:
+            explanation = f"High priority: {layout_reason} + good consistency"
+    elif level == 'medium':
+        if layout_importance >= 0.7:
+            explanation = f"Medium priority: {layout_reason}"
+        elif size_score >= 0.6:
+            explanation = f"Medium priority: Moderately used layout ({cluster_size} similar pages)"
+        else:
+            explanation = f"Medium priority: {layout_reason}"
+    else:
+        if cluster_size == 1:
+            explanation = f"Low priority: Unique layout (single page)"
+        else:
+            explanation = f"Low priority: {layout_reason} + limited usage"
+    
+    return level, importance, explanation
+
 def generate_main_page(summary, site_configs):
-    """Generate the main index page with site switching"""
+    """Generate the main index page with site switching and importance filtering"""
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -159,6 +268,51 @@ def generate_main_page(summary, site_configs):
         .header p {{ font-size: 1.1rem; opacity: 0.9; }}
         
         .container {{ max-width: 1400px; margin: 0 auto; padding: 2rem; }}
+        
+        /* Importance Filter Bar */
+        .importance-filter {{ 
+            background: white; 
+            padding: 1.5rem; 
+            border-radius: 8px; 
+            margin-bottom: 2rem; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }}
+        .filter-label {{ 
+            font-weight: 600; 
+            color: #495057; 
+            margin-right: 0.5rem;
+        }}
+        .filter-buttons {{ display: flex; gap: 0.5rem; flex-wrap: wrap; }}
+        .filter-btn {{ 
+            padding: 0.5rem 1rem; 
+            border: 2px solid #dee2e6; 
+            border-radius: 6px; 
+            background: white; 
+            color: #6c757d; 
+            cursor: pointer; 
+            font-weight: 500; 
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }}
+        .filter-btn:hover {{ 
+            border-color: {summary['site_config']['color']}; 
+            color: {summary['site_config']['color']};
+        }}
+        .filter-btn.active {{ 
+            background: {summary['site_config']['color']}; 
+            color: white; 
+            border-color: {summary['site_config']['color']};
+        }}
+        .filter-btn.count {{ 
+            background: #f8f9fa; 
+            border-color: #ced4da;
+            color: #495057;
+        }}
+        
         .stats {{ background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
         .stats-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }}
         .stat-item {{ text-align: center; }}
@@ -186,6 +340,36 @@ def generate_main_page(summary, site_configs):
             box-shadow: 0 20px 60px rgba(0,0,0,0.15);
             border-color: rgba(0,0,0,0.1);
         }}
+        
+        /* Importance Label */
+        .importance-label {{ 
+            position: absolute; 
+            top: 1rem; 
+            right: 1rem; 
+            padding: 0.25rem 0.75rem; 
+            border-radius: 20px; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            z-index: 10;
+        }}
+        .importance-label.high {{ 
+            background: #dc3545; 
+            color: white; 
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+        }}
+        .importance-label.medium {{ 
+            background: #fd7e14; 
+            color: white; 
+            box-shadow: 0 2px 8px rgba(253, 126, 20, 0.3);
+        }}
+        .importance-label.low {{ 
+            background: #6c757d; 
+            color: white; 
+            box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+        }}
+        
         .cluster-header {{ 
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
             padding: 2rem; 
@@ -298,6 +482,57 @@ def generate_main_page(summary, site_configs):
             box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }}
         .loading {{ text-align: center; padding: 2rem; color: #7f8c8d; }}
+        
+        /* Hidden cards for filtering */
+        .cluster-card.hidden {{ display: none; }}
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {{
+            .importance-filter {{ flex-direction: column; align-items: stretch; }}
+            .filter-buttons {{ justify-content: center; }}
+            .clusters-grid {{ grid-template-columns: 1fr; }}
+        }}
+        
+        /* Modal styles */
+        .modal {{
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }}
+        .modal-content {{
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            object-fit: contain;
+        }}
+        .modal-close {{
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }}
+        .modal-close:hover {{
+            color: #bbb;
+        }}
+        
+        /* Clickable elements */
+        .clickable {{
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }}
+        .clickable:hover {{
+            opacity: 0.9;
+        }}
         
         /* Canonical page link styles */
         .canonical-page-link {{
@@ -444,10 +679,33 @@ def generate_main_page(summary, site_configs):
         <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">
             💡 <strong>How it works:</strong> Each cluster groups screenshots with similar visual layouts. 
             Images are sorted by similarity to the "canonical" (most representative) image.
+            <strong>Importance levels</strong> are calculated based on cluster size and layout consistency.
         </p>
     </div>
     
     <div class="container">
+        <!-- Importance Filter Bar -->
+        <div class="importance-filter">
+            <div class="filter-label">Filter by Importance:</div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all" onclick="filterByImportance('all')">
+                    All Layouts
+                </button>
+                <button class="filter-btn" data-filter="high" onclick="filterByImportance('high')">
+                    🔴 High Priority
+                </button>
+                <button class="filter-btn" data-filter="medium" onclick="filterByImportance('medium')">
+                    🟠 Medium Priority
+                </button>
+                <button class="filter-btn" data-filter="low" onclick="filterByImportance('low')">
+                    ⚫ Low Priority
+                </button>
+            </div>
+            <div class="filter-btn count" id="filterCount">
+                Showing all {summary['total_clusters']} layouts
+            </div>
+        </div>
+        
         <div class="stats">
             <div class="stats-grid">
                 <div class="stat-item">
@@ -465,15 +723,61 @@ def generate_main_page(summary, site_configs):
             </div>
         </div>
         
+        <!-- Importance Calculation Info -->
+        <div class="stats" style="margin-bottom: 1rem;">
+            <h3 style="margin-bottom: 1rem; color: #495057;">How Importance is Calculated</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; font-size: 0.9rem;">
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; border-left: 4px solid #dc3545;">
+                    <strong>🔴 High Priority (≥0.7):</strong> Homepage, navigation, program schedules, visitor info
+                </div>
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; border-left: 4px solid #fd7e14;">
+                    <strong>🟠 Medium Priority (0.4-0.69):</strong> About pages, blog posts, content pages
+                </div>
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 6px; border-left: 4px solid #6c757d;">
+                    <strong>⚫ Low Priority (<0.4):</strong> Archive pages, utility pages, less critical layouts
+                </div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: #6c757d;">
+                <strong>Formula:</strong> Layout Type (50%) + Cluster Size (25%) + Consistency (15%) + Site Priority (10%)
+            </p>
+        </div>
+        
         <div class="clusters-grid">"""
     
     # Load URL mapping for this site
     url_mapping = load_url_mapping(summary['site'])
     
-    # Sort clusters by size (largest first)
-    sorted_clusters = sorted(summary['clusters'].items(), key=lambda x: len(x[1]), reverse=True)
+    # Sort clusters by size (largest first) and calculate importance
+    sorted_clusters = []
+    for cluster_id, screenshots in summary['clusters'].items():
+        # Calculate average distance for importance scoring
+        avg_distance = sum(s['distance'] for s in screenshots) / len(screenshots)
+        
+        # Find canonical image for importance calculation
+        canonical = next((s for s in screenshots if s['canonical']), screenshots[0])
+        
+        importance_level, importance_score, explanation = calculate_cluster_importance(
+            len(screenshots), avg_distance, summary['site'], canonical['filename'], cluster_id
+        )
+        
+        sorted_clusters.append({
+            'cluster_id': cluster_id,
+            'screenshots': screenshots,
+            'importance_level': importance_level,
+            'importance_score': importance_score,
+            'explanation': explanation
+        })
     
-    for cluster_id, screenshots in sorted_clusters:
+    # Sort by importance score first, then by size
+    sorted_clusters.sort(key=lambda x: (x['importance_score'], len(x['screenshots'])), reverse=True)
+    
+    for cluster_data in sorted_clusters:
+        cluster_id = cluster_data['cluster_id']
+        screenshots = cluster_data['screenshots']
+        importance_level = cluster_data['importance_level']
+        importance_score = cluster_data['importance_score']
+        explanation = cluster_data['explanation']
+        
         # Find canonical image
         canonical = next((s for s in screenshots if s['canonical']), screenshots[0])
         
@@ -483,11 +787,20 @@ def generate_main_page(summary, site_configs):
         # Get URL for canonical image
         canonical_url = url_mapping.get(canonical['filename'], '')
         
+        # Create a more descriptive title
+        canonical_name = canonical['filename'].replace('.png', '').replace('_', ' ').title()
+        if len(canonical_name) > 40:
+            canonical_name = canonical_name[:37] + '...'
+        
         html += f"""
-            <div class="cluster-card">
+            <div class="cluster-card" data-importance="{importance_level}">
+                <div class="importance-label {importance_level}">{importance_level.upper()}</div>
                 <div class="cluster-header">
-                    <div class="cluster-title">Layout {cluster_id}</div>
-                    <div class="cluster-size">{len(screenshots)} screenshots</div>
+                    <div class="cluster-title">Layout {cluster_id}: {canonical_name}</div>
+                    <div class="cluster-size">{len(screenshots)} screenshots • {importance_level.title()} Priority</div>
+                    <div class="cluster-explanation" style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; font-style: italic;">
+                        {explanation}
+                    </div>
                 </div>
                 
                 <img src="{SPACES_CDN_BASE}/{canonical['filename']}" 
@@ -547,6 +860,38 @@ def generate_main_page(summary, site_configs):
         
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        function filterByImportance(importance) {
+            const cards = document.querySelectorAll('.cluster-card');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            let visibleCount = 0;
+            
+            // Update active filter button
+            filterBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === importance) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (importance === 'all' || card.dataset.importance === importance) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+            
+            // Update count display
+            const countElement = document.getElementById('filterCount');
+            if (importance === 'all') {
+                countElement.textContent = `Showing all ${cards.length} layouts`;
+            } else {
+                countElement.textContent = `Showing ${visibleCount} ${importance} priority layouts`;
+            }
         }
         
         // Close modal when clicking outside the image
