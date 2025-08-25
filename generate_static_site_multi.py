@@ -38,7 +38,7 @@ SITE_CONFIGS = {
 
 # Configuration
 THUMBNAIL_SIZE = (300, 225)
-MAX_IMAGES_PER_CLUSTER = 20
+MAX_IMAGES_PER_CLUSTER = 4
 OUTPUT_DIR = Path("docs")
 SPACES_CDN_BASE = "https://quotient.nyc3.cdn.digitaloceanspaces.com"
 
