@@ -334,6 +334,9 @@ def generate_main_page(summary, site_configs):
             border: 1px solid rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
             position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }}
         .cluster-card:hover {{ 
             transform: translateY(-8px) scale(1.02); 
@@ -368,6 +371,140 @@ def generate_main_page(summary, site_configs):
             background: #6c757d; 
             color: white; 
             box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+        }}
+        
+        .cluster-header-top {{
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 1rem 1.5rem 0.75rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }}
+        .cluster-header-top::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, {summary['site_config']['color']}, {summary['site_config']['color']}dd);
+        }}
+        .cluster-explanation {{
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #6c757d;
+            margin-top: 0.25rem;
+            line-height: 1.4;
+        }}
+        
+        .cluster-main-content {{
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }}
+        
+        .cluster-image-section {{
+            padding: 1rem 1.5rem;
+            background: #fafbfc;
+        }}
+        
+        .cluster-info-section {{
+            padding: 1rem 1.5rem 1.5rem 1.5rem;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }}
+        
+        .cluster-header {{ 
+            margin-bottom: 1rem;
+        }}
+        .cluster-title {{ 
+            font-size: 1.4rem; 
+            font-weight: 700; 
+            color: #1a1a1a; 
+            margin-bottom: 0.5rem; 
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }}
+        .cluster-size {{ 
+            color: #6c757d; 
+            font-size: 0.9rem; 
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }}
+        .canonical-image {{ 
+            width: 100%; 
+            height: 220px; 
+            object-fit: cover; 
+            transition: transform 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }}
+        .cluster-card:hover .canonical-image {{
+            transform: scale(1.02);
+        }}
+        .cluster-preview {{ 
+            margin-bottom: 1.25rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #f1f3f4;
+        }}
+        .preview-grid {{ 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); 
+            gap: 0.75rem; 
+            max-width: 100%;
+            margin-top: 0.75rem;
+        }}
+        .preview-thumb {{ 
+            width: 100%; 
+            height: 60px; 
+            object-fit: cover; 
+            border-radius: 8px; 
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }}
+        .preview-thumb:hover {{
+            transform: scale(1.05);
+            border-color: {summary['site_config']['color']};
+        }}
+        .cluster-actions {{
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #f1f3f4;
+        }}
+        .view-btn {{ 
+            background: {summary['site_config']['color']}; 
+            color: white; 
+            padding: 0.875rem 1.5rem; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            text-align: center; 
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }}
+        .view-btn:hover {{ 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+        }}
+        .canonical-page-link {{ 
+            background: #f8f9fa; 
+            color: #495057; 
+            padding: 0.75rem 1.25rem; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            font-weight: 500; 
+            text-align: center; 
+            transition: all 0.2s ease;
+            border: 1px solid #e9ecef;
+        }}
+        .canonical-page-link:hover {{ 
+            background: #e9ecef; 
+            border-color: #dee2e6;
         }}
         
         .cluster-header {{ 
@@ -485,6 +622,28 @@ def generate_main_page(summary, site_configs):
         
         /* Hidden cards for filtering */
         .cluster-card.hidden {{ display: none; }}
+        
+        /* Skeleton Loading */
+        .skeleton {{
+            animation: skeleton-loading 1.5s ease-in-out infinite;
+        }}
+        
+        @keyframes skeleton-loading {{
+            0% {{ opacity: 1; }}
+            50% {{ opacity: 0.7; }}
+            100% {{ opacity: 1; }}
+        }}
+        
+        .skeleton .canonical-image {{
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s infinite;
+        }}
+        
+        @keyframes skeleton-shimmer {{
+            0% {{ background-position: -200% 0; }}
+            100% {{ background-position: 200% 0; }}
+        }}
         
         /* Responsive adjustments */
         @media (max-width: 768px) {{
@@ -771,6 +930,7 @@ def generate_main_page(summary, site_configs):
     # Sort by importance score first, then by size
     sorted_clusters.sort(key=lambda x: (x['importance_score'], len(x['screenshots'])), reverse=True)
     
+    # Generate cluster cards
     for cluster_data in sorted_clusters:
         cluster_id = cluster_data['cluster_id']
         screenshots = cluster_data['screenshots']
@@ -778,60 +938,63 @@ def generate_main_page(summary, site_configs):
         importance_score = cluster_data['importance_score']
         explanation = cluster_data['explanation']
         
-        # Find canonical image
+        # Get canonical image (first image with canonical=True)
         canonical = next((s for s in screenshots if s['canonical']), screenshots[0])
         
-        # Get preview images (up to 8)
-        preview_images = screenshots[:8]
+        # Get preview images (up to MAX_IMAGES_PER_CLUSTER)
+        preview_images = screenshots[:MAX_IMAGES_PER_CLUSTER]
         
-        # Get URL for canonical image
+        # Get canonical URL if available
         canonical_url = url_mapping.get(canonical['filename'], '')
         
-        # Create a more descriptive title
-        canonical_name = canonical['filename'].replace('.png', '').replace('_', ' ').title()
-        if len(canonical_name) > 40:
-            canonical_name = canonical_name[:37] + '...'
-        
         html += f"""
-            <div class="cluster-card" data-importance="{importance_level}">
-                <div class="importance-label {importance_level}">{importance_level.upper()}</div>
-                <div class="cluster-header">
-                    <div class="cluster-title">Layout {cluster_id}: {canonical_name}</div>
-                    <div class="cluster-size">{len(screenshots)} screenshots • {importance_level.title()} Priority</div>
-                    <div class="cluster-explanation" style="font-size: 0.85rem; color: #6c757d; margin-top: 0.5rem; font-style: italic;">
+            <div class="cluster-card skeleton" data-importance="{importance_level}">
+                <div class="cluster-header-top">
+                    <div class="importance-label {importance_level}">{importance_level.upper()}</div>
+                    <div class="cluster-explanation">
                         {explanation}
                     </div>
                 </div>
                 
-                <img src="{SPACES_CDN_BASE}/{summary['site']}/{canonical['filename']}" 
-                     alt="Canonical" 
-                     class="canonical-image clickable" 
-                     onclick="openModal('{canonical['filename']}', '{summary['site']}')">
-                
-                <div class="cluster-preview">
+                <div class="cluster-main-content">
+                    <div class="cluster-image-section">
+                        <img src="{SPACES_CDN_BASE}/{summary['site']}/{canonical['filename']}" 
+                             alt="Canonical" 
+                             class="canonical-image clickable" 
+                             onclick="openModal('{canonical['filename']}', '{summary['site']}')">
+                    </div>
                     
-                    <div class="preview-grid">"""
+                    <div class="cluster-info-section">
+                        <div class="cluster-header">
+                            <div class="cluster-title">Layout {cluster_id}: {canonical['filename'].replace('.png', '').replace('_', ' ').title()}</div>
+                            <div class="cluster-size">{len(screenshots)} screenshots</div>
+                        </div>
+                        
+                        <div class="cluster-preview">
+                            <div class="preview-grid">"""
         
         for screenshot in preview_images:
             html += f"""
-                        <img src="{SPACES_CDN_BASE}/{summary['site']}/{screenshot['filename']}" 
-                             alt="{screenshot['filename']}" 
-                             class="preview-thumb clickable" 
-                             title="{screenshot['filename']}" 
-                             onclick="openModal('{screenshot['filename']}', '{summary['site']}')">"""
+                                <img src="{SPACES_CDN_BASE}/{summary['site']}/{screenshot['filename']}" 
+                                     alt="{screenshot['filename']}" 
+                                     class="preview-thumb clickable" 
+                                     title="{screenshot['filename']}" 
+                                     onclick="openModal('{screenshot['filename']}', '{summary['site']}')">"""
         
         html += f"""
-                    </div>
-                    
-                    <div class="view-all">
-                        <a href="layout_{summary['site']}_{cluster_id}.html" class="view-btn">View All {len(screenshots)} Images</a>"""
+                            </div>
+                        </div>
+                        
+                        <div class="cluster-actions">
+                            <a href="layout_{summary['site']}_{cluster_id}.html" class="view-btn">View All {len(screenshots)} Images</a>"""
         
         # Add canonical page link if available
         if canonical_url:
             html += f"""
-                        <a href="{canonical_url}" target="_blank" class="canonical-page-link">🔗 View Source Page</a>"""
+                            <a href="{canonical_url}" target="_blank" class="canonical-page-link">🔗 View Source Page</a>"""
         
         html += f"""
+                        </div>
                     </div>
                 </div>
             </div>"""
@@ -866,6 +1029,7 @@ def generate_main_page(summary, site_configs):
             const cards = document.querySelectorAll('.cluster-card');
             const filterBtns = document.querySelectorAll('.filter-btn');
             let visibleCount = 0;
+            let totalScreenshots = 0;
             
             // Update active filter button
             filterBtns.forEach(btn => {
@@ -875,11 +1039,18 @@ def generate_main_page(summary, site_configs):
                 }
             });
             
-            // Filter cards
+            // Filter cards and count screenshots
             cards.forEach(card => {
                 if (importance === 'all' || card.dataset.importance === importance) {
                     card.classList.remove('hidden');
                     visibleCount++;
+                    
+                    // Extract screenshot count from the cluster-size text
+                    const sizeText = card.querySelector('.cluster-size').textContent;
+                    const screenshotMatch = sizeText.match(/(\\d+)\\s+screenshots/);
+                    if (screenshotMatch) {
+                        totalScreenshots += parseInt(screenshotMatch[1]);
+                    }
                 } else {
                     card.classList.add('hidden');
                 }
@@ -891,6 +1062,46 @@ def generate_main_page(summary, site_configs):
                 countElement.textContent = `Showing all ${cards.length} layouts`;
             } else {
                 countElement.textContent = `Showing ${visibleCount} ${importance} priority layouts`;
+            }
+            
+            // Update stats widget
+            updateStatsWidget(visibleCount, totalScreenshots);
+        }
+        
+        function updateStatsWidget(visibleLayouts, visibleScreenshots) {
+            // Update Unique Layouts count
+            const uniqueLayoutsElement = document.querySelector('.stat-number');
+            if (uniqueLayoutsElement) {
+                uniqueLayoutsElement.textContent = visibleLayouts;
+            }
+            
+            // Update Total Screenshots count
+            const totalScreenshotsElements = document.querySelectorAll('.stat-number');
+            if (totalScreenshotsElements.length > 1) {
+                totalScreenshotsElements[1].textContent = visibleScreenshots;
+            }
+            
+            // Update Average per Cluster
+            const avgPerClusterElements = document.querySelectorAll('.stat-number');
+            if (avgPerClusterElements.length > 2) {
+                const avgPerCluster = visibleLayouts > 0 ? (visibleScreenshots / visibleLayouts).toFixed(1) : '0.0';
+                avgPerClusterElements[2].textContent = avgPerCluster;
+            }
+            
+            // Update header description
+            const headerDescription = document.querySelector('.header p');
+            if (headerDescription) {
+                const totalLayouts = document.querySelectorAll('.cluster-card').length;
+                const totalScreenshots = Array.from(document.querySelectorAll('.cluster-size')).reduce((sum, el) => {
+                    const match = el.textContent.match(/(\d+)\s+screenshots/);
+                    return sum + (match ? parseInt(match[1]) : 0);
+                }, 0);
+                
+                if (visibleLayouts === totalLayouts) {
+                    headerDescription.textContent = `Visual overview of ${totalLayouts} unique layouts from ${totalScreenshots} screenshots`;
+                } else {
+                    headerDescription.textContent = `Visual overview of ${visibleLayouts} visible layouts from ${visibleScreenshots} screenshots (filtered from ${totalLayouts} total layouts)`;
+                }
             }
         }
         
@@ -907,6 +1118,20 @@ def generate_main_page(summary, site_configs):
             if (event.key === 'Escape') {
                 closeModal();
             }
+        });
+        
+        // Remove skeleton loading when images load
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.canonical-image, .preview-thumb');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.closest('.cluster-card').classList.remove('skeleton');
+                } else {
+                    img.addEventListener('load', function() {
+                        this.closest('.cluster-card').classList.remove('skeleton');
+                    });
+                }
+            });
         });
     </script>
 </body>
