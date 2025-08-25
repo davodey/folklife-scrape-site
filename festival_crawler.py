@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup
 
 
 class FestivalCrawler:
-    def __init__(self, base_url: str = "https://folklife.si.edu", output_dir: str = "folklife-screens-x"):
+    def __init__(self, base_url: str = "https://festival.si.edu", output_dir: str = "festival-screens-x"):
         self.base_url = base_url
         self.output_dir = Path(output_dir)
         self.visited_urls: Set[str] = set()
@@ -380,7 +380,7 @@ async def main():
     crawler = FestivalCrawler()
     
     try:
-        await crawler.run(max_depth=10, delay=1.0)
+        await crawler.run(max_depth=15, delay=1.0)
         crawler.save_summary()
         
     except KeyboardInterrupt:

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout 69 - folklife.si.edu Layouts Viewer</title>
+    <meta name="description" content="View all 1 screenshots for Layout 69">
+    
+    <!-- Cache and Performance Headers -->
+    
+    <meta http-equiv="Cache-Control" content="public, max-age=3600, must-revalidate">
+    <meta http-equiv="Expires" content="3600">
+    
+
+    <link rel="preload" href="/static/css/main.css" as="style">
+    <link rel="preload" href="/static/js/main.js" as="script">
+    
+<link rel="dns-prefetch" href="//quotient.nyc3.cdn.digitaloceanspaces.com">
+    
+    <!-- Performance Optimizations -->
+    
+    <style>
+        /* Critical CSS - inline for performance */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        /* Lazy loading for images */
+        .lazy-image {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .lazy-image.loaded {
+            opacity: 1;
+        }
+        
+        /* Optimize grid rendering */
+        .clusters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            contain: layout style paint;
+        }
+        
+        /* Optimize image containers */
+        .image-container {
+            contain: layout style paint;
+            will-change: transform;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    
+    <script>
+        // Lazy loading implementation
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyImages = document.querySelectorAll('.lazy-image');
+            
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            
+            lazyImages.forEach(img => imageObserver.observe(img));
+        });
+        
+        // Preload critical images
+        function preloadCriticalImages() {
+            const criticalImages = [
+                // Add your most important image URLs here
+            ];
+            
+            criticalImages.forEach(url => {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.as = 'image';
+                link.href = url;
+                document.head.appendChild(link);
+            });
+        }
+        
+        // Initialize preloading
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', preloadCriticalImages);
+        } else {
+            preloadCriticalImages();
+        }
+    </script>
+    
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        .header { background: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        
+        .back-link { text-align: center; margin: 2rem 0; }
+        .back-link a { display: inline-block; padding: 0.75rem 1.5rem; background: #3498db; color: white; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
+        .back-link a:hover { background: #2980b9; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        .canonical-section { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .canonical-section h2 { color: #2c3e50; margin-bottom: 1rem; }
+        .canonical-image { width: 100%; max-width: 800px; height: auto; border-radius: 8px; cursor: pointer; transition: opacity 0.2s; }
+        .canonical-image:hover { opacity: 0.9; }
+        
+        .screenshots-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+        .screenshot-item { background: white; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+        .screenshot-thumb { width: 100%; height: 150px; object-fit: cover; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
+        .screenshot-thumb:hover { opacity: 0.8; }
+        .screenshot-filename { margin-top: 0.5rem; font-size: 0.9rem; color: #7f8c8d; word-break: break-word; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Layout 69</h1>
+        <p>1 screenshots with similar layout</p>
+    </div>
+    
+    <div class="back-link">
+        <a href="index.html">← Back to All Layouts</a>
+    </div>
+    
+    <div class="container">
+        <div class="canonical-section">
+            <h2>Canonical Layout</h2>
+            <p>This image represents the standard layout for this group:</p>
+            <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smile.png" 
+                 alt="smile.png" 
+                 class="canonical-image lazy-image"
+                 data-src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smile.png"
+                 onclick="openModal('smile.png')">
+            <p><strong>smile.png</strong></p>
+        </div>
+        
+        <div class="screenshots-grid">
+            <div class="screenshot-item">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smile.png" 
+                     alt="smile.png" 
+                     class="screenshot-thumb lazy-image"
+                     data-src="https://quotient.nyc3.cdn.digitaloceanspaces.com/smile.png"
+                     onclick="openModal('smile.png')">
+                <div class="screenshot-filename">smile.png</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            caption.innerHTML = filename;
+        }}
+        
+        function closeModal() {{
+            document.getElementById('imageModal').style.display = 'none';
+        }}
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {{
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {{
+                modal.style.display = 'none';
+            }}
+        }}
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {{
+            if (event.key === 'Escape') {{
+                closeModal();
+            }}
+        }});
+    </script>
+</body>
+</html>

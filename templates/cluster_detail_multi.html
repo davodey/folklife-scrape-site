@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_config.display_name }} - Layout {{ cluster_id }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        /* Site Toggle Toolbar */
+        .site-toolbar { 
+            background: #34495e; 
+            padding: 1rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .site-toggle { display: flex; gap: 0.5rem; }
+        .site-btn { 
+            padding: 0.75rem 1.5rem; 
+            border: 2px solid white; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 500; 
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            background: transparent;
+            color: white;
+        }
+        .site-btn.active { 
+            background: rgba(255, 255, 255, 0.2); 
+            color: white; 
+            border-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .site-btn:not(.active) { 
+            background: transparent; 
+            color: white; 
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+        .site-btn:hover:not(.active) { 
+            background: rgba(255, 255, 255, 0.1); 
+            border-color: white;
+            transform: translateY(-1px);
+        }
+        .site-info { color: white; font-size: 0.9rem; opacity: 0.8; }
+        
+        .header { 
+            background: {{ site_config.color }}; 
+            color: white; 
+            padding: 2rem; 
+            text-align: center; 
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .back-link { margin-bottom: 2rem; }
+        .back-btn { 
+            background: {{ site_config.color }}; 
+            color: white; 
+            padding: 0.75rem 1.5rem; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+        .back-btn:hover { opacity: 0.9; }
+        
+        .cluster-info { background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .cluster-header { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }
+        .canonical-image { width: 200px; height: 150px; object-fit: cover; border-radius: 8px; }
+        .cluster-details h2 { color: #2c3e50; margin-bottom: 1rem; }
+        .cluster-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 1.5rem; font-weight: bold; color: {{ site_config.color }}; }
+        .stat-label { color: #7f8c8d; font-size: 0.9rem; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .image-card { 
+            background: white; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            transition: transform 0.2s; 
+        }
+        .image-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+        .image-card img { width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem; word-break: break-word; }
+        .canonical-badge { 
+            background: {{ site_config.color }}; 
+            color: white; 
+            padding: 0.25rem 0.5rem; 
+            border-radius: 4px; 
+            font-size: 0.8rem; 
+            margin-left: 0.5rem; 
+        }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <!-- Site Toggle Toolbar -->
+    <div class="site-toolbar">
+        <div class="site-toggle">
+            <a href="/?site=folklife" class="site-btn {{ 'active' if site == 'folklife' else '' }}">
+                Folklife
+            </a>
+            <a href="/?site=festival" class="site-btn {{ 'active' if site == 'festival' else '' }}">
+                Festival
+            </a>
+        </div>
+        <div class="site-info">
+            Currently viewing: {{ site_config.display_name }}
+        </div>
+    </div>
+    
+    <div class="header">
+        <h1>{{ site_config.display_name }} - Layout {{ cluster_id }}</h1>
+        <p>Detailed view of {{ cluster_data|length }} screenshots in this layout cluster</p>
+    </div>
+    
+    <div class="container">
+        <div class="back-link">
+            <a href="/?site={{ site }}" class="back-btn">← Back to All Layouts</a>
+        </div>
+        
+        <div class="cluster-info">
+            <div class="cluster-header">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/{{ canonical.filename }}" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('{{ canonical.path }}', '{{ canonical.filename }}')">
+                <div class="cluster-details">
+                    <h2>Layout {{ cluster_id }}</h2>
+                    <p><strong>Canonical Image:</strong> {{ canonical.filename }}</p>
+                    <div class="cluster-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">{{ cluster_data|length }}</div>
+                            <div class="stat-label">Total Screenshots</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">{{ "%.1f"|format(cluster_data|length / 1) }}</div>
+                            <div class="stat-label">Avg per Layout</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            {% for screenshot in cluster_data %}
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/{{ screenshot.filename }}" alt="{{ screenshot.filename }}" 
+                     onclick="openModal('{{ screenshot.path }}', '{{ screenshot.filename }}')">
+                <div class="image-info">
+                    <div class="image-name">
+                        {{ screenshot.filename }}
+                        {% if screenshot.filename == screenshot.canonical %}
+                        <span class="canonical-badge">Canonical</span>
+                        {% endif %}
+                    </div>
+                    <div class="image-distance">
+                        Distance: {{ "%.6f"|format(screenshot.distance) }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(imagePath, filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+timestamp,site,cluster_id,feedback_type,feedback_text,status,reviewer_notes,action_taken
+2025-08-24T19:29:29.757800,festival,123,flag,This image has a completely different header layout and should be in a separate cluster.,reviewed,This should be a separate layout,new_bucket_created
+2025-08-24T19:29:29.757878,folklife,45,correct,This is a unique navigation pattern that should have its own layout bucket.,pending,,
