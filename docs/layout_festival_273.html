@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festival - Layout 273</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        /* Site Toggle Toolbar */
+        .site-toolbar { 
+            background: #34495e; 
+            padding: 1rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .site-toggle { display: flex; gap: 0.5rem; }
+        .site-btn { 
+            padding: 0.75rem 1.5rem; 
+            border: 2px solid white; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 500; 
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            background: transparent;
+            color: white;
+        }
+        .site-btn.active { 
+            background: rgba(255, 255, 255, 0.2); 
+            color: white; 
+            border-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .site-btn:not(.active) { 
+            background: transparent; 
+            color: white; 
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+        .site-btn:hover:not(.active) { 
+            background: rgba(255, 255, 255, 0.1); 
+            border-color: white;
+            transform: translateY(-1px);
+        }
+        .site-info { color: white; font-size: 0.9rem; opacity: 0.8; }
+        
+        .header { 
+            background: #8e44ad; 
+            color: white; 
+            padding: 2rem; 
+            text-align: center; 
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .back-link { margin-bottom: 2rem; }
+        .back-btn { 
+            background: #8e44ad; 
+            color: white; 
+            padding: 0.75rem 1.5rem; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+        .back-btn:hover { opacity: 0.9; }
+        
+        .cluster-info { background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .cluster-header { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }
+        .canonical-image { width: 200px; height: 150px; object-fit: cover; border-radius: 8px; }
+        .cluster-details h2 { color: #2c3e50; margin-bottom: 1rem; }
+        .cluster-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 1.5rem; font-weight: bold; color: #8e44ad; }
+        .stat-label { color: #7f8c8d; font-size: 0.9rem; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .image-card { 
+            background: white; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            transition: transform 0.2s; 
+        }
+        .image-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+        .image-card img { width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem; word-break: break-word; }
+        .canonical-badge { 
+            background: #8e44ad; 
+            color: white; 
+            padding: 0.25rem 0.5rem; 
+            border-radius: 4px; 
+            font-size: 0.8rem; 
+            margin-left: 0.5rem; 
+        }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        
+        /* User feedback styles */
+        .feedback-section { 
+            background: #f8f9fa; 
+            border: 1px solid #dee2e6; 
+            border-radius: 8px; 
+            padding: 1rem; 
+            margin-top: 1rem; 
+        }
+        .feedback-title { 
+            font-weight: bold; 
+            color: #495057; 
+            margin-bottom: 0.5rem; 
+        }
+        .feedback-buttons { 
+            display: flex; 
+            gap: 0.5rem; 
+            flex-wrap: wrap; 
+        }
+        .feedback-btn { 
+            background: #6c757d; 
+            color: white; 
+            border: none; 
+            padding: 0.25rem 0.5rem; 
+            border-radius: 4px; 
+            font-size: 0.8rem; 
+            cursor: pointer; 
+            transition: background 0.2s; 
+        }
+        .feedback-btn:hover { background: #5a6268; }
+        .feedback-btn.flag { background: #dc3545; }
+        .feedback-btn.flag:hover { background: #c82333; }
+        .feedback-btn.correct { background: #28a745; }
+        .feedback-btn.correct:hover { background: #218838; }
+        .feedback-form { 
+            display: none; 
+            margin-top: 1rem; 
+            padding: 1rem; 
+            background: white; 
+            border-radius: 6px; 
+            border: 1px solid #ced4da; 
+        }
+        .feedback-form.show { display: block; }
+        .feedback-form textarea { 
+            width: 100%; 
+            min-height: 80px; 
+            padding: 0.5rem; 
+            border: 1px solid #ced4da; 
+            border-radius: 4px; 
+            margin-bottom: 0.5rem; 
+            font-family: inherit; 
+        }
+        .feedback-form button { 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            padding: 0.5rem 1rem; 
+            border-radius: 4px; 
+            cursor: pointer; 
+        }
+        .feedback-form button:hover { background: #0056b3; }
+        .similarity-warning { 
+            background: #fff3cd; 
+            border: 1px solid #ffeaa7; 
+            color: #856404; 
+            padding: 0.5rem; 
+            border-radius: 4px; 
+            margin-bottom: 0.5rem; 
+            font-size: 0.9rem; 
+        }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <!-- Site Toggle Toolbar -->
+    <div class="site-toolbar">
+        <div class="site-toggle">
+            <a href="index.html" class="site-btn">
+                Folklife
+            </a>
+            <a href="index_festival.html" class="site-btn active">
+                Festival
+            </a>
+        </div>
+        <div class="site-info">
+            Currently viewing: Festival
+        </div>
+    </div>
+    
+    <div class="header">
+        <h1>Festival - Layout 273</h1>
+        <p>Detailed view of 1 screenshots in this layout cluster</p>
+    </div>
+    
+    <div class="container">
+        <div class="back-link">
+            <a href="index_festival.html" class="back-btn">← Back to All Layouts</a>
+        </div>
+        
+        <div class="cluster-info">
+            <div class="cluster-header">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_santa-clara-bowl.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('storied-objects_santa-clara-bowl.png')">
+                <div class="cluster-details">
+                    <h2>Layout 273</h2>
+                    <p><strong>Canonical Image:</strong> storied-objects_santa-clara-bowl.png</p>
+                    <p style="font-size: 0.9rem; color: #666; margin: 0.5rem 0;">
+                        💡 <strong>Canonical:</strong> The most representative image for this layout. 
+                        Other images are sorted by how similar they are to this one.
+                    </p>
+                    <div class="cluster-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">1</div>
+                            <div class="stat-label">Total Screenshots</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">1.0</div>
+                            <div class="stat-label">Avg per Layout</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Feedback Section -->
+            <div class="feedback-section">
+                <div class="feedback-title">🤔 Found a misclassified image?</div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                    Help improve our layout detection by flagging images that don't belong here or suggesting new layouts.
+                </p>
+                <div class="feedback-buttons">
+                    <button class="feedback-btn flag" onclick="showFeedbackForm('flag', '273')">
+                        🚩 Flag for Review
+                    </button>
+                    <button class="feedback-btn correct" onclick="showFeedbackForm('correct', '273')">
+                        ✏️ Suggest New Layout
+                    </button>
+                </div>
+                
+                <div id="feedback-form-273" class="feedback-form">
+                    <textarea id="feedback-text-273" placeholder="Please describe why this image should be reviewed or what new layout it represents..."></textarea>
+                    <button onclick="submitFeedback('273', 'festival')">Submit Feedback</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/storied-objects_santa-clara-bowl.png" alt="storied-objects_santa-clara-bowl.png" 
+                     onclick="openModal('storied-objects_santa-clara-bowl.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        storied-objects_santa-clara-bowl.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 100.0%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        // Feedback system functions
+        function showFeedbackForm(type, clusterId) {
+            const form = document.getElementById(`feedback-form-${clusterId}`);
+            const textarea = document.getElementById(`feedback-text-${clusterId}`);
+            
+            // Clear previous content
+            textarea.value = '';
+            
+            // Show form
+            form.classList.add('show');
+            
+            // Focus on textarea
+            textarea.focus();
+        }
+        
+        function submitFeedback(clusterId, site) {
+            const textarea = document.getElementById(`feedback-text-${clusterId}`);
+            const feedback = textarea.value.trim();
+            
+            if (!feedback) {
+                alert('Please provide feedback before submitting.');
+                return;
+            }
+            
+            // Here you would typically send this to your backend
+            // For now, we'll just show a success message
+            alert('Thank you for your feedback! This will be reviewed by our team.');
+            
+            // Hide the form
+            document.getElementById(`feedback-form-${clusterId}`).classList.remove('show');
+            
+            // In a real implementation, you would:
+            // 1. Send feedback to your backend API
+            // 2. Store it in a database
+            // 3. Create a review queue for human moderators
+            // 4. Potentially create new layout buckets
+            console.log('Feedback submitted:', {
+                clusterId: clusterId,
+                site: site,
+                feedback: feedback,
+                timestamp: new Date().toISOString()
+            });
+        }
+    </script>
+</body>
+</html>

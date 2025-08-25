@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folklife - Layout 15</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        
+        /* Site Toggle Toolbar */
+        .site-toolbar { 
+            background: #34495e; 
+            padding: 1rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .site-toggle { display: flex; gap: 0.5rem; }
+        .site-btn { 
+            padding: 0.75rem 1.5rem; 
+            border: 2px solid white; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 500; 
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            background: transparent;
+            color: white;
+        }
+        .site-btn.active { 
+            background: rgba(255, 255, 255, 0.2); 
+            color: white; 
+            border-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .site-btn:not(.active) { 
+            background: transparent; 
+            color: white; 
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+        .site-btn:hover:not(.active) { 
+            background: rgba(255, 255, 255, 0.1); 
+            border-color: white;
+            transform: translateY(-1px);
+        }
+        .site-info { color: white; font-size: 0.9rem; opacity: 0.8; }
+        
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 2rem; 
+            text-align: center; 
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .back-link { margin-bottom: 2rem; }
+        .back-btn { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 0.75rem 1.5rem; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+        .back-btn:hover { opacity: 0.9; }
+        
+        .cluster-info { background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .cluster-header { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; }
+        .canonical-image { width: 200px; height: 150px; object-fit: cover; border-radius: 8px; }
+        .cluster-details h2 { color: #2c3e50; margin-bottom: 1rem; }
+        .cluster-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 1.5rem; font-weight: bold; color: #2c3e50; }
+        .stat-label { color: #7f8c8d; font-size: 0.9rem; }
+        
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .image-card { 
+            background: white; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            transition: transform 0.2s; 
+        }
+        .image-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+        .image-card img { width: 100%; height: 200px; object-fit: cover; cursor: pointer; transition: opacity 0.2s; }
+        .image-card img:hover { opacity: 0.8; }
+        .image-info { padding: 1rem; }
+        .image-name { font-weight: bold; color: #2c3e50; margin-bottom: 0.5rem; word-break: break-word; }
+        .canonical-badge { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 0.25rem 0.5rem; 
+            border-radius: 4px; 
+            font-size: 0.8rem; 
+            margin-left: 0.5rem; 
+        }
+        .image-distance { color: #7f8c8d; font-size: 0.9rem; }
+        
+        /* User feedback styles */
+        .feedback-section { 
+            background: #f8f9fa; 
+            border: 1px solid #dee2e6; 
+            border-radius: 8px; 
+            padding: 1rem; 
+            margin-top: 1rem; 
+        }
+        .feedback-title { 
+            font-weight: bold; 
+            color: #495057; 
+            margin-bottom: 0.5rem; 
+        }
+        .feedback-buttons { 
+            display: flex; 
+            gap: 0.5rem; 
+            flex-wrap: wrap; 
+        }
+        .feedback-btn { 
+            background: #6c757d; 
+            color: white; 
+            border: none; 
+            padding: 0.25rem 0.5rem; 
+            border-radius: 4px; 
+            font-size: 0.8rem; 
+            cursor: pointer; 
+            transition: background 0.2s; 
+        }
+        .feedback-btn:hover { background: #5a6268; }
+        .feedback-btn.flag { background: #dc3545; }
+        .feedback-btn.flag:hover { background: #c82333; }
+        .feedback-btn.correct { background: #28a745; }
+        .feedback-btn.correct:hover { background: #218838; }
+        .feedback-form { 
+            display: none; 
+            margin-top: 1rem; 
+            padding: 1rem; 
+            background: white; 
+            border-radius: 6px; 
+            border: 1px solid #ced4da; 
+        }
+        .feedback-form.show { display: block; }
+        .feedback-form textarea { 
+            width: 100%; 
+            min-height: 80px; 
+            padding: 0.5rem; 
+            border: 1px solid #ced4da; 
+            border-radius: 4px; 
+            margin-bottom: 0.5rem; 
+            font-family: inherit; 
+        }
+        .feedback-form button { 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            padding: 0.5rem 1rem; 
+            border-radius: 4px; 
+            cursor: pointer; 
+        }
+        .feedback-form button:hover { background: #0056b3; }
+        .similarity-warning { 
+            background: #fff3cd; 
+            border: 1px solid #ffeaa7; 
+            color: #856404; 
+            padding: 0.5rem; 
+            border-radius: 4px; 
+            margin-bottom: 0.5rem; 
+            font-size: 0.9rem; 
+        }
+        
+        /* Modal/Lightbox styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
+        .modal-close { position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal-close:hover { color: #bbb; }
+    </style>
+</head>
+<body>
+    <!-- Site Toggle Toolbar -->
+    <div class="site-toolbar">
+        <div class="site-toggle">
+            <a href="index.html" class="site-btn active">
+                Folklife
+            </a>
+            <a href="index_festival.html" class="site-btn">
+                Festival
+            </a>
+        </div>
+        <div class="site-info">
+            Currently viewing: Folklife
+        </div>
+    </div>
+    
+    <div class="header">
+        <h1>Folklife - Layout 15</h1>
+        <p>Detailed view of 51 screenshots in this layout cluster</p>
+    </div>
+    
+    <div class="container">
+        <div class="back-link">
+            <a href="index_folklife.html" class="back-btn">← Back to All Layouts</a>
+        </div>
+        
+        <div class="cluster-info">
+            <div class="cluster-header">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amanda-holmes-duffy.png" alt="Canonical" class="canonical-image clickable" 
+                     onclick="openModal('authors_amanda-holmes-duffy.png')">
+                <div class="cluster-details">
+                    <h2>Layout 15</h2>
+                    <p><strong>Canonical Image:</strong> authors_amanda-holmes-duffy.png</p>
+                    <p style="font-size: 0.9rem; color: #666; margin: 0.5rem 0;">
+                        💡 <strong>Canonical:</strong> The most representative image for this layout. 
+                        Other images are sorted by how similar they are to this one.
+                    </p>
+                    <div class="cluster-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">51</div>
+                            <div class="stat-label">Total Screenshots</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">51.0</div>
+                            <div class="stat-label">Avg per Layout</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Feedback Section -->
+            <div class="feedback-section">
+                <div class="feedback-title">🤔 Found a misclassified image?</div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                    Help improve our layout detection by flagging images that don't belong here or suggesting new layouts.
+                </p>
+                <div class="feedback-buttons">
+                    <button class="feedback-btn flag" onclick="showFeedbackForm('flag', '15')">
+                        🚩 Flag for Review
+                    </button>
+                    <button class="feedback-btn correct" onclick="showFeedbackForm('correct', '15')">
+                        ✏️ Suggest New Layout
+                    </button>
+                </div>
+                
+                <div id="feedback-form-15" class="feedback-form">
+                    <textarea id="feedback-text-15" placeholder="Please describe why this image should be reviewed or what new layout it represents..."></textarea>
+                    <button onclick="submitFeedback('15', 'folklife')">Submit Feedback</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="images-grid">
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_lena-pham.png" alt="authors_lena-pham.png" 
+                     onclick="openModal('authors_lena-pham.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_lena-pham.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 100.0%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_natalie-amador-solis.png" alt="authors_natalie-amador-solis.png" 
+                     onclick="openModal('authors_natalie-amador-solis.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_natalie-amador-solis.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 91.2%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_yingying-yang.png" alt="authors_yingying-yang.png" 
+                     onclick="openModal('authors_yingying-yang.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_yingying-yang.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 89.9%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_benedict-cook.png" alt="authors_benedict-cook.png" 
+                     onclick="openModal('authors_benedict-cook.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_benedict-cook.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 89.4%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_daria-boltokova.png" alt="authors_daria-boltokova.png" 
+                     onclick="openModal('authors_daria-boltokova.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_daria-boltokova.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 89.0%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_igor-xoyon.png" alt="authors_igor-xoyon.png" 
+                     onclick="openModal('authors_igor-xoyon.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_igor-xoyon.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 89.0%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_brianna-melgar.png" alt="authors_brianna-melgar.png" 
+                     onclick="openModal('authors_brianna-melgar.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_brianna-melgar.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 88.7%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_lindsey-max.png" alt="authors_lindsey-max.png" 
+                     onclick="openModal('authors_lindsey-max.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_lindsey-max.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 88.4%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hyein-hazel-lee.png" alt="authors_hyein-hazel-lee.png" 
+                     onclick="openModal('authors_hyein-hazel-lee.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_hyein-hazel-lee.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 88.4%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_kyle-baker.png" alt="authors_kyle-baker.png" 
+                     onclick="openModal('authors_kyle-baker.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_kyle-baker.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 88.3%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_henry-lesperance.png" alt="authors_henry-lesperance.png" 
+                     onclick="openModal('authors_henry-lesperance.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_henry-lesperance.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 88.2%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_meda-dewitt.png" alt="authors_meda-dewitt.png" 
+                     onclick="openModal('authors_meda-dewitt.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_meda-dewitt.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 87.8%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_lauren-safranek.png" alt="authors_lauren-safranek.png" 
+                     onclick="openModal('authors_lauren-safranek.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_lauren-safranek.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 87.6%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_zubair-torwali.png" alt="authors_zubair-torwali.png" 
+                     onclick="openModal('authors_zubair-torwali.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_zubair-torwali.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 87.6%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hope-zhu.png" alt="authors_hope-zhu.png" 
+                     onclick="openModal('authors_hope-zhu.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_hope-zhu.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 87.4%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_antonio-jorge-medeiros-batista-silva.png" alt="authors_antonio-jorge-medeiros-batista-silva.png" 
+                     onclick="openModal('authors_antonio-jorge-medeiros-batista-silva.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_antonio-jorge-medeiros-batista-silva.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 87.3%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jean-young.png" alt="authors_jean-young.png" 
+                     onclick="openModal('authors_jean-young.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jean-young.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 86.7%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_juliette-murphy.png" alt="authors_juliette-murphy.png" 
+                     onclick="openModal('authors_juliette-murphy.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_juliette-murphy.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 86.3%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_gabe-silverstein-rivera.png" alt="authors_gabe-silverstein-rivera.png" 
+                     onclick="openModal('authors_gabe-silverstein-rivera.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_gabe-silverstein-rivera.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 86.2%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jorge-g-f-moreno-soto.png" alt="authors_jorge-g-f-moreno-soto.png" 
+                     onclick="openModal('authors_jorge-g-f-moreno-soto.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jorge-g-f-moreno-soto.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 86.0%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_zoe-tribur.png" alt="authors_zoe-tribur.png" 
+                     onclick="openModal('authors_zoe-tribur.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_zoe-tribur.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 85.9%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/join.png" alt="join.png" 
+                     onclick="openModal('join.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        join.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 85.5%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_kimberley-watson.png" alt="authors_kimberley-watson.png" 
+                     onclick="openModal('authors_kimberley-watson.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_kimberley-watson.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 85.1%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sharon-nelson.png" alt="authors_sharon-nelson.png" 
+                     onclick="openModal('authors_sharon-nelson.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_sharon-nelson.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 85.0%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_kaitlyn-mcconnell.png" alt="authors_kaitlyn-mcconnell.png" 
+                     onclick="openModal('authors_kaitlyn-mcconnell.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_kaitlyn-mcconnell.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 84.8%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_cassie-roshu.png" alt="authors_cassie-roshu.png" 
+                     onclick="openModal('authors_cassie-roshu.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_cassie-roshu.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 84.6%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_pete-reiniger.png" alt="authors_pete-reiniger.png" 
+                     onclick="openModal('authors_pete-reiniger.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_pete-reiniger.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 84.5%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_zanta.png" alt="authors_zanta.png" 
+                     onclick="openModal('authors_zanta.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_zanta.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 84.5%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_astrid-stephenson.png" alt="authors_astrid-stephenson.png" 
+                     onclick="openModal('authors_astrid-stephenson.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_astrid-stephenson.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 84.3%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amanda-holmes-duffy.png" alt="authors_amanda-holmes-duffy.png" 
+                     onclick="openModal('authors_amanda-holmes-duffy.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_amanda-holmes-duffy.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 84.2%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jennifer-m-everett.png" alt="authors_jennifer-m-everett.png" 
+                     onclick="openModal('authors_jennifer-m-everett.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jennifer-m-everett.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 83.9%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_thanvi-thodati.png" alt="authors_thanvi-thodati.png" 
+                     onclick="openModal('authors_thanvi-thodati.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_thanvi-thodati.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 83.5%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_lily-horne.png" alt="authors_lily-horne.png" 
+                     onclick="openModal('authors_lily-horne.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_lily-horne.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 83.3%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_eric-galm.png" alt="authors_eric-galm.png" 
+                     onclick="openModal('authors_eric-galm.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_eric-galm.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 83.2%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_gwen-mallow.png" alt="authors_gwen-mallow.png" 
+                     onclick="openModal('authors_gwen-mallow.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_gwen-mallow.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 83.1%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_claire-smith.png" alt="authors_claire-smith.png" 
+                     onclick="openModal('authors_claire-smith.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_claire-smith.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 83.1%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_joan-hua.png" alt="authors_joan-hua.png" 
+                     onclick="openModal('authors_joan-hua.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_joan-hua.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 82.7%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_yu-lha.png" alt="authors_yu-lha.png" 
+                     onclick="openModal('authors_yu-lha.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_yu-lha.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 82.5%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_zachary-tumlin.png" alt="authors_zachary-tumlin.png" 
+                     onclick="openModal('authors_zachary-tumlin.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_zachary-tumlin.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 82.3%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_anne-rappaport.png" alt="authors_anne-rappaport.png" 
+                     onclick="openModal('authors_anne-rappaport.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_anne-rappaport.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 82.1%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jaiha-lee.png" alt="authors_jaiha-lee.png" 
+                     onclick="openModal('authors_jaiha-lee.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jaiha-lee.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 81.8%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sunny-jain.png" alt="authors_sunny-jain.png" 
+                     onclick="openModal('authors_sunny-jain.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_sunny-jain.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 81.7%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_drukmo-gyal.png" alt="authors_drukmo-gyal.png" 
+                     onclick="openModal('authors_drukmo-gyal.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_drukmo-gyal.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 81.6%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_andrea-mayorga.png" alt="authors_andrea-mayorga.png" 
+                     onclick="openModal('authors_andrea-mayorga.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_andrea-mayorga.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 81.5%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_roland-keates.png" alt="authors_roland-keates.png" 
+                     onclick="openModal('authors_roland-keates.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_roland-keates.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 81.3%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_ty-juana-taylor.png" alt="authors_ty-juana-taylor.png" 
+                     onclick="openModal('authors_ty-juana-taylor.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_ty-juana-taylor.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 81.0%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amelia-tseng.png" alt="authors_amelia-tseng.png" 
+                     onclick="openModal('authors_amelia-tseng.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_amelia-tseng.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 80.7%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_liana-aghajanian.png" alt="authors_liana-aghajanian.png" 
+                     onclick="openModal('authors_liana-aghajanian.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_liana-aghajanian.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 80.1%
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jc-gibbs.png" alt="authors_jc-gibbs.png" 
+                     onclick="openModal('authors_jc-gibbs.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_jc-gibbs.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 80.0%
+                    </div>
+                    <div class="similarity-warning">
+                        ⚠️ <strong>Review Recommended:</strong> This image has low similarity and may need human review.
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sean-tomlinson.png" alt="authors_sean-tomlinson.png" 
+                     onclick="openModal('authors_sean-tomlinson.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_sean-tomlinson.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 79.8%
+                    </div>
+                    <div class="similarity-warning">
+                        ⚠️ <strong>Review Recommended:</strong> This image has low similarity and may need human review.
+                    </div>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_joe-alonso.png" alt="authors_joe-alonso.png" 
+                     onclick="openModal('authors_joe-alonso.png')">
+                <div class="image-info">
+                    <div class="image-name">
+                        authors_joe-alonso.png
+                    </div>
+                    <div class="image-distance">
+                        Similarity: 78.6%
+                    </div>
+                    <div class="similarity-warning">
+                        ⚠️ <strong>Review Recommended:</strong> This image has low similarity and may need human review.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full-size images -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" style="text-align: center; color: white; margin-top: 1rem; font-size: 1.1rem;"></div>
+    </div>
+    
+    <script>
+        function openModal(filename) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = 'https://quotient.nyc3.cdn.digitaloceanspaces.com/' + filename;
+            caption.innerHTML = filename;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        // Feedback system functions
+        function showFeedbackForm(type, clusterId) {
+            const form = document.getElementById(`feedback-form-${clusterId}`);
+            const textarea = document.getElementById(`feedback-text-${clusterId}`);
+            
+            // Clear previous content
+            textarea.value = '';
+            
+            // Show form
+            form.classList.add('show');
+            
+            // Focus on textarea
+            textarea.focus();
+        }
+        
+        function submitFeedback(clusterId, site) {
+            const textarea = document.getElementById(`feedback-text-${clusterId}`);
+            const feedback = textarea.value.trim();
+            
+            if (!feedback) {
+                alert('Please provide feedback before submitting.');
+                return;
+            }
+            
+            // Here you would typically send this to your backend
+            // For now, we'll just show a success message
+            alert('Thank you for your feedback! This will be reviewed by our team.');
+            
+            // Hide the form
+            document.getElementById(`feedback-form-${clusterId}`).classList.remove('show');
+            
+            // In a real implementation, you would:
+            // 1. Send feedback to your backend API
+            // 2. Store it in a database
+            // 3. Create a review queue for human moderators
+            // 4. Potentially create new layout buckets
+            console.log('Feedback submitted:', {
+                clusterId: clusterId,
+                site: site,
+                feedback: feedback,
+                timestamp: new Date().toISOString()
+            });
+        }
+    </script>
+</body>
+</html>
