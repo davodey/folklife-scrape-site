@@ -119,6 +119,20 @@
             font-size: 0.8rem;
             border-radius: 4px;
         }
+        .loading-overlay.skeleton { 
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        .loading-overlay.failed { 
+            background: #dc3545; 
+            color: white; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+        }
+        .loading-overlay.loaded { 
+            display: none; 
+        }
         .view-all { text-align: center; margin-top: 1rem; }
         .view-btn { 
             background: #2c3e50; 
@@ -4182,19 +4196,20 @@
             // Hide loading overlay and show image
             const loadingOverlay = document.getElementById(loadingId);
             if (loadingOverlay) {
-                loadingOverlay.style.display = 'none';
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('loaded');
             }
             img.classList.remove('loading');
             img.classList.add('loaded');
         }
         
         function imageError(img, loadingId) {
-            // Show error state
+            // Show error state with red background and "Failed" text
             const loadingOverlay = document.getElementById(loadingId);
             if (loadingOverlay) {
-                loadingOverlay.innerHTML = '<span>❌ Failed to load</span>';
-                loadingOverlay.style.background = '#fee';
-                loadingOverlay.style.color = '#c33';
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('failed');
+                loadingOverlay.innerHTML = '<span>Failed</span>';
             }
             img.style.display = 'none';
         }

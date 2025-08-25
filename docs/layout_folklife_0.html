@@ -172,6 +172,42 @@
             font-size: 0.9rem; 
         }
         
+        /* Loading overlay styles */
+        .image-container { position: relative; }
+        .loading-overlay { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            background: #f8f9fa; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #6c757d; 
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+        .loading-overlay.skeleton { 
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        .loading-overlay.failed { 
+            background: #dc3545; 
+            color: white; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+        }
+        .loading-overlay.loaded { 
+            display: none; 
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
         /* Modal/Lightbox styles */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
         .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
@@ -202,13 +238,20 @@
     
     <div class="container">
         <div class="back-link">
-            <a href="index_folklife.html" class="back-btn">← Back to All Layouts</a>
+            <a href="index.html" class="back-btn">← Back to All Layouts</a>
         </div>
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/1989Recommendation.htm.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('1989Recommendation.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-canonical">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/1989Recommendation.htm.png" alt="Canonical" class="canonical-image clickable" 
+                         onclick="openModal('1989Recommendation.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-canonical')"
+                         onerror="imageError(this, 'loading-0-canonical')">
+                </div>
                 <div class="cluster-details">
                     <h2>Layout 0</h2>
                     <p><strong>Canonical Image:</strong> 1989Recommendation.htm.png</p>
@@ -253,8 +296,15 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/1989Recommendation.htm.png" alt="1989Recommendation.htm.png" 
-                     onclick="openModal('1989Recommendation.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-1989Recommendation_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/1989Recommendation.htm.png" alt="1989Recommendation.htm.png" 
+                         onclick="openModal('1989Recommendation.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-1989Recommendation_htm_png')"
+                         onerror="imageError(this, 'loading-0-1989Recommendation_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         1989Recommendation.htm.png
@@ -265,8 +315,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/abeita.htm.png" alt="abeita.htm.png" 
-                     onclick="openModal('abeita.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-abeita_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/abeita.htm.png" alt="abeita.htm.png" 
+                         onclick="openModal('abeita.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-abeita_htm_png')"
+                         onerror="imageError(this, 'loading-0-abeita_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         abeita.htm.png
@@ -277,8 +334,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/acknowledgements.htm.png" alt="acknowledgements.htm.png" 
-                     onclick="openModal('acknowledgements.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-acknowledgements_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/acknowledgements.htm.png" alt="acknowledgements.htm.png" 
+                         onclick="openModal('acknowledgements.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-acknowledgements_htm_png')"
+                         onerror="imageError(this, 'loading-0-acknowledgements_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         acknowledgements.htm.png
@@ -289,8 +353,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan.htm.png" alt="actionplan.htm.png" 
-                     onclick="openModal('actionplan.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-actionplan_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan.htm.png" alt="actionplan.htm.png" 
+                         onclick="openModal('actionplan.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-actionplan_htm_png')"
+                         onerror="imageError(this, 'loading-0-actionplan_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         actionplan.htm.png
@@ -301,8 +372,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan_french.htm.png" alt="actionplan_french.htm.png" 
-                     onclick="openModal('actionplan_french.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-actionplan_french_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan_french.htm.png" alt="actionplan_french.htm.png" 
+                         onclick="openModal('actionplan_french.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-actionplan_french_htm_png')"
+                         onerror="imageError(this, 'loading-0-actionplan_french_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         actionplan_french.htm.png
@@ -313,8 +391,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan_spanish.htm.png" alt="actionplan_spanish.htm.png" 
-                     onclick="openModal('actionplan_spanish.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-actionplan_spanish_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/actionplan_spanish.htm.png" alt="actionplan_spanish.htm.png" 
+                         onclick="openModal('actionplan_spanish.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-actionplan_spanish_htm_png')"
+                         onerror="imageError(this, 'loading-0-actionplan_spanish_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         actionplan_spanish.htm.png
@@ -325,8 +410,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/aikawa.htm.png" alt="aikawa.htm.png" 
-                     onclick="openModal('aikawa.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-aikawa_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/aikawa.htm.png" alt="aikawa.htm.png" 
+                         onclick="openModal('aikawa.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-aikawa_htm_png')"
+                         onerror="imageError(this, 'loading-0-aikawa_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         aikawa.htm.png
@@ -337,8 +429,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archive.png" alt="archive.png" 
-                     onclick="openModal('archive.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-archive_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/archive.png" alt="archive.png" 
+                         onclick="openModal('archive.png')"
+                         onload="imageLoaded(this, 'loading-0-archive_png')"
+                         onerror="imageError(this, 'loading-0-archive_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         archive.png
@@ -349,8 +448,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/bancroft.htm.png" alt="bancroft.htm.png" 
-                     onclick="openModal('bancroft.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-bancroft_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/bancroft.htm.png" alt="bancroft.htm.png" 
+                         onclick="openModal('bancroft.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-bancroft_htm_png')"
+                         onerror="imageError(this, 'loading-0-bancroft_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         bancroft.htm.png
@@ -361,8 +467,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/berman.htm.png" alt="berman.htm.png" 
-                     onclick="openModal('berman.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-berman_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/berman.htm.png" alt="berman.htm.png" 
+                         onclick="openModal('berman.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-berman_htm_png')"
+                         onerror="imageError(this, 'loading-0-berman_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         berman.htm.png
@@ -373,8 +486,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/blake.htm.png" alt="blake.htm.png" 
-                     onclick="openModal('blake.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-blake_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/blake.htm.png" alt="blake.htm.png" 
+                         onclick="openModal('blake.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-blake_htm_png')"
+                         onerror="imageError(this, 'loading-0-blake_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         blake.htm.png
@@ -385,8 +505,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/borisova.htm.png" alt="borisova.htm.png" 
-                     onclick="openModal('borisova.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-borisova_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/borisova.htm.png" alt="borisova.htm.png" 
+                         onclick="openModal('borisova.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-borisova_htm_png')"
+                         onerror="imageError(this, 'loading-0-borisova_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         borisova.htm.png
@@ -397,8 +524,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/bouchenakiaddress.htm.png" alt="bouchenakiaddress.htm.png" 
-                     onclick="openModal('bouchenakiaddress.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-bouchenakiaddress_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/bouchenakiaddress.htm.png" alt="bouchenakiaddress.htm.png" 
+                         onclick="openModal('bouchenakiaddress.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-bouchenakiaddress_htm_png')"
+                         onerror="imageError(this, 'loading-0-bouchenakiaddress_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         bouchenakiaddress.htm.png
@@ -409,8 +543,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/collier.htm.png" alt="collier.htm.png" 
-                     onclick="openModal('collier.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-collier_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/collier.htm.png" alt="collier.htm.png" 
+                         onclick="openModal('collier.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-collier_htm_png')"
+                         onerror="imageError(this, 'loading-0-collier_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         collier.htm.png
@@ -421,8 +562,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/contributors.htm.png" alt="contributors.htm.png" 
-                     onclick="openModal('contributors.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-contributors_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/contributors.htm.png" alt="contributors.htm.png" 
+                         onclick="openModal('contributors.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-contributors_htm_png')"
+                         onerror="imageError(this, 'loading-0-contributors_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         contributors.htm.png
@@ -433,8 +581,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png" alt="cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png" 
-                     onclick="openModal('cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png" alt="cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png" 
+                         onclick="openModal('cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png')"
+                         onload="imageLoaded(this, 'loading-0-cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian_png')"
+                         onerror="imageError(this, 'loading-0-cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         cultural-sustainability_smithsonian-artisan-initiative_projects_smithsonian.png
@@ -445,8 +600,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/dacunha.htm.png" alt="dacunha.htm.png" 
-                     onclick="openModal('dacunha.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-dacunha_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/dacunha.htm.png" alt="dacunha.htm.png" 
+                         onclick="openModal('dacunha.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-dacunha_htm_png')"
+                         onerror="imageError(this, 'loading-0-dacunha_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         dacunha.htm.png
@@ -457,8 +619,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/elhouda.htm.png" alt="elhouda.htm.png" 
-                     onclick="openModal('elhouda.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-elhouda_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/elhouda.htm.png" alt="elhouda.htm.png" 
+                         onclick="openModal('elhouda.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-elhouda_htm_png')"
+                         onerror="imageError(this, 'loading-0-elhouda_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         elhouda.htm.png
@@ -469,8 +638,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/elhouda_eng.htm.png" alt="elhouda_eng.htm.png" 
-                     onclick="openModal('elhouda_eng.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-elhouda_eng_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/elhouda_eng.htm.png" alt="elhouda_eng.htm.png" 
+                         onclick="openModal('elhouda_eng.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-elhouda_eng_htm_png')"
+                         onerror="imageError(this, 'loading-0-elhouda_eng_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         elhouda_eng.htm.png
@@ -481,8 +657,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/finalreport_eng.htm.png" alt="finalreport_eng.htm.png" 
-                     onclick="openModal('finalreport_eng.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-finalreport_eng_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/finalreport_eng.htm.png" alt="finalreport_eng.htm.png" 
+                         onclick="openModal('finalreport_eng.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-finalreport_eng_htm_png')"
+                         onerror="imageError(this, 'loading-0-finalreport_eng_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         finalreport_eng.htm.png
@@ -493,8 +676,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/finalreport_french.htm.png" alt="finalreport_french.htm.png" 
-                     onclick="openModal('finalreport_french.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-finalreport_french_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/finalreport_french.htm.png" alt="finalreport_french.htm.png" 
+                         onclick="openModal('finalreport_french.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-finalreport_french_htm_png')"
+                         onerror="imageError(this, 'loading-0-finalreport_french_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         finalreport_french.htm.png
@@ -505,8 +695,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/finalreport_spanish.htm.png" alt="finalreport_spanish.htm.png" 
-                     onclick="openModal('finalreport_spanish.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-finalreport_spanish_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/finalreport_spanish.htm.png" alt="finalreport_spanish.htm.png" 
+                         onclick="openModal('finalreport_spanish.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-finalreport_spanish_htm_png')"
+                         onerror="imageError(this, 'loading-0-finalreport_spanish_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         finalreport_spanish.htm.png
@@ -517,8 +714,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife.si.edu_magazine_basketry-traditions-southwest-china.png" alt="folklife.si.edu_magazine_basketry-traditions-southwest-china.png" 
-                     onclick="openModal('folklife.si.edu_magazine_basketry-traditions-southwest-china.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-folklife_si_edu_magazine_basketry-traditions-southwest-china_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife.si.edu_magazine_basketry-traditions-southwest-china.png" alt="folklife.si.edu_magazine_basketry-traditions-southwest-china.png" 
+                         onclick="openModal('folklife.si.edu_magazine_basketry-traditions-southwest-china.png')"
+                         onload="imageLoaded(this, 'loading-0-folklife_si_edu_magazine_basketry-traditions-southwest-china_png')"
+                         onerror="imageError(this, 'loading-0-folklife_si_edu_magazine_basketry-traditions-southwest-china_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         folklife.si.edu_magazine_basketry-traditions-southwest-china.png
@@ -529,8 +733,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife@si.edu.png" alt="folklife@si.edu.png" 
-                     onclick="openModal('folklife@si.edu.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-folklife@si_edu_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/folklife@si.edu.png" alt="folklife@si.edu.png" 
+                         onclick="openModal('folklife@si.edu.png')"
+                         onload="imageLoaded(this, 'loading-0-folklife@si_edu_png')"
+                         onerror="imageError(this, 'loading-0-folklife@si_edu_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         folklife@si.edu.png
@@ -541,8 +752,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/garba.htm.png" alt="garba.htm.png" 
-                     onclick="openModal('garba.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-garba_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/garba.htm.png" alt="garba.htm.png" 
+                         onclick="openModal('garba.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-garba_htm_png')"
+                         onerror="imageError(this, 'loading-0-garba_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         garba.htm.png
@@ -553,8 +771,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/garba_eng.htm.png" alt="garba_eng.htm.png" 
-                     onclick="openModal('garba_eng.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-garba_eng_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/garba_eng.htm.png" alt="garba_eng.htm.png" 
+                         onclick="openModal('garba_eng.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-garba_eng_htm_png')"
+                         onerror="imageError(this, 'loading-0-garba_eng_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         garba_eng.htm.png
@@ -565,8 +790,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/hoppal.htm.png" alt="hoppal.htm.png" 
-                     onclick="openModal('hoppal.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-hoppal_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/hoppal.htm.png" alt="hoppal.htm.png" 
+                         onclick="openModal('hoppal.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-hoppal_htm_png')"
+                         onerror="imageError(this, 'loading-0-hoppal_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         hoppal.htm.png
@@ -577,8 +809,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/hornedo.htm.png" alt="hornedo.htm.png" 
-                     onclick="openModal('hornedo.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-hornedo_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/hornedo.htm.png" alt="hornedo.htm.png" 
+                         onclick="openModal('hornedo.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-hornedo_htm_png')"
+                         onerror="imageError(this, 'loading-0-hornedo_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         hornedo.htm.png
@@ -589,8 +828,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kawada.htm.png" alt="kawada.htm.png" 
-                     onclick="openModal('kawada.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-kawada_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kawada.htm.png" alt="kawada.htm.png" 
+                         onclick="openModal('kawada.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-kawada_htm_png')"
+                         onerror="imageError(this, 'loading-0-kawada_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         kawada.htm.png
@@ -601,8 +847,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kirkinen.htm.png" alt="kirkinen.htm.png" 
-                     onclick="openModal('kirkinen.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-kirkinen_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kirkinen.htm.png" alt="kirkinen.htm.png" 
+                         onclick="openModal('kirkinen.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-kirkinen_htm_png')"
+                         onerror="imageError(this, 'loading-0-kirkinen_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         kirkinen.htm.png
@@ -613,8 +866,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/koch.htm.png" alt="koch.htm.png" 
-                     onclick="openModal('koch.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-koch_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/koch.htm.png" alt="koch.htm.png" 
+                         onclick="openModal('koch.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-koch_htm_png')"
+                         onerror="imageError(this, 'loading-0-koch_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         koch.htm.png
@@ -625,8 +885,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kouyate.htm.png" alt="kouyate.htm.png" 
-                     onclick="openModal('kouyate.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-kouyate_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kouyate.htm.png" alt="kouyate.htm.png" 
+                         onclick="openModal('kouyate.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-kouyate_htm_png')"
+                         onerror="imageError(this, 'loading-0-kouyate_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         kouyate.htm.png
@@ -637,8 +904,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kouyate_eng.htm.png" alt="kouyate_eng.htm.png" 
-                     onclick="openModal('kouyate_eng.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-kouyate_eng_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kouyate_eng.htm.png" alt="kouyate_eng.htm.png" 
+                         onclick="openModal('kouyate_eng.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-kouyate_eng_htm_png')"
+                         onerror="imageError(this, 'loading-0-kouyate_eng_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         kouyate_eng.htm.png
@@ -649,8 +923,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kurin.htm.png" alt="kurin.htm.png" 
-                     onclick="openModal('kurin.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-kurin_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/kurin.htm.png" alt="kurin.htm.png" 
+                         onclick="openModal('kurin.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-kurin_htm_png')"
+                         onerror="imageError(this, 'loading-0-kurin_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         kurin.htm.png
@@ -661,8 +942,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mambetova.htm.png" alt="mambetova.htm.png" 
-                     onclick="openModal('mambetova.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-mambetova_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mambetova.htm.png" alt="mambetova.htm.png" 
+                         onclick="openModal('mambetova.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-mambetova_htm_png')"
+                         onerror="imageError(this, 'loading-0-mambetova_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         mambetova.htm.png
@@ -673,8 +961,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/matusse.htm.png" alt="matusse.htm.png" 
-                     onclick="openModal('matusse.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-matusse_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/matusse.htm.png" alt="matusse.htm.png" 
+                         onclick="openModal('matusse.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-matusse_htm_png')"
+                         onerror="imageError(this, 'loading-0-matusse_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         matusse.htm.png
@@ -685,8 +980,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mayormessage.htm.png" alt="mayormessage.htm.png" 
-                     onclick="openModal('mayormessage.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-mayormessage_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mayormessage.htm.png" alt="mayormessage.htm.png" 
+                         onclick="openModal('mayormessage.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-mayormessage_htm_png')"
+                         onerror="imageError(this, 'loading-0-mayormessage_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         mayormessage.htm.png
@@ -697,8 +999,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mccann.htm.png" alt="mccann.htm.png" 
-                     onclick="openModal('mccann.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-mccann_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/mccann.htm.png" alt="mccann.htm.png" 
+                         onclick="openModal('mccann.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-mccann_htm_png')"
+                         onerror="imageError(this, 'loading-0-mccann_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         mccann.htm.png
@@ -709,8 +1018,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/nketia.htm.png" alt="nketia.htm.png" 
-                     onclick="openModal('nketia.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-nketia_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/nketia.htm.png" alt="nketia.htm.png" 
+                         onclick="openModal('nketia.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-nketia_htm_png')"
+                         onerror="imageError(this, 'loading-0-nketia_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         nketia.htm.png
@@ -721,8 +1037,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/preface.htm.png" alt="preface.htm.png" 
-                     onclick="openModal('preface.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-preface_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/preface.htm.png" alt="preface.htm.png" 
+                         onclick="openModal('preface.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-preface_htm_png')"
+                         onerror="imageError(this, 'loading-0-preface_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         preface.htm.png
@@ -733,8 +1056,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/prott.htm.png" alt="prott.htm.png" 
-                     onclick="openModal('prott.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-prott_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/prott.htm.png" alt="prott.htm.png" 
+                         onclick="openModal('prott.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-prott_htm_png')"
+                         onerror="imageError(this, 'loading-0-prott_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         prott.htm.png
@@ -745,8 +1075,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/pualani.htm.png" alt="pualani.htm.png" 
-                     onclick="openModal('pualani.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-pualani_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/pualani.htm.png" alt="pualani.htm.png" 
+                         onclick="openModal('pualani.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-pualani_htm_png')"
+                         onerror="imageError(this, 'loading-0-pualani_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         pualani.htm.png
@@ -757,8 +1094,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/puri.htm.png" alt="puri.htm.png" 
-                     onclick="openModal('puri.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-puri_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/puri.htm.png" alt="puri.htm.png" 
+                         onclick="openModal('puri.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-puri_htm_png')"
+                         onerror="imageError(this, 'loading-0-puri_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         puri.htm.png
@@ -769,8 +1113,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/puwainchir.htm.png" alt="puwainchir.htm.png" 
-                     onclick="openModal('puwainchir.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-puwainchir_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/puwainchir.htm.png" alt="puwainchir.htm.png" 
+                         onclick="openModal('puwainchir.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-puwainchir_htm_png')"
+                         onerror="imageError(this, 'loading-0-puwainchir_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         puwainchir.htm.png
@@ -781,8 +1132,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/saunders.htm.png" alt="saunders.htm.png" 
-                     onclick="openModal('saunders.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-saunders_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/saunders.htm.png" alt="saunders.htm.png" 
+                         onclick="openModal('saunders.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-saunders_htm_png')"
+                         onerror="imageError(this, 'loading-0-saunders_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         saunders.htm.png
@@ -793,8 +1151,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/seeger.htm.png" alt="seeger.htm.png" 
-                     onclick="openModal('seeger.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-seeger_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/seeger.htm.png" alt="seeger.htm.png" 
+                         onclick="openModal('seeger.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-seeger_htm_png')"
+                         onerror="imageError(this, 'loading-0-seeger_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         seeger.htm.png
@@ -805,8 +1170,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sethi.htm.png" alt="sethi.htm.png" 
-                     onclick="openModal('sethi.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-sethi_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sethi.htm.png" alt="sethi.htm.png" 
+                         onclick="openModal('sethi.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-sethi_htm_png')"
+                         onerror="imageError(this, 'loading-0-sethi_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         sethi.htm.png
@@ -817,8 +1189,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/shalaan.htm.png" alt="shalaan.htm.png" 
-                     onclick="openModal('shalaan.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-shalaan_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/shalaan.htm.png" alt="shalaan.htm.png" 
+                         onclick="openModal('shalaan.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-shalaan_htm_png')"
+                         onerror="imageError(this, 'loading-0-shalaan_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         shalaan.htm.png
@@ -829,8 +1208,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sherkin.htm.png" alt="sherkin.htm.png" 
-                     onclick="openModal('sherkin.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-sherkin_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/sherkin.htm.png" alt="sherkin.htm.png" 
+                         onclick="openModal('sherkin.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-sherkin_htm_png')"
+                         onerror="imageError(this, 'loading-0-sherkin_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         sherkin.htm.png
@@ -841,8 +1227,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/simon.htm.png" alt="simon.htm.png" 
-                     onclick="openModal('simon.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-simon_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/simon.htm.png" alt="simon.htm.png" 
+                         onclick="openModal('simon.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-simon_htm_png')"
+                         onerror="imageError(this, 'loading-0-simon_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         simon.htm.png
@@ -853,8 +1246,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/thomas.htm.png" alt="thomas.htm.png" 
-                     onclick="openModal('thomas.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-thomas_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/thomas.htm.png" alt="thomas.htm.png" 
+                         onclick="openModal('thomas.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-thomas_htm_png')"
+                         onerror="imageError(this, 'loading-0-thomas_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         thomas.htm.png
@@ -865,8 +1265,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/tora.htm.png" alt="tora.htm.png" 
-                     onclick="openModal('tora.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-tora_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/tora.htm.png" alt="tora.htm.png" 
+                         onclick="openModal('tora.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-tora_htm_png')"
+                         onerror="imageError(this, 'loading-0-tora_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         tora.htm.png
@@ -877,8 +1284,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png" 
-                     onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-www_folklife_si_edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png" 
+                         onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png')"
+                         onload="imageLoaded(this, 'loading-0-www_folklife_si_edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso_png')"
+                         onerror="imageError(this, 'loading-0-www_folklife_si_edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-ahmet-sahin_smithso.png
@@ -889,8 +1303,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png" 
-                     onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-www_folklife_si_edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png" 
+                         onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png')"
+                         onload="imageLoaded(this, 'loading-0-www_folklife_si_edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith_png')"
+                         onerror="imageError(this, 'loading-0-www_folklife_si_edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-mehmet-gursoy_smith.png
@@ -901,8 +1322,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png" 
-                     onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-www_folklife_si_edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png" alt="www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png" 
+                         onclick="openModal('www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png')"
+                         onload="imageLoaded(this, 'loading-0-www_folklife_si_edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths_png')"
+                         onerror="imageError(this, 'loading-0-www_folklife_si_edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         www.folklife.si.edu_online-exhibitions_modern-islamic-ceramics_artists-spotlight-nurten-sahin_smiths.png
@@ -913,8 +1341,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/yamaguti.htm.png" alt="yamaguti.htm.png" 
-                     onclick="openModal('yamaguti.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-yamaguti_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/yamaguti.htm.png" alt="yamaguti.htm.png" 
+                         onclick="openModal('yamaguti.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-yamaguti_htm_png')"
+                         onerror="imageError(this, 'loading-0-yamaguti_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         yamaguti.htm.png
@@ -925,8 +1360,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/yugar.htm.png" alt="yugar.htm.png" 
-                     onclick="openModal('yugar.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-yugar_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/yugar.htm.png" alt="yugar.htm.png" 
+                         onclick="openModal('yugar.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-yugar_htm_png')"
+                         onerror="imageError(this, 'loading-0-yugar_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         yugar.htm.png
@@ -937,8 +1379,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/yugar_eng.htm.png" alt="yugar_eng.htm.png" 
-                     onclick="openModal('yugar_eng.htm.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-0-yugar_eng_htm_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/yugar_eng.htm.png" alt="yugar_eng.htm.png" 
+                         onclick="openModal('yugar_eng.htm.png')"
+                         onload="imageLoaded(this, 'loading-0-yugar_eng_htm_png')"
+                         onerror="imageError(this, 'loading-0-yugar_eng_htm_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         yugar_eng.htm.png
@@ -987,6 +1436,29 @@
                 closeModal();
             }
         });
+        
+        // Image loading functions
+        function imageLoaded(img, loadingId) {
+            // Hide loading overlay and show image
+            const loadingOverlay = document.getElementById(loadingId);
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('loaded');
+            }
+            img.classList.remove('loading');
+            img.classList.add('loaded');
+        }
+        
+        function imageError(img, loadingId) {
+            // Show error state with red background and "Failed" text
+            const loadingOverlay = document.getElementById(loadingId);
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('failed');
+                loadingOverlay.innerHTML = '<span>Failed</span>';
+            }
+            img.style.display = 'none';
+        }
         
         // Feedback system functions
         function showFeedbackForm(type, clusterId) {

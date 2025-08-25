@@ -172,6 +172,42 @@
             font-size: 0.9rem; 
         }
         
+        /* Loading overlay styles */
+        .image-container { position: relative; }
+        .loading-overlay { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            background: #f8f9fa; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #6c757d; 
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+        .loading-overlay.skeleton { 
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        .loading-overlay.failed { 
+            background: #dc3545; 
+            color: white; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+        }
+        .loading-overlay.loaded { 
+            display: none; 
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
         /* Modal/Lightbox styles */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
         .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
@@ -202,13 +238,20 @@
     
     <div class="container">
         <div class="back-link">
-            <a href="index_folklife.html" class="back-btn">← Back to All Layouts</a>
+            <a href="index.html" class="back-btn">← Back to All Layouts</a>
         </div>
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('authors_betty-belanus.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-canonical">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="Canonical" class="canonical-image clickable" 
+                         onclick="openModal('authors_betty-belanus.png')"
+                         onload="imageLoaded(this, 'loading-17-canonical')"
+                         onerror="imageError(this, 'loading-17-canonical')">
+                </div>
                 <div class="cluster-details">
                     <h2>Layout 17</h2>
                     <p><strong>Canonical Image:</strong> authors_betty-belanus.png</p>
@@ -253,8 +296,15 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_crisis.png" alt="magazine_series_crisis.png" 
-                     onclick="openModal('magazine_series_crisis.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_series_crisis_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_crisis.png" alt="magazine_series_crisis.png" 
+                         onclick="openModal('magazine_series_crisis.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_series_crisis_png')"
+                         onerror="imageError(this, 'loading-17-magazine_series_crisis_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_series_crisis.png
@@ -265,8 +315,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_sports-games.png" alt="magazine_themes_sports-games.png" 
-                     onclick="openModal('magazine_themes_sports-games.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_sports-games_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_sports-games.png" alt="magazine_themes_sports-games.png" 
+                         onclick="openModal('magazine_themes_sports-games.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_sports-games_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_sports-games_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_sports-games.png
@@ -277,8 +334,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_foodways-of-holidays.png" alt="magazine_series_foodways-of-holidays.png" 
-                     onclick="openModal('magazine_series_foodways-of-holidays.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_series_foodways-of-holidays_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_foodways-of-holidays.png" alt="magazine_series_foodways-of-holidays.png" 
+                         onclick="openModal('magazine_series_foodways-of-holidays.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_series_foodways-of-holidays_png')"
+                         onerror="imageError(this, 'loading-17-magazine_series_foodways-of-holidays_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_series_foodways-of-holidays.png
@@ -289,8 +353,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_material-world.png" alt="magazine_material-world.png" 
-                     onclick="openModal('magazine_material-world.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_material-world_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_material-world.png" alt="magazine_material-world.png" 
+                         onclick="openModal('magazine_material-world.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_material-world_png')"
+                         onerror="imageError(this, 'loading-17-magazine_material-world_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_material-world.png
@@ -301,8 +372,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_work-life.png" alt="magazine_themes_work-life.png" 
-                     onclick="openModal('magazine_themes_work-life.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_work-life_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_work-life.png" alt="magazine_themes_work-life.png" 
+                         onclick="openModal('magazine_themes_work-life.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_work-life_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_work-life_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_work-life.png
@@ -313,8 +391,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_religion-spirituality.png" alt="magazine_themes_religion-spirituality.png" 
-                     onclick="openModal('magazine_themes_religion-spirituality.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_religion-spirituality_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_religion-spirituality.png" alt="magazine_themes_religion-spirituality.png" 
+                         onclick="openModal('magazine_themes_religion-spirituality.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_religion-spirituality_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_religion-spirituality_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_religion-spirituality.png
@@ -325,8 +410,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_crafts.png" alt="magazine_themes_crafts.png" 
-                     onclick="openModal('magazine_themes_crafts.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_crafts_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_crafts.png" alt="magazine_themes_crafts.png" 
+                         onclick="openModal('magazine_themes_crafts.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_crafts_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_crafts_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_crafts.png
@@ -337,8 +429,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_environment.png" alt="magazine_themes_environment.png" 
-                     onclick="openModal('magazine_themes_environment.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_environment_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_environment.png" alt="magazine_themes_environment.png" 
+                         onclick="openModal('magazine_themes_environment.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_environment_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_environment_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_environment.png
@@ -349,8 +448,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_foodways.png" alt="magazine_themes_foodways.png" 
-                     onclick="openModal('magazine_themes_foodways.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_foodways_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_foodways.png" alt="magazine_themes_foodways.png" 
+                         onclick="openModal('magazine_themes_foodways.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_foodways_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_foodways_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_foodways.png
@@ -361,8 +467,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine.png" alt="magazine.png" 
-                     onclick="openModal('magazine.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine.png" alt="magazine.png" 
+                         onclick="openModal('magazine.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_png')"
+                         onerror="imageError(this, 'loading-17-magazine_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine.png
@@ -373,8 +486,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dress.png" alt="magazine_themes_dress.png" 
-                     onclick="openModal('magazine_themes_dress.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_dress_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dress.png" alt="magazine_themes_dress.png" 
+                         onclick="openModal('magazine_themes_dress.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_dress_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_dress_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_dress.png
@@ -385,8 +505,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_history.png" alt="magazine_themes_history.png" 
-                     onclick="openModal('magazine_themes_history.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_history_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_history.png" alt="magazine_themes_history.png" 
+                         onclick="openModal('magazine_themes_history.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_history_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_history_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_history.png
@@ -397,8 +524,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_music.png" alt="magazine_themes_music.png" 
-                     onclick="openModal('magazine_themes_music.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_music_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_music.png" alt="magazine_themes_music.png" 
+                         onclick="openModal('magazine_themes_music.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_music_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_music_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_music.png
@@ -409,8 +543,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-sustainability.png" alt="magazine_themes_cultural-sustainability.png" 
-                     onclick="openModal('magazine_themes_cultural-sustainability.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_cultural-sustainability_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-sustainability.png" alt="magazine_themes_cultural-sustainability.png" 
+                         onclick="openModal('magazine_themes_cultural-sustainability.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_cultural-sustainability_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_cultural-sustainability_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_cultural-sustainability.png
@@ -421,8 +562,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_news-and-events.png" alt="magazine_news-and-events.png" 
-                     onclick="openModal('magazine_news-and-events.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_news-and-events_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_news-and-events.png" alt="magazine_news-and-events.png" 
+                         onclick="openModal('magazine_news-and-events.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_news-and-events_png')"
+                         onerror="imageError(this, 'loading-17-magazine_news-and-events_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_news-and-events.png
@@ -433,8 +581,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_traditional-knowledge.png" alt="magazine_themes_traditional-knowledge.png" 
-                     onclick="openModal('magazine_themes_traditional-knowledge.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_traditional-knowledge_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_traditional-knowledge.png" alt="magazine_themes_traditional-knowledge.png" 
+                         onclick="openModal('magazine_themes_traditional-knowledge.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_traditional-knowledge_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_traditional-knowledge_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_traditional-knowledge.png
@@ -445,8 +600,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_deep-dive.png" alt="magazine_deep-dive.png" 
-                     onclick="openModal('magazine_deep-dive.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_deep-dive_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_deep-dive.png" alt="magazine_deep-dive.png" 
+                         onclick="openModal('magazine_deep-dive.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_deep-dive_png')"
+                         onerror="imageError(this, 'loading-17-magazine_deep-dive_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_deep-dive.png
@@ -457,8 +619,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_celebrations.png" alt="magazine_themes_celebrations.png" 
-                     onclick="openModal('magazine_themes_celebrations.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_celebrations_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_celebrations.png" alt="magazine_themes_celebrations.png" 
+                         onclick="openModal('magazine_themes_celebrations.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_celebrations_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_celebrations_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_celebrations.png
@@ -469,8 +638,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_sights-and-sounds.png" alt="magazine_sights-and-sounds.png" 
-                     onclick="openModal('magazine_sights-and-sounds.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_sights-and-sounds_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_sights-and-sounds.png" alt="magazine_sights-and-sounds.png" 
+                         onclick="openModal('magazine_sights-and-sounds.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_sights-and-sounds_png')"
+                         onerror="imageError(this, 'loading-17-magazine_sights-and-sounds_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_sights-and-sounds.png
@@ -481,8 +657,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_social-justice.png" alt="magazine_themes_social-justice.png" 
-                     onclick="openModal('magazine_themes_social-justice.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_social-justice_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_social-justice.png" alt="magazine_themes_social-justice.png" 
+                         onclick="openModal('magazine_themes_social-justice.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_social-justice_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_social-justice_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_social-justice.png
@@ -493,8 +676,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-transmission.png" alt="magazine_themes_cultural-transmission.png" 
-                     onclick="openModal('magazine_themes_cultural-transmission.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_cultural-transmission_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_cultural-transmission.png" alt="magazine_themes_cultural-transmission.png" 
+                         onclick="openModal('magazine_themes_cultural-transmission.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_cultural-transmission_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_cultural-transmission_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_cultural-transmission.png
@@ -505,8 +695,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_education.png" alt="magazine_themes_education.png" 
-                     onclick="openModal('magazine_themes_education.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_education_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_education.png" alt="magazine_themes_education.png" 
+                         onclick="openModal('magazine_themes_education.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_education_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_education_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_education.png
@@ -517,8 +714,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_immigration-migration.png" alt="magazine_themes_immigration-migration.png" 
-                     onclick="openModal('magazine_themes_immigration-migration.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_immigration-migration_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_immigration-migration.png" alt="magazine_themes_immigration-migration.png" 
+                         onclick="openModal('magazine_themes_immigration-migration.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_immigration-migration_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_immigration-migration_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_immigration-migration.png
@@ -529,8 +733,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_art-design.png" alt="magazine_themes_art-design.png" 
-                     onclick="openModal('magazine_themes_art-design.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_art-design_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_art-design.png" alt="magazine_themes_art-design.png" 
+                         onclick="openModal('magazine_themes_art-design.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_art-design_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_art-design_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_art-design.png
@@ -541,8 +752,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_perspectives.png" alt="magazine_perspectives.png" 
-                     onclick="openModal('magazine_perspectives.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_perspectives_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_perspectives.png" alt="magazine_perspectives.png" 
+                         onclick="openModal('magazine_perspectives.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_perspectives_png')"
+                         onerror="imageError(this, 'loading-17-magazine_perspectives_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_perspectives.png
@@ -553,8 +771,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_storytelling.png" alt="magazine_themes_storytelling.png" 
-                     onclick="openModal('magazine_themes_storytelling.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_storytelling_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_storytelling.png" alt="magazine_themes_storytelling.png" 
+                         onclick="openModal('magazine_themes_storytelling.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_storytelling_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_storytelling_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_storytelling.png
@@ -565,8 +790,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_language.png" alt="magazine_themes_language.png" 
-                     onclick="openModal('magazine_themes_language.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_language_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_language.png" alt="magazine_themes_language.png" 
+                         onclick="openModal('magazine_themes_language.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_language_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_language_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_language.png
@@ -577,8 +809,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_community.png" alt="magazine_themes_community.png" 
-                     onclick="openModal('magazine_themes_community.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_community_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_community.png" alt="magazine_themes_community.png" 
+                         onclick="openModal('magazine_themes_community.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_community_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_community_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_community.png
@@ -589,8 +828,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_dc-local.png" alt="magazine_dc-local.png" 
-                     onclick="openModal('magazine_dc-local.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_dc-local_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_dc-local.png" alt="magazine_dc-local.png" 
+                         onclick="openModal('magazine_dc-local.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_dc-local_png')"
+                         onerror="imageError(this, 'loading-17-magazine_dc-local_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_dc-local.png
@@ -601,8 +847,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dance.png" alt="magazine_themes_dance.png" 
-                     onclick="openModal('magazine_themes_dance.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_dance_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_dance.png" alt="magazine_themes_dance.png" 
+                         onclick="openModal('magazine_themes_dance.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_dance_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_dance_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_dance.png
@@ -613,8 +866,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="authors_betty-belanus.png" 
-                     onclick="openModal('authors_betty-belanus.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-authors_betty-belanus_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_betty-belanus.png" alt="authors_betty-belanus.png" 
+                         onclick="openModal('authors_betty-belanus.png')"
+                         onload="imageLoaded(this, 'loading-17-authors_betty-belanus_png')"
+                         onerror="imageError(this, 'loading-17-authors_betty-belanus_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_betty-belanus.png
@@ -625,8 +885,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emma-cieslik.png" alt="authors_emma-cieslik.png" 
-                     onclick="openModal('authors_emma-cieslik.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-authors_emma-cieslik_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emma-cieslik.png" alt="authors_emma-cieslik.png" 
+                         onclick="openModal('authors_emma-cieslik.png')"
+                         onload="imageLoaded(this, 'loading-17-authors_emma-cieslik_png')"
+                         onerror="imageError(this, 'loading-17-authors_emma-cieslik_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_emma-cieslik.png
@@ -637,8 +904,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_building-arts.png" alt="magazine_themes_building-arts.png" 
-                     onclick="openModal('magazine_themes_building-arts.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_themes_building-arts_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_themes_building-arts.png" alt="magazine_themes_building-arts.png" 
+                         onclick="openModal('magazine_themes_building-arts.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_themes_building-arts_png')"
+                         onerror="imageError(this, 'loading-17-magazine_themes_building-arts_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_themes_building-arts.png
@@ -649,8 +923,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_stream-of-voices.png" alt="magazine_series_stream-of-voices.png" 
-                     onclick="openModal('magazine_series_stream-of-voices.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-magazine_series_stream-of-voices_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/magazine_series_stream-of-voices.png" alt="magazine_series_stream-of-voices.png" 
+                         onclick="openModal('magazine_series_stream-of-voices.png')"
+                         onload="imageLoaded(this, 'loading-17-magazine_series_stream-of-voices_png')"
+                         onerror="imageError(this, 'loading-17-magazine_series_stream-of-voices_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         magazine_series_stream-of-voices.png
@@ -661,8 +942,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_maddie-vanoostenburg.png" alt="authors_maddie-vanoostenburg.png" 
-                     onclick="openModal('authors_maddie-vanoostenburg.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-authors_maddie-vanoostenburg_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_maddie-vanoostenburg.png" alt="authors_maddie-vanoostenburg.png" 
+                         onclick="openModal('authors_maddie-vanoostenburg.png')"
+                         onload="imageLoaded(this, 'loading-17-authors_maddie-vanoostenburg_png')"
+                         onerror="imageError(this, 'loading-17-authors_maddie-vanoostenburg_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_maddie-vanoostenburg.png
@@ -673,8 +961,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emily-buhrow-rogers.png" alt="authors_emily-buhrow-rogers.png" 
-                     onclick="openModal('authors_emily-buhrow-rogers.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-authors_emily-buhrow-rogers_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emily-buhrow-rogers.png" alt="authors_emily-buhrow-rogers.png" 
+                         onclick="openModal('authors_emily-buhrow-rogers.png')"
+                         onload="imageLoaded(this, 'loading-17-authors_emily-buhrow-rogers_png')"
+                         onerror="imageError(this, 'loading-17-authors_emily-buhrow-rogers_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_emily-buhrow-rogers.png
@@ -685,8 +980,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_james-deutsch.png" alt="authors_james-deutsch.png" 
-                     onclick="openModal('authors_james-deutsch.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-authors_james-deutsch_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_james-deutsch.png" alt="authors_james-deutsch.png" 
+                         onclick="openModal('authors_james-deutsch.png')"
+                         onload="imageLoaded(this, 'loading-17-authors_james-deutsch_png')"
+                         onerror="imageError(this, 'loading-17-authors_james-deutsch_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_james-deutsch.png
@@ -697,8 +999,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hali-dardar.png" alt="authors_hali-dardar.png" 
-                     onclick="openModal('authors_hali-dardar.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-authors_hali-dardar_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hali-dardar.png" alt="authors_hali-dardar.png" 
+                         onclick="openModal('authors_hali-dardar.png')"
+                         onload="imageLoaded(this, 'loading-17-authors_hali-dardar_png')"
+                         onerror="imageError(this, 'loading-17-authors_hali-dardar_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_hali-dardar.png
@@ -709,8 +1018,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_daniel-sheehy.png" alt="authors_daniel-sheehy.png" 
-                     onclick="openModal('authors_daniel-sheehy.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-17-authors_daniel-sheehy_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_daniel-sheehy.png" alt="authors_daniel-sheehy.png" 
+                         onclick="openModal('authors_daniel-sheehy.png')"
+                         onload="imageLoaded(this, 'loading-17-authors_daniel-sheehy_png')"
+                         onerror="imageError(this, 'loading-17-authors_daniel-sheehy_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_daniel-sheehy.png
@@ -762,6 +1078,29 @@
                 closeModal();
             }
         });
+        
+        // Image loading functions
+        function imageLoaded(img, loadingId) {
+            // Hide loading overlay and show image
+            const loadingOverlay = document.getElementById(loadingId);
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('loaded');
+            }
+            img.classList.remove('loading');
+            img.classList.add('loaded');
+        }
+        
+        function imageError(img, loadingId) {
+            // Show error state with red background and "Failed" text
+            const loadingOverlay = document.getElementById(loadingId);
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('failed');
+                loadingOverlay.innerHTML = '<span>Failed</span>';
+            }
+            img.style.display = 'none';
+        }
         
         // Feedback system functions
         function showFeedbackForm(type, clusterId) {

@@ -172,6 +172,42 @@
             font-size: 0.9rem; 
         }
         
+        /* Loading overlay styles */
+        .image-container { position: relative; }
+        .loading-overlay { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            background: #f8f9fa; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #6c757d; 
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+        .loading-overlay.skeleton { 
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        .loading-overlay.failed { 
+            background: #dc3545; 
+            color: white; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+        }
+        .loading-overlay.loaded { 
+            display: none; 
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
         /* Modal/Lightbox styles */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
         .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
@@ -207,8 +243,15 @@
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/2021_making-matters_storied-objects.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('2021_making-matters_storied-objects.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-139-canonical">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/2021_making-matters_storied-objects.png" alt="Canonical" class="canonical-image clickable" 
+                         onclick="openModal('2021_making-matters_storied-objects.png')"
+                         onload="imageLoaded(this, 'loading-139-canonical')"
+                         onerror="imageError(this, 'loading-139-canonical')">
+                </div>
                 <div class="cluster-details">
                     <h2>Layout 139</h2>
                     <p><strong>Canonical Image:</strong> 2021_making-matters_storied-objects.png</p>
@@ -253,8 +296,15 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/2021_making-matters_storied-objects.png" alt="2021_making-matters_storied-objects.png" 
-                     onclick="openModal('2021_making-matters_storied-objects.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-139-2021_making-matters_storied-objects_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/2021_making-matters_storied-objects.png" alt="2021_making-matters_storied-objects.png" 
+                         onclick="openModal('2021_making-matters_storied-objects.png')"
+                         onload="imageLoaded(this, 'loading-139-2021_making-matters_storied-objects_png')"
+                         onerror="imageError(this, 'loading-139-2021_making-matters_storied-objects_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         2021_making-matters_storied-objects.png
@@ -303,6 +353,29 @@
                 closeModal();
             }
         });
+        
+        // Image loading functions
+        function imageLoaded(img, loadingId) {
+            // Hide loading overlay and show image
+            const loadingOverlay = document.getElementById(loadingId);
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('loaded');
+            }
+            img.classList.remove('loading');
+            img.classList.add('loaded');
+        }
+        
+        function imageError(img, loadingId) {
+            // Show error state with red background and "Failed" text
+            const loadingOverlay = document.getElementById(loadingId);
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('failed');
+                loadingOverlay.innerHTML = '<span>Failed</span>';
+            }
+            img.style.display = 'none';
+        }
         
         // Feedback system functions
         function showFeedbackForm(type, clusterId) {

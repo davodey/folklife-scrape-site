@@ -172,6 +172,42 @@
             font-size: 0.9rem; 
         }
         
+        /* Loading overlay styles */
+        .image-container { position: relative; }
+        .loading-overlay { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            background: #f8f9fa; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #6c757d; 
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+        .loading-overlay.skeleton { 
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        .loading-overlay.failed { 
+            background: #dc3545; 
+            color: white; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+        }
+        .loading-overlay.loaded { 
+            display: none; 
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
         /* Modal/Lightbox styles */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); }
         .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90%; margin-top: 2%; }
@@ -202,13 +238,20 @@
     
     <div class="container">
         <div class="back-link">
-            <a href="index_folklife.html" class="back-btn">← Back to All Layouts</a>
+            <a href="index.html" class="back-btn">← Back to All Layouts</a>
         </div>
         
         <div class="cluster-info">
             <div class="cluster-header">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_alexa-nickandros.png" alt="Canonical" class="canonical-image clickable" 
-                     onclick="openModal('authors_alexa-nickandros.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-canonical">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_alexa-nickandros.png" alt="Canonical" class="canonical-image clickable" 
+                         onclick="openModal('authors_alexa-nickandros.png')"
+                         onload="imageLoaded(this, 'loading-14-canonical')"
+                         onerror="imageError(this, 'loading-14-canonical')">
+                </div>
                 <div class="cluster-details">
                     <h2>Layout 14</h2>
                     <p><strong>Canonical Image:</strong> authors_alexa-nickandros.png</p>
@@ -253,8 +296,15 @@
         
         <div class="images-grid">
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_eowyn-stewart.png" alt="authors_eowyn-stewart.png" 
-                     onclick="openModal('authors_eowyn-stewart.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_eowyn-stewart_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_eowyn-stewart.png" alt="authors_eowyn-stewart.png" 
+                         onclick="openModal('authors_eowyn-stewart.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_eowyn-stewart_png')"
+                         onerror="imageError(this, 'loading-14-authors_eowyn-stewart_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_eowyn-stewart.png
@@ -265,8 +315,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sally-van-de-water.png" alt="authors_sally-van-de-water.png" 
-                     onclick="openModal('authors_sally-van-de-water.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_sally-van-de-water_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_sally-van-de-water.png" alt="authors_sally-van-de-water.png" 
+                         onclick="openModal('authors_sally-van-de-water.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_sally-van-de-water_png')"
+                         onerror="imageError(this, 'loading-14-authors_sally-van-de-water_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_sally-van-de-water.png
@@ -277,8 +334,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_francesca-du-brock.png" alt="authors_francesca-du-brock.png" 
-                     onclick="openModal('authors_francesca-du-brock.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_francesca-du-brock_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_francesca-du-brock.png" alt="authors_francesca-du-brock.png" 
+                         onclick="openModal('authors_francesca-du-brock.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_francesca-du-brock_png')"
+                         onerror="imageError(this, 'loading-14-authors_francesca-du-brock_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_francesca-du-brock.png
@@ -289,8 +353,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jose-gonzalez.png" alt="authors_jose-gonzalez.png" 
-                     onclick="openModal('authors_jose-gonzalez.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_jose-gonzalez_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jose-gonzalez.png" alt="authors_jose-gonzalez.png" 
+                         onclick="openModal('authors_jose-gonzalez.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_jose-gonzalez_png')"
+                         onerror="imageError(this, 'loading-14-authors_jose-gonzalez_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_jose-gonzalez.png
@@ -301,8 +372,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_rebecca-west.png" alt="authors_rebecca-west.png" 
-                     onclick="openModal('authors_rebecca-west.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_rebecca-west_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_rebecca-west.png" alt="authors_rebecca-west.png" 
+                         onclick="openModal('authors_rebecca-west.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_rebecca-west_png')"
+                         onerror="imageError(this, 'loading-14-authors_rebecca-west_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_rebecca-west.png
@@ -313,8 +391,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_marjorie-hunt.png" alt="authors_marjorie-hunt.png" 
-                     onclick="openModal('authors_marjorie-hunt.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_marjorie-hunt_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_marjorie-hunt.png" alt="authors_marjorie-hunt.png" 
+                         onclick="openModal('authors_marjorie-hunt.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_marjorie-hunt_png')"
+                         onerror="imageError(this, 'loading-14-authors_marjorie-hunt_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_marjorie-hunt.png
@@ -325,8 +410,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hannah-julia-davis.png" alt="authors_hannah-julia-davis.png" 
-                     onclick="openModal('authors_hannah-julia-davis.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_hannah-julia-davis_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_hannah-julia-davis.png" alt="authors_hannah-julia-davis.png" 
+                         onclick="openModal('authors_hannah-julia-davis.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_hannah-julia-davis_png')"
+                         onerror="imageError(this, 'loading-14-authors_hannah-julia-davis_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_hannah-julia-davis.png
@@ -337,8 +429,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_julian-saporiti.png" alt="authors_julian-saporiti.png" 
-                     onclick="openModal('authors_julian-saporiti.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_julian-saporiti_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_julian-saporiti.png" alt="authors_julian-saporiti.png" 
+                         onclick="openModal('authors_julian-saporiti.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_julian-saporiti_png')"
+                         onerror="imageError(this, 'loading-14-authors_julian-saporiti_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_julian-saporiti.png
@@ -349,8 +448,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_yuliya-gluhova.png" alt="authors_yuliya-gluhova.png" 
-                     onclick="openModal('authors_yuliya-gluhova.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_yuliya-gluhova_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_yuliya-gluhova.png" alt="authors_yuliya-gluhova.png" 
+                         onclick="openModal('authors_yuliya-gluhova.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_yuliya-gluhova_png')"
+                         onerror="imageError(this, 'loading-14-authors_yuliya-gluhova_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_yuliya-gluhova.png
@@ -361,8 +467,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_james-early.png" alt="authors_james-early.png" 
-                     onclick="openModal('authors_james-early.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_james-early_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_james-early.png" alt="authors_james-early.png" 
+                         onclick="openModal('authors_james-early.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_james-early_png')"
+                         onerror="imageError(this, 'loading-14-authors_james-early_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_james-early.png
@@ -373,8 +486,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jonathan-williger.png" alt="authors_jonathan-williger.png" 
-                     onclick="openModal('authors_jonathan-williger.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_jonathan-williger_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_jonathan-williger.png" alt="authors_jonathan-williger.png" 
+                         onclick="openModal('authors_jonathan-williger.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_jonathan-williger_png')"
+                         onerror="imageError(this, 'loading-14-authors_jonathan-williger_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_jonathan-williger.png
@@ -385,8 +505,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_alexa-nickandros.png" alt="authors_alexa-nickandros.png" 
-                     onclick="openModal('authors_alexa-nickandros.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_alexa-nickandros_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_alexa-nickandros.png" alt="authors_alexa-nickandros.png" 
+                         onclick="openModal('authors_alexa-nickandros.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_alexa-nickandros_png')"
+                         onerror="imageError(this, 'loading-14-authors_alexa-nickandros_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_alexa-nickandros.png
@@ -397,8 +524,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_josi-miller.png" alt="authors_josi-miller.png" 
-                     onclick="openModal('authors_josi-miller.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_josi-miller_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_josi-miller.png" alt="authors_josi-miller.png" 
+                         onclick="openModal('authors_josi-miller.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_josi-miller_png')"
+                         onerror="imageError(this, 'loading-14-authors_josi-miller_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_josi-miller.png
@@ -409,8 +543,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_soraya-keiser.png" alt="authors_soraya-keiser.png" 
-                     onclick="openModal('authors_soraya-keiser.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_soraya-keiser_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_soraya-keiser.png" alt="authors_soraya-keiser.png" 
+                         onclick="openModal('authors_soraya-keiser.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_soraya-keiser_png')"
+                         onerror="imageError(this, 'loading-14-authors_soraya-keiser_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_soraya-keiser.png
@@ -421,8 +562,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_nana-meparishvili.png" alt="authors_nana-meparishvili.png" 
-                     onclick="openModal('authors_nana-meparishvili.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_nana-meparishvili_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_nana-meparishvili.png" alt="authors_nana-meparishvili.png" 
+                         onclick="openModal('authors_nana-meparishvili.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_nana-meparishvili_png')"
+                         onerror="imageError(this, 'loading-14-authors_nana-meparishvili_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_nana-meparishvili.png
@@ -433,8 +581,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_huib-schippers.png" alt="authors_huib-schippers.png" 
-                     onclick="openModal('authors_huib-schippers.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_huib-schippers_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_huib-schippers.png" alt="authors_huib-schippers.png" 
+                         onclick="openModal('authors_huib-schippers.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_huib-schippers_png')"
+                         onerror="imageError(this, 'loading-14-authors_huib-schippers_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_huib-schippers.png
@@ -445,8 +600,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_mali-obomsawin.png" alt="authors_mali-obomsawin.png" 
-                     onclick="openModal('authors_mali-obomsawin.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_mali-obomsawin_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_mali-obomsawin.png" alt="authors_mali-obomsawin.png" 
+                         onclick="openModal('authors_mali-obomsawin.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_mali-obomsawin_png')"
+                         onerror="imageError(this, 'loading-14-authors_mali-obomsawin_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_mali-obomsawin.png
@@ -457,8 +619,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emily-hilliard.png" alt="authors_emily-hilliard.png" 
-                     onclick="openModal('authors_emily-hilliard.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_emily-hilliard_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_emily-hilliard.png" alt="authors_emily-hilliard.png" 
+                         onclick="openModal('authors_emily-hilliard.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_emily-hilliard_png')"
+                         onerror="imageError(this, 'loading-14-authors_emily-hilliard_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_emily-hilliard.png
@@ -469,8 +638,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_samantha-beach-sinagra.png" alt="authors_samantha-beach-sinagra.png" 
-                     onclick="openModal('authors_samantha-beach-sinagra.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_samantha-beach-sinagra_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_samantha-beach-sinagra.png" alt="authors_samantha-beach-sinagra.png" 
+                         onclick="openModal('authors_samantha-beach-sinagra.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_samantha-beach-sinagra_png')"
+                         onerror="imageError(this, 'loading-14-authors_samantha-beach-sinagra_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_samantha-beach-sinagra.png
@@ -481,8 +657,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_monique-marie-cummings.png" alt="authors_monique-marie-cummings.png" 
-                     onclick="openModal('authors_monique-marie-cummings.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_monique-marie-cummings_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_monique-marie-cummings.png" alt="authors_monique-marie-cummings.png" 
+                         onclick="openModal('authors_monique-marie-cummings.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_monique-marie-cummings_png')"
+                         onerror="imageError(this, 'loading-14-authors_monique-marie-cummings_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_monique-marie-cummings.png
@@ -493,8 +676,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amanda-ellard.png" alt="authors_amanda-ellard.png" 
-                     onclick="openModal('authors_amanda-ellard.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_amanda-ellard_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_amanda-ellard.png" alt="authors_amanda-ellard.png" 
+                         onclick="openModal('authors_amanda-ellard.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_amanda-ellard_png')"
+                         onerror="imageError(this, 'loading-14-authors_amanda-ellard_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_amanda-ellard.png
@@ -505,8 +695,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_dawa-drolma.png" alt="authors_dawa-drolma.png" 
-                     onclick="openModal('authors_dawa-drolma.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_dawa-drolma_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_dawa-drolma.png" alt="authors_dawa-drolma.png" 
+                         onclick="openModal('authors_dawa-drolma.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_dawa-drolma_png')"
+                         onerror="imageError(this, 'loading-14-authors_dawa-drolma_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_dawa-drolma.png
@@ -517,8 +714,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_guest-writer.png" alt="authors_guest-writer.png" 
-                     onclick="openModal('authors_guest-writer.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_guest-writer_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_guest-writer.png" alt="authors_guest-writer.png" 
+                         onclick="openModal('authors_guest-writer.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_guest-writer_png')"
+                         onerror="imageError(this, 'loading-14-authors_guest-writer_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_guest-writer.png
@@ -529,8 +733,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_mu-qian.png" alt="authors_mu-qian.png" 
-                     onclick="openModal('authors_mu-qian.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_mu-qian_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_mu-qian.png" alt="authors_mu-qian.png" 
+                         onclick="openModal('authors_mu-qian.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_mu-qian_png')"
+                         onerror="imageError(this, 'loading-14-authors_mu-qian_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_mu-qian.png
@@ -541,8 +752,15 @@
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_biying-ma.png" alt="authors_biying-ma.png" 
-                     onclick="openModal('authors_biying-ma.png')">
+                <div class="image-container">
+                    <div class="loading-overlay skeleton" id="loading-14-authors_biying-ma_png">
+                        <span>Loading...</span>
+                    </div>
+                    <img src="https://quotient.nyc3.cdn.digitaloceanspaces.com/authors_biying-ma.png" alt="authors_biying-ma.png" 
+                         onclick="openModal('authors_biying-ma.png')"
+                         onload="imageLoaded(this, 'loading-14-authors_biying-ma_png')"
+                         onerror="imageError(this, 'loading-14-authors_biying-ma_png')">
+                </div>
                 <div class="image-info">
                     <div class="image-name">
                         authors_biying-ma.png
@@ -594,6 +812,29 @@
                 closeModal();
             }
         });
+        
+        // Image loading functions
+        function imageLoaded(img, loadingId) {
+            // Hide loading overlay and show image
+            const loadingOverlay = document.getElementById(loadingId);
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('loaded');
+            }
+            img.classList.remove('loading');
+            img.classList.add('loaded');
+        }
+        
+        function imageError(img, loadingId) {
+            // Show error state with red background and "Failed" text
+            const loadingOverlay = document.getElementById(loadingId);
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('skeleton');
+                loadingOverlay.classList.add('failed');
+                loadingOverlay.innerHTML = '<span>Failed</span>';
+            }
+            img.style.display = 'none';
+        }
         
         // Feedback system functions
         function showFeedbackForm(type, clusterId) {
