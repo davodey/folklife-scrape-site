@@ -235,36 +235,28 @@ function notifyAuthStateListeners(user) {
 
 // Update UI based on authentication state
 function updateUIForAuthState(user) {
-    console.log('🎨 Updating UI for auth state:', user ? 'authenticated' : 'not authenticated');
+    const authElements = document.querySelectorAll('[data-auth]');
     
-    // Simply show/hide protected content without complex DOM manipulation
-    const protectedElements = document.querySelectorAll('.protected-content');
-    protectedElements.forEach(element => {
-        if (user) {
+    authElements.forEach(element => {
+        const authType = element.dataset.auth;
+        
+        if (authType === 'user-info' && user) {
             element.style.display = 'block';
-        } else {
+            element.innerHTML = `
+                <div class="user-info">
+                    <img src="${user.photoURL || '/assets/default-avatar.png'}" alt="Profile" class="user-avatar">
+                    <span class="user-name">${user.displayName || user.email}</span>
+                    ${isDevelopment ? '<span style="color: #ffd700;">(DEV)</span>' : ''}
+                </div>
+            `;
+        } else if (authType === 'user-info' && !user) {
+            element.style.display = 'none';
+        } else if (authType === 'sign-out' && user) {
+            element.style.display = 'block';
+        } else if (authType === 'sign-out' && !user) {
             element.style.display = 'none';
         }
     });
-    
-    // Update auth elements if they exist
-    const authElements = document.querySelectorAll('[data-auth]');
-    if (authElements.length > 0) {
-        authElements.forEach(element => {
-            const authType = element.dataset.auth;
-            
-            if (authType === 'user-info' && user) {
-                element.style.display = 'block';
-                // Keep existing content, don't overwrite
-            } else if (authType === 'user-info' && !user) {
-                element.style.display = 'none';
-            } else if (authType === 'sign-out' && user) {
-                element.style.display = 'block';
-            } else if (authType === 'sign-out' && !user) {
-                element.style.display = 'none';
-            }
-        });
-    }
 }
 
 // Protect content - redirect to login if not authenticated

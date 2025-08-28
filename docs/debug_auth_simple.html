@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Debug Simple</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #f0f0f0;
+        }
+        .protected-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .auth-status {
+            background: #e0e0e0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .debug-info {
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔐 Authentication Debug - Simple</h1>
+    
+    <div class="auth-status">
+        <h3>Authentication Status</h3>
+        <p id="authStatus">Checking...</p>
+    </div>
+    
+    <div class="debug-info">
+        <h3>Debug Information</h3>
+        <p>Current URL: <span id="currentUrl"></span></p>
+        <p>Pathname: <span id="pathname"></span></p>
+        <p>Hostname: <span id="hostname"></span></p>
+    </div>
+    
+    <div class="protected-content">
+        <h3>🎉 Protected Content Loaded!</h3>
+        <p>This content should only be visible when authenticated.</p>
+        <p>If you can see this, authentication is working!</p>
+    </div>
+    
+    <div class="debug-info">
+        <h3>Console Logs</h3>
+        <p>Check the browser console for detailed authentication logs.</p>
+        <p>Look for messages starting with 🔐, 🎨, 🔄, etc.</p>
+    </div>
+
+    <!-- Authentication Scripts -->
+    <script type="module" src="./auth.js"></script>
+    
+    <script>
+        // Update debug info
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('pathname').textContent = window.location.pathname;
+        document.getElementById('hostname').textContent = window.location.hostname;
+        
+        // Listen for auth state changes
+        import('./auth.js').then(({ onAuthStateChange }) => {
+            onAuthStateChange((user) => {
+                const statusEl = document.getElementById('authStatus');
+                if (user) {
+                    statusEl.textContent = `✅ Authenticated as: ${user.email || user.displayName || 'Unknown'}`;
+                    statusEl.style.color = 'green';
+                } else {
+                    statusEl.textContent = '❌ Not authenticated';
+                    statusEl.style.color = 'red';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
