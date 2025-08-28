@@ -281,6 +281,68 @@
             background: #38a169;
             border-color: #38a169;
         }
+    
+        /* Authentication Styles */
+        .auth-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+        
+        .protected-content {
+            display: none;
+        }
+        
+        .auth-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: auto;
+        }
+        
+        .user-info {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .user-name {
+            font-weight: 500;
+        }
+        
+        .sign-out-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        
+        .sign-out-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+    
     </style>
 </head>
 <body>
@@ -293,7 +355,7 @@
 
         <div class="login-form">
             <div class="sso-buttons">
-                <button class="sso-btn google" onclick="signInWithGoogle()" id="googleBtn">
+                <button class="sso-btn google" onclick="handleGoogleSignIn()" id="googleBtn">
                     <div class="icon">
                         <svg width="24" height="24" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -305,7 +367,7 @@
                     Continue with Google
                 </button>
 
-                <button class="sso-btn microsoft" onclick="signInWithMicrosoft()" id="microsoftBtn">
+                <button class="sso-btn microsoft" onclick="handleMicrosoftSignIn()" id="microsoftBtn">
                     <div class="icon">
                         <svg width="24" height="24" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M11.5 2.75h-8a.75.75 0 0 0-.75.75v8c0 .414.336.75.75.75h8a.75.75 0 0 0 .75-.75v-8a.75.75 0 0 0-.75-.75zm-8 1.5h6.5v6.5h-6.5v-6.5z"/>
@@ -339,7 +401,7 @@
         import { signInWithGoogle, signInWithMicrosoft, onAuthStateChange } from './auth.js';
 
         // Make functions globally available
-        window.signInWithGoogle = async function() {
+        window.handleGoogleSignIn = async function() {
             try {
                 showLoading(true);
                 hideError();
@@ -353,7 +415,7 @@
             }
         };
 
-        window.signInWithMicrosoft = async function() {
+        window.handleMicrosoftSignIn = async function() {
             try {
                 showLoading(true);
                 hideError();
@@ -420,7 +482,11 @@
         onAuthStateChange((user) => {
             if (user) {
                 // User is signed in, redirect will happen automatically
-                console.log('Authentication successful');
+                console.log('✅ Authentication successful in login page');
+                console.log('📍 Current pathname:', window.location.pathname);
+                console.log('📍 User email:', user.email);
+            } else {
+                console.log('❌ No user authenticated in login page');
             }
         });
 
@@ -429,5 +495,9 @@
             alert('This application uses Firebase Authentication to securely sign you in. Your data is protected and only used for authentication purposes.');
         };
     </script>
+
+    <!-- Authentication Scripts -->
+    <script type="module" src="./auth_middleware.js"></script>
+    
 </body>
 </html>

@@ -1,17 +1,15 @@
 // Authentication Middleware
 // This script should be included on all protected pages
 
-import { requireAuth, onAuthStateChange, getCurrentUser, isDevelopment } from './auth.js';
+import { requireAuth, onAuthStateChange, getCurrentUser } from './auth.js';
+
+// Environment detection
+const isDevelopment = window.location.hostname === 'localhost' || 
+                     window.location.hostname === '127.0.0.1' || 
+                     window.location.hostname.includes('localhost');
 
 // Authentication check function
 function checkAuthentication() {
-    // In development mode, always allow access
-    if (isDevelopment) {
-        console.log('🚀 Development mode: Authentication check bypassed');
-        showProtectedContent();
-        return;
-    }
-    
     // Check if user is authenticated
     if (!requireAuth()) {
         return; // Redirect will happen automatically
@@ -238,38 +236,22 @@ function addLoadingStates() {
 function initAuthMiddleware() {
     console.log(`🔐 Initializing auth middleware in ${isDevelopment ? 'development' : 'production'} mode`);
     
-    // In development mode, immediately show content and skip auth checks
-    if (isDevelopment) {
-        console.log('🚀 Development mode: Bypassing all authentication checks');
-        showProtectedContent();
-        addAuthUI();
-        return;
-    }
-    
-    // Production mode - add loading states first
+    // Add loading states first (only in production)
     addLoadingStates();
     
     // Add auth UI elements
     addAuthUI();
     
-    // Wait for Firebase auth to initialize before checking authentication
-    console.log('⏳ Waiting for Firebase auth to initialize...');
-    setTimeout(() => {
-        console.log('🔍 Checking authentication after Firebase init...');
-        checkAuthentication();
-    }, 2000); // Wait 2 seconds for Firebase to fully initialize
+    // Check authentication
+    checkAuthentication();
     
     // Listen for auth state changes
     onAuthStateChange((user) => {
         if (user) {
             showProtectedContent();
-        } else {
-            // User signed out, redirect to login
-            // Use absolute URL in production, relative in development
-            const loginUrl = isDevelopment 
-                ? '/login.html'
-                : 'https://davodey.github.io/folklife-scrape-site/login.html';
-            window.location.href = loginUrl;
+        } else if (isDevelopment) {
+            // User signed out, redirect to login (only in production)
+            window.location.href = '/login.html';
         }
     });
 }
