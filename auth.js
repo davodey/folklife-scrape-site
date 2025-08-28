@@ -110,7 +110,7 @@ export function initAuth() {
             
             // Check email domain before allowing access
             const userEmail = user.email;
-            const allowedDomains = ['@si.edu'];
+            const allowedDomains = ['@si.edu', '@quotient-inc.com'];
             const hasAllowedDomain = allowedDomains.some(domain => userEmail.endsWith(domain));
             
             console.log('🔍 Email domain validation:', {
