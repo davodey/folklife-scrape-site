@@ -62,7 +62,7 @@ def generate_protected_site():
     try:
         # Run the static site generator
         import subprocess
-        result = subprocess.run(['python', 'generate_static_site_multi.py'], 
+        result = subprocess.run(['python3', 'generate_static_site_multi.py'], 
                               capture_output=True, text=True)
         
         if result.returncode == 0:

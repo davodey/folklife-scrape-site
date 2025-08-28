@@ -108,6 +108,34 @@ export function initAuth() {
             console.log('📍 Current pathname:', window.location.pathname);
             console.log('📍 Current href:', window.location.href);
             
+            // Check email domain before allowing access
+            const userEmail = user.email;
+            const allowedDomains = ['@si.edu'];
+            const hasAllowedDomain = allowedDomains.some(domain => userEmail.endsWith(domain));
+            
+            console.log('🔍 Email domain validation:', {
+                userEmail: userEmail,
+                allowedDomains: allowedDomains,
+                hasAllowedDomain: hasAllowedDomain
+            });
+            
+            if (!hasAllowedDomain) {
+                console.log('🚫 User email domain not allowed:', userEmail);
+                console.log('🚫 Signing out unauthorized user');
+                
+                // Sign out the unauthorized user
+                signOut(auth).then(() => {
+                    console.log('🚫 Unauthorized user signed out');
+                    // Show error message to user
+                    showDomainError();
+                }).catch(error => {
+                    console.error('❌ Error signing out unauthorized user:', error);
+                });
+                return;
+            }
+            
+            console.log('✅ Email domain validation passed');
+            
             // Check if we're on a login page (more flexible check for GitHub Pages)
             const isOnLoginPage = window.location.href.includes('login.html') || 
                                 window.location.pathname.includes('login.html') ||
@@ -417,6 +445,51 @@ export function requireAuth() {
     }
     console.log('✅ Authentication check passed');
     return true;
+}
+
+// Show domain error message
+function showDomainError() {
+    console.log('🚫 Showing domain error message');
+    
+    // Create error message element
+    const errorDiv = document.createElement('div');
+    errorDiv.id = 'domain-error';
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #dc3545;
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        z-index: 10000;
+        text-align: center;
+        max-width: 400px;
+        font-family: Arial, sans-serif;
+    `;
+    
+    errorDiv.innerHTML = `
+        <h3 style="margin: 0 0 15px 0; color: white;">🚫 Access Denied</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.4;">
+            Your email domain is not authorized to access this application. 
+            Only users with @si.edu email addresses are allowed.
+        </p>
+        <p style="margin: 0; font-size: 14px; opacity: 0.9;">
+            Please contact your administrator if you believe this is an error.
+        </p>
+    `;
+    
+    // Add to page
+    document.body.appendChild(errorDiv);
+    
+    // Remove after 10 seconds
+    setTimeout(() => {
+        if (errorDiv.parentNode) {
+            errorDiv.parentNode.removeChild(errorDiv);
+        }
+    }, 10000);
 }
 
 // Initialize auth when module loads
