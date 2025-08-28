@@ -57,15 +57,17 @@
         .logo-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin: 0 auto 1rem;
-            font-size: 2rem;
-            color: white;
             box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            overflow: hidden;
+        }
+        
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
         }
 
         .logo h1 {
@@ -286,7 +288,9 @@
 <body>
     <div class="login-container">
         <div class="logo">
-            <div class="logo-icon">🎭</div>
+            <div class="logo-icon">
+            <img src="./login-profile.png" alt="Festival Layouts Logo">
+        </div>
             <h1>Festival Layouts</h1>
             <p>Access the visual layout analysis tool</p>
         </div>
