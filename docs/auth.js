@@ -473,8 +473,8 @@ function showDomainError() {
     errorDiv.innerHTML = `
         <h3 style="margin: 0 0 15px 0; color: white;">🚫 Access Denied</h3>
         <p style="margin: 0 0 15px 0; line-height: 1.4;">
-            Your email domain is not authorized to access this application. 
-            Only users with @si.edu email addresses are allowed.
+            Access to this application has been denied by your organization. 
+            Your email domain is not authorized for this resource.
         </p>
         <p style="margin: 0; font-size: 14px; opacity: 0.9;">
             Please contact your administrator if you believe this is an error.
