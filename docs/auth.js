@@ -76,9 +76,6 @@ export function initAuth() {
         console.log('⚠️ Domain check: Unexpected domain:', currentDomain);
     }
     
-    // Initialize UI state immediately
-    updateUIForAuthState(null);
-    
     onAuthStateChanged(auth, (user) => {
         console.log('🔄 Auth state changed:', user ? `User: ${user.email}` : 'No user');
         currentUser = user;
@@ -86,17 +83,10 @@ export function initAuth() {
         notifyAuthStateListeners(user);
         
         if (user) {
-            console.log('✅ User signed in:', user.email);
+            console.log('✅ User signed in:', user.email, window.location.pathname);
             console.log('📍 Current pathname:', window.location.pathname);
-            console.log('📍 Current href:', window.location.href);
-            
-            // Check if we're on a login page (more flexible check for GitHub Pages)
-            const isOnLoginPage = window.location.href.includes('login.html') || 
-                                window.location.pathname.includes('login.html') ||
-                                window.location.pathname.endsWith('/') ||
-                                window.location.pathname === '/folklife-scrape-site/';
-            
-            if (isOnLoginPage) {
+            // Redirect to main content if on login page
+            if (window.location.pathname.includes('login.html') || window.location.pathname === '/') {
                 // For GitHub Pages, use the correct base path
                 const basePath = '/folklife-scrape-site';
                 const redirectPath = basePath + '/index.html';
@@ -106,20 +96,15 @@ export function initAuth() {
                 setTimeout(() => {
                     console.log('🚀 Executing redirect to:', redirectPath);
                     window.location.href = redirectPath;
-                }, 500); // Increased delay for reliability
+                }, 100);
             } else {
                 console.log('📍 User is authenticated but not on login page, no redirect needed');
             }
         } else {
             console.log('❌ User signed out');
             console.log('📍 Current pathname:', window.location.pathname);
-            console.log('📍 Current href:', window.location.href);
-            
-            // Check if we're NOT on a login page (more flexible check)
-            const isOnLoginPage = window.location.href.includes('login.html') || 
-                                window.location.pathname.includes('login.html');
-            
-            if (!isOnLoginPage) {
+            // Redirect to login if not authenticated
+            if (!window.location.pathname.includes('login.html')) {
                 const basePath = '/folklife-scrape-site';
                 const loginPath = basePath + '/login.html';
                 console.log('🔄 Redirecting unauthenticated user to:', loginPath);
@@ -223,12 +208,9 @@ export function getCurrentUser() {
 // Check if user is authenticated
 export function isAuthenticated() {
     if (isDevelopment) {
-        console.log('🚀 Development mode: Always authenticated');
         return true; // Always authenticated in development
     }
-    const authenticated = currentUser !== null;
-    console.log('🔐 Authentication check:', authenticated ? 'Yes' : 'No', 'User:', currentUser);
-    return authenticated;
+    return currentUser !== null;
 }
 
 // Add auth state listener
@@ -253,53 +235,28 @@ function notifyAuthStateListeners(user) {
 
 // Update UI based on authentication state
 function updateUIForAuthState(user) {
-    console.log('🎨 Updating UI for auth state:', user ? 'authenticated' : 'not authenticated');
+    const authElements = document.querySelectorAll('[data-auth]');
     
-    // Show/hide protected content
-    const protectedElements = document.querySelectorAll('.protected-content');
-    console.log('🎨 Found protected elements:', protectedElements.length);
-    
-    protectedElements.forEach(element => {
-        if (user) {
-            console.log('🎨 Showing protected content');
+    authElements.forEach(element => {
+        const authType = element.dataset.auth;
+        
+        if (authType === 'user-info' && user) {
             element.style.display = 'block';
-        } else {
-            console.log('🎨 Hiding protected content');
+            element.innerHTML = `
+                <div class="user-info">
+                    <img src="${user.photoURL || '/assets/default-avatar.png'}" alt="Profile" class="user-avatar">
+                    <span class="user-name">${user.displayName || user.email}</span>
+                    ${isDevelopment ? '<span style="color: #ffd700;">(DEV)</span>' : ''}
+                </div>
+            `;
+        } else if (authType === 'user-info' && !user) {
+            element.style.display = 'none';
+        } else if (authType === 'sign-out' && user) {
+            element.style.display = 'block';
+        } else if (authType === 'sign-out' && !user) {
             element.style.display = 'none';
         }
     });
-    
-    // Update auth elements if they exist
-    const authElements = document.querySelectorAll('[data-auth]');
-    console.log('🎨 Found auth elements:', authElements.length);
-    
-    if (authElements.length > 0) {
-        authElements.forEach(element => {
-            const authType = element.dataset.auth;
-            
-            if (authType === 'user-info' && user) {
-                element.style.display = 'block';
-                element.innerHTML = `
-                    <div class="user-info">
-                        <img src="${user.photoURL || '/assets/default-avatar.png'}" alt="Profile" class="user-avatar">
-                        <span class="user-name">${user.displayName || user.email}</span>
-                        ${isDevelopment ? '<span style="color: #ffd700;">(DEV)</span>' : ''}
-                    </div>
-                `;
-            } else if (authType === 'user-info' && !user) {
-                element.style.display = 'none';
-            } else if (authType === 'sign-out' && user) {
-                element.style.display = 'block';
-            } else if (authType === 'sign-out' && !user) {
-                element.style.display = 'none';
-            }
-        });
-    }
-    
-    // If no protected content found, log a warning
-    if (protectedElements.length === 0) {
-        console.warn('⚠️ No .protected-content elements found on this page');
-    }
 }
 
 // Protect content - redirect to login if not authenticated
@@ -310,8 +267,10 @@ export function requireAuth() {
     }
     
     if (!isAuthenticated()) {
-        console.log('🚫 Authentication required but user not authenticated');
-        // Don't redirect here - let the auth state change handler do it
+        const basePath = '/folklife-scrape-site';
+        const loginPath = basePath + '/login.html';
+        console.log('RequireAuth: Redirecting to:', loginPath);
+        window.location.href = loginPath;
         return false;
     }
     return true;
