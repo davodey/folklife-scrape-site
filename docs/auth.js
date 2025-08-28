@@ -69,7 +69,11 @@ export function initAuth() {
             console.log('User signed in:', user.email);
             // Redirect to main content if on login page
             if (window.location.pathname === '/login.html' || window.location.pathname === '/') {
-                window.location.href = '/index.html';
+                // Use absolute URL in production, relative in development
+                const mainUrl = isProduction 
+                    ? 'https://davodey.github.io/folklife-scrape-site/'
+                    : '/index.html';
+                window.location.href = mainUrl;
             }
         } else {
             console.log('User signed out');
@@ -129,7 +133,11 @@ export async function signOutUser() {
 
     try {
         await signOut(auth);
-        window.location.href = '/login.html';
+        // Use absolute URL in production, relative in development
+        const loginUrl = isProduction 
+            ? 'https://davodey.github.io/folklife-scrape-site/login.html'
+            : '/login.html';
+        window.location.href = loginUrl;
     } catch (error) {
         console.error('Sign-out error:', error);
         throw error;
