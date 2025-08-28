@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Test - Festival Crawler</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .test-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .test-section h2 {
+            color: #495057;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .test-result {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .test-result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .test-result.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .test-result.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .test-result.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .test-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            transition: all 0.2s ease;
+        }
+
+        .test-button:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .user-info {
+            background: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .user-info h3 {
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-info p {
+            color: #718096;
+            margin: 0.25rem 0;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-indicator.authenticated {
+            background: #48bb78;
+        }
+
+        .status-indicator.unauthenticated {
+            background: #e53e3e;
+        }
+
+        .status-indicator.loading {
+            background: #ed8936;
+            animation: pulse 2s infinite;
+        }
+
+        .environment-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .environment-badge.development {
+            background: #fbbf24;
+            color: #92400e;
+        }
+
+        .environment-badge.production {
+            background: #10b981;
+            color: #064e3b;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Authentication Test</h1>
+        
+        <div class="test-section">
+            <h2>Environment Status</h2>
+            <div id="environmentStatus"></div>
+            <div id="authStatus">
+                <span class="status-indicator loading"></span>
+                <span>Checking authentication status...</span>
+            </div>
+            <div id="userInfo" class="user-info" style="display: none;">
+                <h3>User Information</h3>
+                <div id="userDetails"></div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Authentication Tests</h2>
+            <button class="test-button" onclick="testAuthentication()">Test Authentication</button>
+            <button class="test-button" onclick="testUserInfo()">Test User Info</button>
+            <button class="test-button" onclick="testSignOut()">Test Sign Out</button>
+            <button class="test-button" onclick="clearResults()">Clear Results</button>
+        </div>
+
+        <div class="test-section">
+            <h2>Test Results</h2>
+            <div id="testResults"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Quick Actions</h2>
+            <a href="login.html" class="test-button" style="text-decoration: none; display: inline-block;">
+                Go to Login
+            </a>
+            <a href="index.html" class="test-button" style="text-decoration: none; display: inline-block;">
+                Go to Protected Page
+            </a>
+        </div>
+    </div>
+
+    <!-- Import authentication modules -->
+    <script type="module">
+        import { 
+            initAuth, 
+            getCurrentUser, 
+            isAuthenticated, 
+            onAuthStateChange,
+            signOutUser 
+        } from './auth.js';
+
+        // Environment detection
+        const isDevelopment = window.location.hostname === 'localhost' || 
+                             window.location.hostname === '127.0.0.1' || 
+                             window.location.hostname.includes('localhost');
+
+        // Update environment status
+        function updateEnvironmentStatus() {
+            const envStatus = document.getElementById('environmentStatus');
+            const badgeClass = isDevelopment ? 'development' : 'production';
+            const badgeText = isDevelopment ? 'Development Mode' : 'Production Mode';
+            
+            envStatus.innerHTML = `
+                <div class="environment-badge ${badgeClass}">
+                    ${isDevelopment ? '🚀' : '🔐'} ${badgeText}
+                </div>
+                <p style="margin-bottom: 1rem; color: #6b7280;">
+                    <strong>Hostname:</strong> ${window.location.hostname}<br>
+                    <strong>Protocol:</strong> ${window.location.protocol}<br>
+                    <strong>Port:</strong> ${window.location.port || 'default'}
+                </p>
+                <div style="background: #f3f4f6; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+                    <strong>What this means:</strong><br>
+                    ${isDevelopment ? 
+                        '🔓 <strong>Development:</strong> Authentication bypassed, all content accessible locally' :
+                        '🔒 <strong>Production:</strong> Firebase authentication required, content protected'
+                    }
+                </div>
+            `;
+        }
+
+        // Make functions globally available for button clicks
+        window.testAuthentication = function() {
+            addTestResult('Testing authentication status...', 'info');
+            const authenticated = isAuthenticated();
+            const user = getCurrentUser();
+            
+            if (authenticated && user) {
+                addTestResult(`✅ Authentication successful! User: ${user.email}`, 'success');
+            } else {
+                addTestResult('❌ User not authenticated', 'error');
+            }
+        };
+
+        window.testUserInfo = function() {
+            addTestResult('Testing user information...', 'info');
+            const user = getCurrentUser();
+            
+            if (user) {
+                addTestResult(`✅ User info retrieved: ${JSON.stringify({
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    uid: user.uid
+                }, null, 2)}`, 'success');
+            } else {
+                addTestResult('❌ No user information available', 'error');
+            }
+        };
+
+        window.testSignOut = async function() {
+            addTestResult('Testing sign out...', 'info');
+            try {
+                await signOutUser();
+                addTestResult('✅ Sign out successful', 'success');
+            } catch (error) {
+                addTestResult(`❌ Sign out failed: ${error.message}`, 'error');
+            }
+        };
+
+        window.clearResults = function() {
+            document.getElementById('testResults').innerHTML = '';
+        };
+
+        // Helper function to add test results
+        function addTestResult(message, type) {
+            const resultsDiv = document.getElementById('testResults');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${type}`;
+            resultDiv.textContent = message;
+            resultsDiv.appendChild(resultDiv);
+            
+            // Auto-scroll to bottom
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        // Update authentication status
+        function updateAuthStatus(user) {
+            const statusDiv = document.getElementById('authStatus');
+            const userInfoDiv = document.getElementById('userInfo');
+            const userDetailsDiv = document.getElementById('userDetails');
+            
+            if (user) {
+                const devIndicator = isDevelopment ? ' (DEV MODE)' : '';
+                statusDiv.innerHTML = `
+                    <span class="status-indicator authenticated"></span>
+                    <span>✅ Authenticated as: ${user.email}${devIndicator}</span>
+                `;
+                
+                userInfoDiv.style.display = 'block';
+                userDetailsDiv.innerHTML = `
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Display Name:</strong> ${user.displayName || 'Not provided'}</p>
+                    <p><strong>Photo URL:</strong> ${user.photoURL || 'Not provided'}</p>
+                    <p><strong>User ID:</strong> ${user.uid}</p>
+                    ${isDevelopment ? '<p><strong>Mode:</strong> <span style="color: #f59e0b;">Development (Authentication Bypassed)</span></p>' : ''}
+                `;
+            } else {
+                statusDiv.innerHTML = `
+                    <span class="status-indicator unauthenticated"></span>
+                    <span>❌ Not authenticated</span>
+                `;
+                userInfoDiv.style.display = 'none';
+            }
+        }
+
+        // Listen for authentication state changes
+        onAuthStateChange((user) => {
+            updateAuthStatus(user);
+            
+            if (user) {
+                addTestResult(`🔐 User signed in: ${user.email}`, 'success');
+            } else {
+                addTestResult('🚪 User signed out', 'info');
+            }
+        });
+
+        // Initialize authentication
+        initAuth();
+        
+        // Update environment status
+        updateEnvironmentStatus();
+        
+        // Add initial test result
+        addTestResult('🚀 Authentication test page loaded', 'info');
+        addTestResult(`🌍 Environment: ${isDevelopment ? 'Development (localhost)' : 'Production'}`, 'info');
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Authentication Debug Page</h1>
+    
+    <div class="debug-section info">
+        <h3>📋 Test Results</h3>
+        <div id="testResults">Running tests...</div>
+    </div>
+
+    <div class="debug-section">
+        <h3>🌐 Environment Info</h3>
+        <div id="envInfo"></div>
+    </div>
+
+    <div class="debug-section">
+        <h3>🔐 Auth Status</h3>
+        <div id="authStatus"></div>
+    </div>
+
+    <div class="debug-section">
+        <h3>📝 Console Logs</h3>
+        <div id="consoleLogs"></div>
+    </div>
+
+    <script type="module">
+        // Capture console logs
+        const originalLog = console.log;
+        const originalError = console.error;
+        const logs = [];
+        
+        function captureLog(level, ...args) {
+            const timestamp = new Date().toLocaleTimeString();
+            const message = args.map(arg => 
+                typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+            ).join(' ');
+            logs.push(`[${timestamp}] ${level}: ${message}`);
+            updateConsoleLogs();
+        }
+        
+        console.log = (...args) => {
+            captureLog('LOG', ...args);
+            originalLog.apply(console, args);
+        };
+        
+        console.error = (...args) => {
+            captureLog('ERROR', ...args);
+            originalError.apply(console, args);
+        };
+
+        function updateConsoleLogs() {
+            document.getElementById('consoleLogs').innerHTML = 
+                logs.map(log => `<div>${log}</div>`).join('');
+        }
+
+        // Environment detection test
+        function testEnvironment() {
+            const hostname = window.location.hostname;
+            const protocol = window.location.protocol;
+            const port = window.location.port;
+            
+            const isDev = hostname === 'localhost' || 
+                         hostname === '127.0.0.1' || 
+                         hostname.includes('localhost');
+            
+            document.getElementById('envInfo').innerHTML = `
+                <p><strong>Hostname:</strong> ${hostname}</p>
+                <p><strong>Protocol:</strong> ${protocol}</p>
+                <p><strong>Port:</strong> ${port}</p>
+                <p><strong>Is Development:</strong> ${isDev ? '✅ YES' : '❌ NO'}</p>
+                <p><strong>Full URL:</strong> ${window.location.href}</p>
+            `;
+            
+            return isDev;
+        }
+
+        // Test auth.js import
+        async function testAuthImport() {
+            try {
+                console.log('🔍 Testing auth.js import...');
+                const authModule = await import('./auth.js');
+                console.log('✅ auth.js imported successfully');
+                console.log('Available exports:', Object.keys(authModule));
+                
+                // Test environment detection
+                if (typeof authModule.isDevelopment !== 'undefined') {
+                    console.log('✅ isDevelopment export found:', authModule.isDevelopment);
+                } else {
+                    console.log('❌ isDevelopment export not found');
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('❌ Failed to import auth.js:', error);
+                return false;
+            }
+        }
+
+        // Test auth middleware
+        async function testAuthMiddleware() {
+            try {
+                console.log('🔍 Testing auth_middleware.js import...');
+                const middlewareModule = await import('./auth_middleware.js');
+                console.log('✅ auth_middleware.js imported successfully');
+                console.log('Available exports:', Object.keys(middlewareModule));
+                return true;
+            } catch (error) {
+                console.error('❌ Failed to import auth_middleware.js:', error);
+                return false;
+            }
+        }
+
+        // Run all tests
+        async function runTests() {
+            console.log('🚀 Starting authentication debug tests...');
+            
+            const results = [];
+            
+            // Test 1: Environment detection
+            console.log('Test 1: Environment detection');
+            const isDev = testEnvironment();
+            results.push(`Environment: ${isDev ? 'Development' : 'Production'}`);
+            
+            // Test 2: Auth.js import
+            console.log('Test 2: Auth.js import');
+            const authImportSuccess = await testAuthImport();
+            results.push(`Auth.js import: ${authImportSuccess ? 'Success' : 'Failed'}`);
+            
+            // Test 3: Auth middleware import
+            console.log('Test 3: Auth middleware import');
+            const middlewareImportSuccess = await testAuthMiddleware();
+            results.push(`Middleware import: ${middlewareImportSuccess ? 'Success' : 'Failed'}`);
+            
+            // Test 4: Check if auth is bypassed
+            console.log('Test 4: Checking authentication bypass');
+            if (isDev) {
+                console.log('🚀 Development mode detected - should bypass auth');
+                results.push('Auth bypass: Should work in development');
+            } else {
+                console.log('🔐 Production mode detected - auth required');
+                results.push('Auth bypass: Not applicable in production');
+            }
+            
+            // Update results display
+            document.getElementById('testResults').innerHTML = 
+                results.map(result => `<div>✅ ${result}</div>`).join('');
+            
+            console.log('🎯 Debug tests completed');
+        }
+
+        // Start tests when page loads
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>
