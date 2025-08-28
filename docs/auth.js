@@ -11,13 +11,16 @@ import {
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 
 // Environment detection
-export const isDevelopment = window.location.hostname === 'localhost' || 
+const isDevelopment = window.location.hostname === 'localhost' || 
                      window.location.hostname === '127.0.0.1' || 
                      window.location.hostname.includes('localhost');
 
-export const isProduction = !isDevelopment;
+const isProduction = !isDevelopment;
 
 console.log(`🔍 Environment detected: ${isDevelopment ? 'Development' : 'Production'}`);
+console.log(`🔍 Hostname: ${window.location.hostname}`);
+console.log(`🔍 Pathname: ${window.location.pathname}`);
+console.log(`🔍 Full URL: ${window.location.href}`);
 
 // Firebase configuration
 const firebaseConfig = {
@@ -45,6 +48,10 @@ let authStateListeners = [];
 
 // Initialize authentication
 export function initAuth() {
+    console.log('🔐 Initializing authentication...');
+    console.log('🌐 Current domain:', window.location.hostname);
+    console.log('🔗 Current URL:', window.location.href);
+    
     if (isDevelopment) {
         console.log('🚀 Development mode: Authentication bypassed');
         // In development, simulate authenticated user
@@ -60,30 +67,50 @@ export function initAuth() {
     }
 
     console.log('🔐 Production mode: Firebase authentication enabled');
+    
+    // Check if we're on an authorized domain
+    const currentDomain = window.location.hostname;
+    if (currentDomain === 'davodey.github.io') {
+        console.log('✅ Domain check: GitHub Pages domain detected');
+    } else {
+        console.log('⚠️ Domain check: Unexpected domain:', currentDomain);
+    }
+    
     onAuthStateChanged(auth, (user) => {
+        console.log('🔄 Auth state changed:', user ? `User: ${user.email}` : 'No user');
         currentUser = user;
         updateUIForAuthState(user);
         notifyAuthStateListeners(user);
         
         if (user) {
-            console.log('User signed in:', user.email);
+            console.log('✅ User signed in:', user.email, window.location.pathname);
+            console.log('📍 Current pathname:', window.location.pathname);
             // Redirect to main content if on login page
-            if (window.location.pathname === '/login.html' || window.location.pathname === '/') {
-                // Use absolute URL in production, relative in development
-                const mainUrl = isProduction 
-                    ? 'https://davodey.github.io/folklife-scrape-site/'
-                    : '/index.html';
-                window.location.href = mainUrl;
+            if (window.location.pathname.includes('login.html') || window.location.pathname === '/') {
+                // For GitHub Pages, use the correct base path
+                const basePath = '/folklife-scrape-site';
+                const redirectPath = basePath + '/index.html';
+                console.log('🔄 Redirecting authenticated user to:', redirectPath);
+                
+                // Use a small delay to ensure the auth state is fully processed
+                setTimeout(() => {
+                    console.log('🚀 Executing redirect to:', redirectPath);
+                    window.location.href = redirectPath;
+                }, 100);
+            } else {
+                console.log('📍 User is authenticated but not on login page, no redirect needed');
             }
         } else {
-            console.log('User signed out');
+            console.log('❌ User signed out');
+            console.log('📍 Current pathname:', window.location.pathname);
             // Redirect to login if not authenticated
             if (!window.location.pathname.includes('login.html')) {
-                // Use absolute URL in production, relative in development
-                const loginUrl = isProduction 
-                    ? 'https://davodey.github.io/folklife-scrape-site/login.html'
-                    : '/login.html';
-                window.location.href = loginUrl;
+                const basePath = '/folklife-scrape-site';
+                const loginPath = basePath + '/login.html';
+                console.log('🔄 Redirecting unauthenticated user to:', loginPath);
+                window.location.href = loginPath;
+            } else {
+                console.log('📍 User is not authenticated but already on login page, no redirect needed');
             }
         }
     });
@@ -97,10 +124,25 @@ export async function signInWithGoogle() {
     }
 
     try {
+        console.log('🔐 Attempting Google sign-in...');
         const result = await signInWithPopup(auth, googleProvider);
+        console.log('✅ Google sign-in successful:', result.user.email);
         return result.user;
     } catch (error) {
-        console.error('Google sign-in error:', error);
+        console.error('❌ Google sign-in error:', error);
+        
+        // Handle specific error cases
+        if (error.code === 'auth/unauthorized-domain') {
+            console.error('🚫 Domain not authorized. Please add this domain to Firebase authorized domains.');
+            throw new Error('This domain is not authorized for authentication. Please contact support.');
+        } else if (error.code === 'auth/popup-blocked') {
+            console.error('🚫 Popup blocked by browser. Please allow popups for this site.');
+            throw new Error('Authentication popup was blocked. Please allow popups and try again.');
+        } else if (error.code === 'auth/popup-closed-by-user') {
+            console.error('🚫 Popup closed by user.');
+            throw new Error('Authentication was cancelled. Please try again.');
+        }
+        
         throw error;
     }
 }
@@ -113,10 +155,25 @@ export async function signInWithMicrosoft() {
     }
 
     try {
+        console.log('🔐 Attempting Microsoft sign-in...');
         const result = await signInWithPopup(auth, microsoftProvider);
+        console.log('✅ Microsoft sign-in successful:', result.user.email);
         return result.user;
     } catch (error) {
-        console.error('Microsoft sign-in error:', error);
+        console.error('❌ Microsoft sign-in error:', error);
+        
+        // Handle specific error cases
+        if (error.code === 'auth/unauthorized-domain') {
+            console.error('🚫 Domain not authorized. Please add this domain to Firebase authorized domains.');
+            throw new Error('This domain is not authorized for authentication. Please contact support.');
+        } else if (error.code === 'auth/popup-blocked') {
+            console.error('🚫 Popup blocked by browser. Please allow popups for this site.');
+            throw new Error('Authentication popup was blocked. Please allow popups and try again.');
+        } else if (error.code === 'auth/popup-closed-by-user') {
+            console.error('🚫 Popup closed by user.');
+            throw new Error('Authentication was cancelled. Please try again.');
+        }
+        
         throw error;
     }
 }
@@ -133,11 +190,10 @@ export async function signOutUser() {
 
     try {
         await signOut(auth);
-        // Use absolute URL in production, relative in development
-        const loginUrl = isProduction 
-            ? 'https://davodey.github.io/folklife-scrape-site/login.html'
-            : '/login.html';
-        window.location.href = loginUrl;
+        const basePath = '/folklife-scrape-site';
+        const loginPath = basePath + '/login.html';
+        console.log('Redirecting signed out user to:', loginPath);
+        window.location.href = loginPath;
     } catch (error) {
         console.error('Sign-out error:', error);
         throw error;
@@ -146,8 +202,7 @@ export async function signOutUser() {
 
 // Get current user
 export function getCurrentUser() {
-    // Return local state if available, otherwise check Firebase
-    return currentUser || auth.currentUser;
+    return currentUser;
 }
 
 // Check if user is authenticated
@@ -155,8 +210,7 @@ export function isAuthenticated() {
     if (isDevelopment) {
         return true; // Always authenticated in development
     }
-    // Check both local state and Firebase auth state
-    return currentUser !== null || auth.currentUser !== null;
+    return currentUser !== null;
 }
 
 // Add auth state listener
@@ -213,30 +267,14 @@ export function requireAuth() {
     }
     
     if (!isAuthenticated()) {
-        // Use absolute URL in production, relative in development
-        const loginUrl = isProduction 
-            ? 'https://davodey.github.io/folklife-scrape-site/login.html'
-            : '/login.html';
-        window.location.href = loginUrl;
+        const basePath = '/folklife-scrape-site';
+        const loginPath = basePath + '/login.html';
+        console.log('RequireAuth: Redirecting to:', loginPath);
+        window.location.href = loginPath;
         return false;
     }
     return true;
 }
 
-// Initialize auth immediately and also when DOM is ready
-initAuth();
-
-// Also initialize when DOM is ready
+// Initialize auth when module loads
 document.addEventListener('DOMContentLoaded', initAuth);
-
-// Ensure auth state is checked on every page load
-window.addEventListener('load', () => {
-    // Check if user is already authenticated
-    const user = auth.currentUser;
-    if (user) {
-        console.log('User already authenticated on page load:', user.email);
-        currentUser = user;
-        updateUIForAuthState(user);
-        notifyAuthStateListeners(user);
-    }
-});
