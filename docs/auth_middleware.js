@@ -261,7 +261,11 @@ function initAuthMiddleware() {
             showProtectedContent();
         } else {
             // User signed out, redirect to login
-            window.location.href = '/login.html';
+            // Use absolute URL in production, relative in development
+            const loginUrl = isDevelopment 
+                ? '/login.html'
+                : 'https://davodey.github.io/folklife-scrape-site/login.html';
+            window.location.href = loginUrl;
         }
     });
 }

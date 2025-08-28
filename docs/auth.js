@@ -75,7 +75,11 @@ export function initAuth() {
             console.log('User signed out');
             // Redirect to login if not authenticated
             if (!window.location.pathname.includes('login.html')) {
-                window.location.href = '/login.html';
+                // Use absolute URL in production, relative in development
+                const loginUrl = isProduction 
+                    ? 'https://davodey.github.io/folklife-scrape-site/login.html'
+                    : '/login.html';
+                window.location.href = loginUrl;
             }
         }
     });
@@ -199,7 +203,11 @@ export function requireAuth() {
     }
     
     if (!isAuthenticated()) {
-        window.location.href = '/login.html';
+        // Use absolute URL in production, relative in development
+        const loginUrl = isProduction 
+            ? 'https://davodey.github.io/folklife-scrape-site/login.html'
+            : '/login.html';
+        window.location.href = loginUrl;
         return false;
     }
     return true;
