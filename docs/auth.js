@@ -146,7 +146,8 @@ export async function signOutUser() {
 
 // Get current user
 export function getCurrentUser() {
-    return currentUser;
+    // Return local state if available, otherwise check Firebase
+    return currentUser || auth.currentUser;
 }
 
 // Check if user is authenticated
@@ -154,7 +155,8 @@ export function isAuthenticated() {
     if (isDevelopment) {
         return true; // Always authenticated in development
     }
-    return currentUser !== null;
+    // Check both local state and Firebase auth state
+    return currentUser !== null || auth.currentUser !== null;
 }
 
 // Add auth state listener
@@ -223,4 +225,18 @@ export function requireAuth() {
 
 // Initialize auth immediately and also when DOM is ready
 initAuth();
+
+// Also initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', initAuth);
+
+// Ensure auth state is checked on every page load
+window.addEventListener('load', () => {
+    // Check if user is already authenticated
+    const user = auth.currentUser;
+    if (user) {
+        console.log('User already authenticated on page load:', user.email);
+        currentUser = user;
+        updateUIForAuthState(user);
+        notifyAuthStateListeners(user);
+    }
+});
