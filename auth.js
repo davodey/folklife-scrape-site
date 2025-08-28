@@ -366,10 +366,15 @@ function updateUIForAuthState(user) {
                 console.log(`🎨 [${index}] Showing user info element`);
                 element.style.display = 'block';
                 element.innerHTML = `
-                    <div class="user-info">
-                        <img src="${user.photoURL || '/assets/default-avatar.png'}" alt="Profile" class="user-avatar">
-                        <span class="user-name">${user.displayName || user.email}</span>
-                        ${isDevelopment ? '<span style="color: #ffd700;">(DEV)</span>' : ''}
+                    <div class="user-info" style="display: flex; align-items: center; gap: 8px;">
+                        <img src="${user.photoURL || '/assets/default-avatar.png'}" 
+                             alt="Profile" 
+                             class="user-avatar" 
+                             style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.3);">
+                        <span class="user-name" style="color: white; font-size: 14px; font-weight: 500;">
+                            ${user.displayName || user.email}
+                            ${isDevelopment ? '<span style="color: #ffd700; margin-left: 4px;">(DEV)</span>' : ''}
+                        </span>
                     </div>
                 `;
             } else if (authType === 'user-info' && !user) {
@@ -387,11 +392,6 @@ function updateUIForAuthState(user) {
         console.log('🎨 No auth elements found on this page');
     }
     
-    // Add logout button to protected pages if user is authenticated
-    if (user && !window.location.href.includes('login.html')) {
-        addLogoutButton();
-    }
-    
     // Log final state
     console.log('🎨 Final UI state:', {
         protectedElementsCount: protectedElements.length,
@@ -401,58 +401,6 @@ function updateUIForAuthState(user) {
     });
     
     console.log('🎨 ===== UPDATE UI FOR AUTH STATE COMPLETE =====');
-}
-
-// Add logout button to protected pages
-function addLogoutButton() {
-    // Check if logout button already exists
-    if (document.querySelector('.logout-button')) {
-        return;
-    }
-    
-    console.log('🔘 Adding logout button to page...');
-    
-    // Create logout button
-    const logoutBtn = document.createElement('button');
-    logoutBtn.className = 'logout-button';
-    logoutBtn.innerHTML = '🚪 Sign Out';
-    logoutBtn.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: #e74c3c;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 14px;
-        z-index: 1000;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    `;
-    
-    // Add hover effect
-    logoutBtn.addEventListener('mouseenter', () => {
-        logoutBtn.style.background = '#c0392b';
-    });
-    
-    logoutBtn.addEventListener('mouseleave', () => {
-        logoutBtn.style.background = '#e74c3c';
-    });
-    
-    // Add click handler
-    logoutBtn.addEventListener('click', async () => {
-        console.log('🔘 Logout button clicked');
-        try {
-            await signOutUser();
-        } catch (error) {
-            console.error('❌ Logout error:', error);
-        }
-    });
-    
-    // Add to page
-    document.body.appendChild(logoutBtn);
-    console.log('🔘 Logout button added successfully');
 }
 
 // Protect content - redirect to login if not authenticated
