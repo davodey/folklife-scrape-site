@@ -83,7 +83,7 @@ export function initAuth() {
         notifyAuthStateListeners(user);
         
         if (user) {
-            console.log('✅ User signed in:', user.email);
+            console.log('✅ User signed in:', user.email, window.location.pathname);
             console.log('📍 Current pathname:', window.location.pathname);
             // Redirect to main content if on login page
             if (window.location.pathname.includes('login.html') || window.location.pathname === '/') {
