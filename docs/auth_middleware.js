@@ -252,8 +252,12 @@ function initAuthMiddleware() {
     // Add auth UI elements
     addAuthUI();
     
-    // Check authentication
-    checkAuthentication();
+    // Wait for Firebase auth to initialize before checking authentication
+    console.log('⏳ Waiting for Firebase auth to initialize...');
+    setTimeout(() => {
+        console.log('🔍 Checking authentication after Firebase init...');
+        checkAuthentication();
+    }, 2000); // Wait 2 seconds for Firebase to fully initialize
     
     // Listen for auth state changes
     onAuthStateChange((user) => {
