@@ -9,105 +9,112 @@ import re
 from pathlib import Path
 
 def add_auth_to_html(html_content, site_name):
-    """Add authentication elements to HTML content"""
+    """Add authentication to HTML content"""
     
-    # Add authentication styles to the head section
+    # Check if authentication is already present
+    if 'auth_middleware.js' in html_content:
+        print(f"⚠️  Authentication already present, skipping...")
+        return html_content
+    
+    # Add authentication styles to head
     auth_styles = """
         /* Authentication Styles */
-        .auth-loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            backdrop-filter: blur(10px);
-        }
+        .protected-content { display: none; }
+        .auth-loading { display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .auth-loading::after { content: "🔐 Verifying authentication..."; font-size: 1.1rem; color: #666; }
         
-        .protected-content {
-            display: none;
-        }
-        
-        .auth-section {
-            display: flex;
+        /* Site toolbar styles */
+        .site-toolbar { 
+            background: #34495e; 
+            padding: 1rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
             align-items: center;
-            gap: 1rem;
-            margin-left: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
         }
-        
-        .user-info {
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
+        .site-toggle { display: flex; gap: 0.5rem; }
+        .site-btn { 
+            padding: 0.75rem 1.5rem; 
+            border: 2px solid white; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 500; 
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            background: transparent;
             color: white;
+        }
+        .site-btn.active { 
+            background: rgba(255, 255, 255, 0.2); 
+            color: white; 
+            border-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .site-btn:not(.active) { 
+            background: transparent; 
+            color: white; 
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+        .site-btn:hover:not(.active) { 
+            background: rgba(255, 255, 255, 0.1); 
+            border-color: white;
+            transform: translateY(-1px);
+        }
+        .site-info { color: white; font-size: 0.9rem; opacity: 0.8; }
+        
+        /* Auth UI styles */
+        .auth-section { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+        .user-info { display: none; align-items: center; gap: 0.5rem; color: white; font-size: 0.9rem; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.3); }
+        .sign-out-btn { 
+            background: rgba(255, 255, 255, 0.1); 
+            color: white; 
+            border: 1px solid rgba(255, 255, 255, 0.3); 
+            padding: 0.5rem 1rem; 
+            border-radius: 4px; 
+            cursor: pointer; 
             font-size: 0.9rem;
+            transition: all 0.2s;
         }
-        
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .user-name {
-            font-weight: 500;
-        }
-        
-        .sign-out-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-        
-        .sign-out-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
+        .sign-out-btn:hover { background: rgba(255, 255, 255, 0.2); }
     """
     
-    # Add authentication styles after existing styles
+    # Add styles to head if not already present
     if '</style>' in html_content:
         html_content = html_content.replace('</style>', f'{auth_styles}\n    </style>')
     
-    # Add protected-content class to main container
-    if 'class="container"' in html_content:
+    # Add protected-content class to main container if not already present
+    if 'class="container"' in html_content and 'protected-content' not in html_content:
         html_content = html_content.replace('class="container"', 'class="container protected-content"')
     
-    # Add authentication script before closing body tag
+    # Add authentication script before closing body tag (only if not already present)
     auth_script = """
     <!-- Authentication Scripts -->
     <script type="module" src="./auth_middleware.js"></script>
     """
     
-    if '</body>' in html_content:
+    if '</body>' in html_content and 'auth_middleware.js' not in html_content:
         html_content = html_content.replace('</body>', f'{auth_script}\n</body>')
     
-    # Add authentication notice to header
-    auth_notice = f"""
+    # Add authentication notice to header (only if not already present)
+    if '🔐 <strong>Protected Content:' not in html_content:
+        auth_notice = f"""
         <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">
             🔐 <strong>Protected Content:</strong> You are authenticated and can view all layouts.
         </p>
     """
-    
-    # Find the header section and add the notice
-    header_pattern = r'(<div class="header">.*?<p>.*?</p>)'
-    if re.search(header_pattern, html_content, re.DOTALL):
-        html_content = re.sub(
-            header_pattern, 
-            r'\1' + auth_notice, 
-            html_content, 
-            flags=re.DOTALL
-        )
+        
+        # Find the header section and add the notice
+        header_pattern = r'(<div class="header">.*?<p>.*?</p>)'
+        if re.search(header_pattern, html_content, re.DOTALL):
+            html_content = re.sub(
+                header_pattern, 
+                r'\1' + auth_notice, 
+                html_content, 
+                flags=re.DOTALL
+            )
     
     return html_content
 

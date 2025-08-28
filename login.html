@@ -293,7 +293,7 @@
 
         <div class="login-form">
             <div class="sso-buttons">
-                <button class="sso-btn google" onclick="signInWithGoogle()" id="googleBtn">
+                <button class="sso-btn google" onclick="handleGoogleSignIn()" id="googleBtn">
                     <div class="icon">
                         <svg width="24" height="24" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -305,7 +305,7 @@
                     Continue with Google
                 </button>
 
-                <button class="sso-btn microsoft" onclick="signInWithMicrosoft()" id="microsoftBtn">
+                <button class="sso-btn microsoft" onclick="handleMicrosoftSignIn()" id="microsoftBtn">
                     <div class="icon">
                         <svg width="24" height="24" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M11.5 2.75h-8a.75.75 0 0 0-.75.75v8c0 .414.336.75.75.75h8a.75.75 0 0 0 .75-.75v-8a.75.75 0 0 0-.75-.75zm-8 1.5h6.5v6.5h-6.5v-6.5z"/>
@@ -339,7 +339,7 @@
         import { signInWithGoogle, signInWithMicrosoft, onAuthStateChange } from './auth.js';
 
         // Make functions globally available
-        window.signInWithGoogle = async function() {
+        window.handleGoogleSignIn = async function() {
             try {
                 showLoading(true);
                 hideError();
@@ -353,7 +353,7 @@
             }
         };
 
-        window.signInWithMicrosoft = async function() {
+        window.handleMicrosoftSignIn = async function() {
             try {
                 showLoading(true);
                 hideError();
@@ -420,7 +420,11 @@
         onAuthStateChange((user) => {
             if (user) {
                 // User is signed in, redirect will happen automatically
-                console.log('Authentication successful');
+                console.log('✅ Authentication successful in login page');
+                console.log('📍 Current pathname:', window.location.pathname);
+                console.log('📍 User email:', user.email);
+            } else {
+                console.log('❌ No user authenticated in login page');
             }
         });
 

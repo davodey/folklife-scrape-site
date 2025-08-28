@@ -1,17 +1,15 @@
 // Authentication Middleware
 // This script should be included on all protected pages
 
-import { requireAuth, onAuthStateChange, getCurrentUser, isDevelopment } from './auth.js';
+import { requireAuth, onAuthStateChange, getCurrentUser } from './auth.js';
+
+// Environment detection
+const isDevelopment = window.location.hostname === 'localhost' || 
+                     window.location.hostname === '127.0.0.1' || 
+                     window.location.hostname.includes('localhost');
 
 // Authentication check function
 function checkAuthentication() {
-    // In development mode, always allow access
-    if (isDevelopment) {
-        console.log('🚀 Development mode: Authentication check bypassed');
-        showProtectedContent();
-        return;
-    }
-    
     // Check if user is authenticated
     if (!requireAuth()) {
         return; // Redirect will happen automatically
@@ -238,15 +236,7 @@ function addLoadingStates() {
 function initAuthMiddleware() {
     console.log(`🔐 Initializing auth middleware in ${isDevelopment ? 'development' : 'production'} mode`);
     
-    // In development mode, immediately show content and skip auth checks
-    if (isDevelopment) {
-        console.log('🚀 Development mode: Bypassing all authentication checks');
-        showProtectedContent();
-        addAuthUI();
-        return;
-    }
-    
-    // Production mode - add loading states first
+    // Add loading states first (only in production)
     addLoadingStates();
     
     // Add auth UI elements
@@ -259,8 +249,8 @@ function initAuthMiddleware() {
     onAuthStateChange((user) => {
         if (user) {
             showProtectedContent();
-        } else {
-            // User signed out, redirect to login
+        } else if (isDevelopment) {
+            // User signed out, redirect to login (only in production)
             window.location.href = '/login.html';
         }
     });
