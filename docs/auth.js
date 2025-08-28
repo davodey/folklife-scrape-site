@@ -76,7 +76,7 @@ export function initAuth() {
     
     // Check if we're on an authorized domain
     const currentDomain = window.location.hostname;
-    if (currentDomain === 'davodey.github.io') {
+    if (currentDomain === 'quotientinc.github.io') {
         console.log('✅ Domain check: GitHub Pages domain detected');
     } else {
         console.log('⚠️ Domain check: Unexpected domain:', currentDomain);
@@ -140,19 +140,19 @@ export function initAuth() {
             const isOnLoginPage = window.location.href.includes('login.html') || 
                                 window.location.pathname.includes('login.html') ||
                                 window.location.pathname.endsWith('/') ||
-                                window.location.pathname === '/folklife-scrape-site/';
+                                window.location.pathname === '/folk-crawler/';
             
             console.log('🔍 Login page check:', {
                 hrefIncludesLogin: window.location.href.includes('login.html'),
                 pathnameIncludesLogin: window.location.pathname.includes('login.html'),
                 pathnameEndsWithSlash: window.location.pathname.endsWith('/'),
-                pathnameIsBase: window.location.pathname === '/folklife-scrape-site/',
+                pathnameIsBase: window.location.pathname === '/folk-crawler/',
                 isOnLoginPage: isOnLoginPage
             });
             
             if (isOnLoginPage) {
                 // For GitHub Pages, use the correct base path
-                const basePath = '/folklife-scrape-site';
+                const basePath = '/folk-crawler';
                 const redirectPath = basePath + '/index.html';
                 console.log('🔄 Redirecting authenticated user to:', redirectPath);
                 
@@ -181,7 +181,7 @@ export function initAuth() {
             });
             
             if (!isOnLoginPage) {
-                const basePath = '/folklife-scrape-site';
+                const basePath = '/folk-crawler';
                 const loginPath = basePath + '/login.html';
                 console.log('🔄 Redirecting unauthenticated user to:', loginPath);
                 window.location.href = loginPath;
@@ -269,7 +269,7 @@ export async function signOutUser() {
 
     try {
         await signOut(auth);
-        const basePath = '/folklife-scrape-site';
+        const basePath = '/folk-crawler';
         const loginPath = basePath + '/login.html';
         console.log('Redirecting signed out user to:', loginPath);
         window.location.href = loginPath;
